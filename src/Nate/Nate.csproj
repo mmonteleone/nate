@@ -53,10 +53,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Extensions\IStateMachineExtensions.cs" />
+    <Compile Include="Core\Extensions\IStateModelExtensions.cs" />
     <Compile Include="Core\InvalidStateModelException.cs" />
     <Compile Include="Core\InvalidTransitionException.cs" />
     <Compile Include="Core\InvalidTriggerException.cs" />
+    <Compile Include="Core\IStateMachine.cs" />
     <Compile Include="Core\State.cs" />
+    <Compile Include="Core\StateMachine.cs" />
+    <Compile Include="Core\StateMachineConfiguration.cs" />
     <Compile Include="Core\Transition.cs" />
     <Compile Include="Core\Trigger.cs" />
     <Compile Include="IStateModel.cs" />
