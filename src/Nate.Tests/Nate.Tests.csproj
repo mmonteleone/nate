@@ -69,6 +69,9 @@
     <Compile Include="Unit\Core\Extensions\StateExtensionsTests.cs" />
     <Compile Include="Unit\Core\Extensions\IStateMachineExtensionsTests.cs" />
     <Compile Include="Unit\Core\InvalidTriggerExceptionTests.cs" />
+    <Compile Include="Unit\Core\TransitionEventArgsTests.cs" />
+    <Compile Include="Unit\Core\TransitionTests.cs" />
+    <Compile Include="Unit\Core\TriggerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Nate\Nate.csproj">
