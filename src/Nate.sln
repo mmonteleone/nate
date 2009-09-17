@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nate", "Nate\Nate.csproj", "{62FCBCDE-7A8E-4581-9934-998D118119A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nate.Tests", "Nate.Tests\Nate.Tests.csproj", "{B950F583-D3A3-4093-BD29-6467E6CB2F20}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -16,6 +18,12 @@ Global
 		{62FCBCDE-7A8E-4581-9934-998D118119A0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{62FCBCDE-7A8E-4581-9934-998D118119A0}.Test|Any CPU.ActiveCfg = Test|Any CPU
 		{62FCBCDE-7A8E-4581-9934-998D118119A0}.Test|Any CPU.Build.0 = Test|Any CPU
+		{B950F583-D3A3-4093-BD29-6467E6CB2F20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B950F583-D3A3-4093-BD29-6467E6CB2F20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B950F583-D3A3-4093-BD29-6467E6CB2F20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B950F583-D3A3-4093-BD29-6467E6CB2F20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B950F583-D3A3-4093-BD29-6467E6CB2F20}.Test|Any CPU.ActiveCfg = Test|Any CPU
+		{B950F583-D3A3-4093-BD29-6467E6CB2F20}.Test|Any CPU.Build.0 = Test|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
