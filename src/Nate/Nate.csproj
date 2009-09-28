@@ -64,6 +64,11 @@
     <Compile Include="Core\StateMachineConfiguration.cs" />
     <Compile Include="Core\Transition.cs" />
     <Compile Include="Core\Trigger.cs" />
+    <Compile Include="FluentStateMachine.cs" />
+    <Compile Include="Fluent\FluentStateMachineBuilder.cs" />
+    <Compile Include="Fluent\FluentSyntaxException.cs" />
+    <Compile Include="Fluent\IFluentStateMachineBuilder.cs" />
+    <Compile Include="IFluentStateMachine.cs" />
     <Compile Include="IStateModel.cs" />
     <Compile Include="Core\Extensions\StateExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
