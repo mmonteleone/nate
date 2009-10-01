@@ -75,9 +75,10 @@ namespace Nate
             this.InitialState = initialState;
         }
 
-        public static FluentStateMachineBuilder<TStateModel> Describe()
+        public static InitialFluentBuilderApi<TStateModel> Describe()
         {
-            return new FluentStateMachineBuilder<TStateModel>();
+            var builder = new FluentStateMachineBuilder<TStateModel>();
+            return new InitialFluentBuilderApi<TStateModel>(builder);
         }
 
         public void Trigger(string triggerName, TStateModel model)
