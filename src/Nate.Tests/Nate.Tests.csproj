@@ -75,6 +75,20 @@
     <Compile Include="Unit\Core\TransitionEventArgsTests.cs" />
     <Compile Include="Unit\Core\TransitionTests.cs" />
     <Compile Include="Unit\Core\TriggerTests.cs" />
+    <Compile Include="Unit\Fluent\AfterEntryFluentBuilderApiTests.cs" />
+    <Compile Include="Unit\Fluent\AfterExitFluentBuilderApiTests.cs" />
+    <Compile Include="Unit\Fluent\AfterTransitionBuilderApiTests.cs" />
+    <Compile Include="Unit\Fluent\BeforeEntryFluentBuilderApiTests.cs" />
+    <Compile Include="Unit\Fluent\BeforeExitFluentBuilderApiTests.cs" />
+    <Compile Include="Unit\Fluent\BeforeTransitionBuilderApiTests.cs" />
+    <Compile Include="Unit\Fluent\FluentTestBase.cs" />
+    <Compile Include="Unit\Fluent\GloballyTransitionsToBuilderApiTests.cs" />
+    <Compile Include="Unit\Fluent\InitialFluentBuilderApiTests.cs" />
+    <Compile Include="Unit\Fluent\InitiatesFluentBuilderApiTests.cs" />
+    <Compile Include="Unit\Fluent\OnFluentBuilderApiTests.cs" />
+    <Compile Include="Unit\Fluent\StateFluentBuilderApiTests.cs" />
+    <Compile Include="Unit\Fluent\TransitionsToFluentBuilderApiTests.cs" />
+    <Compile Include="Unit\Fluent\WhenFluentBuilderApiTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Nate\Nate.csproj">
