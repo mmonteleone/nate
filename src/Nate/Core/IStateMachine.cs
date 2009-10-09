@@ -28,6 +28,10 @@ using System.Collections.Generic;
 
 namespace Nate.Core
 {
+    /// <summary>
+    /// Declares an interface for a state machine
+    /// </summary>
+    /// <typeparam name="TStateModel"></typeparam>
     public interface IStateMachine<TStateModel> where TStateModel : IStateModel
     {
         void Trigger(Trigger trigger, TStateModel model);

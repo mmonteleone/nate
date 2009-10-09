@@ -29,6 +29,10 @@ using System.Linq;
 
 namespace Nate.Core
 {
+    /// <summary>
+    /// Represents a single state for a given StateModel type
+    /// </summary>
+    /// <typeparam name="TStateModel"></typeparam>
     public class State<TStateModel> where TStateModel : IStateModel
     {
         private Dictionary<Trigger, List<Transition<TStateModel>>> transitions;

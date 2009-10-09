@@ -30,6 +30,9 @@ using System.Text;
 
 namespace Nate.Core
 {
+    /// <summary>
+    /// Represents a StateModel being invalid for use by a StateMachine
+    /// </summary>
     public class InvalidStateModelException : ArgumentException
     {
         public InvalidStateModelException()

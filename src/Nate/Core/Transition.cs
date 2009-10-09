@@ -26,6 +26,11 @@
 using System;
 namespace Nate.Core
 {
+    /// <summary>
+    /// Represents a single definition of a trigger causing a transition fromn one state to 
+    /// another, possibly given the optional evaluation of a logical guard lambda.
+    /// </summary>
+    /// <typeparam name="TStateModel"></typeparam>
     public class Transition<TStateModel> where TStateModel : Nate.IStateModel
     {
         public State<TStateModel> Source { get; private set; }

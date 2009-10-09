@@ -27,6 +27,9 @@ using System;
 
 namespace Nate.Core
 {
+    /// <summary>
+    /// Represents a possible trigger that can cause a transition, on any number of State instances or types.
+    /// </summary>
     public class Trigger
     {
         public string Name { get; protected set; }

@@ -29,9 +29,13 @@ using System.Linq;
 
 namespace Nate.Core
 {
-    public partial class StateMachine<TStateModel> : IStateMachine<TStateModel> where TStateModel : IStateModel
+    /// <summary>
+    /// Represents a state machine which can process a state to the next, raising all necessary events.
+    /// Also contains optional global transitions that are state-independent.
+    /// </summary>
+    /// <typeparam name="TStateModel"></typeparam>
+    public class StateMachine<TStateModel> : IStateMachine<TStateModel> where TStateModel : IStateModel
     {
-
         public event EventHandler<TransitionEventArgs<TStateModel>> Transitioning;
         public event EventHandler<TransitionEventArgs<TStateModel>> Transitioned;
 

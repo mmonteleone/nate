@@ -30,6 +30,9 @@ using System.Text;
 
 namespace Nate.Core
 {
+    /// <summary>
+    /// Represents an invalid trigger attempt, for various reasons.
+    /// </summary>
     public class InvalidTriggerException : ArgumentException
     {
         public InvalidTriggerException()

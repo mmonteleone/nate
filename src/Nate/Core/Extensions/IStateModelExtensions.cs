@@ -30,8 +30,18 @@ using System.Text;
 
 namespace Nate.Core
 {
+    /// <summary>
+    /// Extensions to StateModels for simpler API usage
+    /// </summary>
     public static class IStateModelExtensions
     {
+        /// <summary>
+        /// Returns the available states from the current one on a model, given a state machine
+        /// </summary>
+        /// <typeparam name="TStateModel"></typeparam>
+        /// <param name="model">model containing current state</param>
+        /// <param name="stateMachine">state machine to process with</param>
+        /// <returns></returns>
         public static IEnumerable<State<TStateModel>> AvailableStates<TStateModel>(this IStateModel model,
             IStateMachine<TStateModel> stateMachine) where TStateModel : IStateModel
         {
@@ -41,6 +51,13 @@ namespace Nate.Core
             return stateMachine.AvailableStates((TStateModel)model);
         }
 
+        /// <summary>
+        /// Returns the available triggers available given the current state of a model, and a state machine
+        /// </summary>
+        /// <typeparam name="TStateModel"></typeparam>
+        /// <param name="model">model containing current state</param>
+        /// <param name="stateMachine">state machine with which to process</param>
+        /// <returns></returns>
         public static IEnumerable<Trigger> AvailableTriggers<TStateModel>(this IStateModel model,
             IStateMachine<TStateModel> stateMachine) where TStateModel : IStateModel
         {
@@ -50,6 +67,13 @@ namespace Nate.Core
             return stateMachine.AvailableTriggers((TStateModel)model);
         }
 
+        /// <summary>
+        /// Triggers a transition trigger on a model given triggername and machine
+        /// </summary>
+        /// <typeparam name="TStateModel"></typeparam>
+        /// <param name="model">model containing current state</param>
+        /// <param name="triggerName">name of trigger</param>
+        /// <param name="stateMachine">state machine to perform the transition</param>
         public static void Trigger<TStateModel>(this IStateModel model,
             string triggerName,
             IStateMachine<TStateModel> stateMachine) where TStateModel : IStateModel
@@ -61,6 +85,13 @@ namespace Nate.Core
             stateMachine.Trigger(new Trigger(triggerName), (TStateModel)model);
         }
 
+        /// <summary>
+        /// Triggers a transition trigger on a model given trigger instance and machine
+        /// </summary>
+        /// <typeparam name="TStateModel"></typeparam>
+        /// <param name="model">model containing current state</param>
+        /// <param name="trigger">trigger instance</param>
+        /// <param name="stateMachine">state machine to perform the transition</param>
         public static void Trigger<TStateModel>(this IStateModel model,
             Trigger trigger,
             IStateMachine<TStateModel> stateMachine) where TStateModel : IStateModel

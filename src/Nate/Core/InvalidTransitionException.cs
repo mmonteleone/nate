@@ -30,6 +30,9 @@ using System.Text;
 
 namespace Nate.Core
 {
+    /// <summary>
+    /// Represents an invalid transition definition 
+    /// </summary>
     public class InvalidTransitionException : ArgumentException
     {
         public InvalidTransitionException()
