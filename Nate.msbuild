@@ -20,7 +20,6 @@
 		<xunit 
 			Assembly="build\Debug\Nate.Tests.dll"
 			Html="build\Debug\Nate.Tests.html"
-			NUnitXml="build\Debug\Nate.Tests.Nunit.xml"
 			Xml="build\Debug\Nate.Tests.Xunit.xml"
 			/>
 	</Target>
@@ -30,7 +29,7 @@
 			Projects="src\Nate.sln" 
 			Targets="Build" 
 			Properties="Configuration=Release" />
-		<Delete Files="build\Release\Nate.Tests.dll;build\Release\xunit.dll"/>
+		<Delete Files="build\Release\Nate.Tests.dll;build\Release\xunit.dll;build\Release\Moq.dll;build\Release\Moq.xml;build\Release\Nate.Tests.pdb;build\Release\xunit.xml"/>
 	</Target>
 
 	<Target Name="Clean">

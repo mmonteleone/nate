@@ -8,6 +8,6 @@ echo where: target = one of "test", "release", "clean"
 goto End
 
 :Build
-%systemroot%\Microsoft.net\framework\v3.5\MSBuild.exe Nate.msbuild /t:%1
+%systemroot%\Microsoft.net\framework\v4.0.30319\MSBuild.exe Nate.msbuild /t:%1
 
 :End

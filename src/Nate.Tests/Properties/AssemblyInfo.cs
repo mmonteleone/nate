@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Michael Monteleone")]
 [assembly: AssemblyProduct("Nate.Tests")]
-[assembly: AssemblyCopyright("Copyright © Michael Monteleone 2009")]
+[assembly: AssemblyCopyright("Copyright © Michael Monteleone 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
