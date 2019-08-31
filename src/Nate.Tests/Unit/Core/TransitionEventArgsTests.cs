@@ -1,4 +1,5 @@
 ﻿#region license
+
 /* Nate
  * http://github.com/mmonteleone/nate
  * 
@@ -21,31 +22,18 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  * DEALINGS IN THE SOFTWARE.
- */ 
+ */
+
 #endregion
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Nate.Core;
 using Xunit;
-using Moq;
 
 namespace Nate.Tests.Unit.Core
 {
     public class TransitionEventArgsTests
     {
-        [Fact]
-        public void TransitionEventArgs_NullModel_ThrowsNullEx()
-        {
-            Assert.Throws<ArgumentNullException>(() =>
-                new TransitionEventArgs<StubStateModel>(
-                    null,
-                    new State<StubStateModel>("from"),
-                    new State<StubStateModel>("to"),
-                    new Trigger("trigger")));
-        }
-
         [Fact]
         public void TransitionEventArgs_NullFrom_ThrowsNullEx()
         {
@@ -53,6 +41,17 @@ namespace Nate.Tests.Unit.Core
                 new TransitionEventArgs<StubStateModel>(
                     new StubStateModel(),
                     null,
+                    new State<StubStateModel>("to"),
+                    new Trigger("trigger")));
+        }
+
+        [Fact]
+        public void TransitionEventArgs_NullModel_ThrowsNullEx()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                new TransitionEventArgs<StubStateModel>(
+                    null,
+                    new State<StubStateModel>("from"),
                     new State<StubStateModel>("to"),
                     new Trigger("trigger")));
         }

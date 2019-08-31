@@ -1,4 +1,5 @@
 ﻿#region license
+
 /* Nate
  * http://github.com/mmonteleone/nate
  * 
@@ -21,30 +22,31 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  * DEALINGS IN THE SOFTWARE.
- */ 
+ */
+
 #endregion
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Nate.Core
 {
     /// <summary>
-    /// Represents a StateModel being invalid for use by a StateMachine
+    ///     Represents a StateModel being invalid for use by a StateMachine
     /// </summary>
     public class InvalidStateModelException : ArgumentException
     {
         public InvalidStateModelException()
-            : base()
-        { }
+        {
+        }
 
         public InvalidStateModelException(string message)
             : base(message)
-        { }
+        {
+        }
 
         public InvalidStateModelException(string message, Exception inner)
             : base(message, inner)
-        { }
+        {
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿#region license
+
 /* Nate
  * http://github.com/mmonteleone/nate
  * 
@@ -21,31 +22,33 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  * DEALINGS IN THE SOFTWARE.
- */ 
+ */
+
 #endregion
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Nate.Core
 {
     /// <summary>
-    /// Represents an invalid trigger attempt, for various reasons.
+    ///     Represents an invalid trigger attempt, for various reasons.
     /// </summary>
     public class InvalidTriggerException : ArgumentException
     {
         public InvalidTriggerException()
-            : base()
-        { }
+        {
+        }
 
         public InvalidTriggerException(string message)
             : base(message)
-        { }
+        {
+        }
 
         public InvalidTriggerException(string message, Exception inner)
             : base(message, inner)
-        { }
+        {
+        }
 
         internal IList<Trigger> AvailableTriggers { get; set; }
     }

@@ -1,21 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Nate.Core;
-using Xunit;
-using Moq;
 using Nate.Fluent;
+using Xunit;
 
 namespace Nate.Tests.Unit.Fluent
 {
     public class AfterEntryFluentBuilderApiTests : FluentTestBase
     {
         [Fact]
+        public void AfterEntryFluentBuilderApi_AfterTransition_NullCallback_ThrowsNullEx()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                new AfterEntryFluentBuilderApi<StubStateModel>(Builder).AfterTransition(null));
+        }
+
+        [Fact]
+        public void
+            AfterEntryFluentBuilderApi_AfterTransition_ValidParms_CallsAfterTransitionOnBuilder_ReturnsApiWithBuilder()
+        {
+            Action<TransitionEventArgs<StubStateModel>> callback = e => { };
+            MockBuilder.Setup(b => b.AfterTransition(callback)).Verifiable();
+            var target = new AfterEntryFluentBuilderApi<StubStateModel>(Builder);
+            var result = target.AfterTransition(callback);
+            Assert.NotNull(result);
+            MockBuilder.VerifyAll();
+        }
+
+        [Fact]
         public void AfterEntryFluentBuilderApi_BeforeExit_NullCallback_ThrowsNullEx()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                (new AfterEntryFluentBuilderApi<StubStateModel>(Builder)).BeforeExit(null));
+                new AfterEntryFluentBuilderApi<StubStateModel>(Builder).BeforeExit(null));
         }
 
         [Fact]
@@ -30,20 +45,57 @@ namespace Nate.Tests.Unit.Fluent
         }
 
         [Fact]
-        public void AfterEntryFluentBuilderApi_TransitionsTo_NullName_ThrowsNullEx()
+        public void AfterEntryFluentBuilderApi_BeforeTransition_NullCallBack_ThrowsNullEx()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                (new AfterEntryFluentBuilderApi<StubStateModel>(Builder)).TransitionsTo(null));
+                new AfterEntryFluentBuilderApi<StubStateModel>(Builder).BeforeTransition(null));
         }
 
         [Fact]
-        public void AfterEntryFluentBuilderApi_TransitionsTo_ValidParms_CallsTransitionsToOnBuilder_ReturnsApiWithBuilder()
+        public void
+            AfterEntryFluentBuilderApi_BeforeTransition_ValidParms_CallsBeforeTransitionOnBuilder_ReturnsApiWithBuilder()
         {
-            MockBuilder.Setup(b => b.TransitionsTo("t")).Verifiable();
+            Action<TransitionEventArgs<StubStateModel>> callback = e => { };
+            MockBuilder.Setup(b => b.BeforeTransition(callback)).Verifiable();
             var target = new AfterEntryFluentBuilderApi<StubStateModel>(Builder);
-            var result = target.TransitionsTo("t");
+            var result = target.BeforeTransition(callback);
             Assert.NotNull(result);
             MockBuilder.VerifyAll();
+        }
+
+        [Fact]
+        public void AfterEntryFluentBuilderApi_Compile_NullConfiguration_ThrowsNullEx()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                new AfterEntryFluentBuilderApi<StubStateModel>(Builder).Compile(null));
+        }
+
+        [Fact]
+        public void AfterEntryFluentBuilderApi_Compile_ValidParms_CallsCompileOnBuilder_ReturnsStateMachine()
+        {
+            var machine = FluentStateMachine;
+            MockBuilder.Setup(b => b.Compile()).Returns(machine);
+            var target = new AfterEntryFluentBuilderApi<StubStateModel>(Builder);
+            var result = target.Compile();
+            Assert.Same(machine, result);
+        }
+
+        [Fact]
+        public void
+            AfterEntryFluentBuilderApi_GloballyTransitionsTo_CallsGloballyTransitionsToOnBuilder_ReturnsApiWithBuilder()
+        {
+            MockBuilder.Setup(b => b.GloballyTransitionsTo("s")).Verifiable();
+            var target = new AfterEntryFluentBuilderApi<StubStateModel>(Builder);
+            var result = target.GloballyTransitionsTo("s");
+            Assert.NotNull(result);
+            MockBuilder.VerifyAll();
+        }
+
+        [Fact]
+        public void AfterEntryFluentBuilderApi_GloballyTransitionsTo_NullState_ThrowsNullEx()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                new AfterEntryFluentBuilderApi<StubStateModel>(Builder).GloballyTransitionsTo(null));
         }
 
         [Fact]
@@ -60,7 +112,7 @@ namespace Nate.Tests.Unit.Fluent
         public void AfterEntryFluentBuilderApi_State_NullName_ThrowsNullEx()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                (new AfterEntryFluentBuilderApi<StubStateModel>(Builder)).State(null));
+                new AfterEntryFluentBuilderApi<StubStateModel>(Builder).State(null));
         }
 
         [Fact]
@@ -84,91 +136,19 @@ namespace Nate.Tests.Unit.Fluent
         }
 
         [Fact]
-        public void AfterEntryFluentBuilderApi_Compile_NullConfiguration_ThrowsNullEx()
+        public void AfterEntryFluentBuilderApi_TransitionsTo_NullName_ThrowsNullEx()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                (new AfterEntryFluentBuilderApi<StubStateModel>(Builder)).Compile(null));
+                new AfterEntryFluentBuilderApi<StubStateModel>(Builder).TransitionsTo(null));
         }
 
         [Fact]
-        public void AfterEntryFluentBuilderApi_Compile_ValidParms_CallsCompileOnBuilder_ReturnsStateMachine()
+        public void
+            AfterEntryFluentBuilderApi_TransitionsTo_ValidParms_CallsTransitionsToOnBuilder_ReturnsApiWithBuilder()
         {
-            var machine = FluentStateMachine;
-            MockBuilder.Setup(b => b.Compile()).Returns(machine);
+            MockBuilder.Setup(b => b.TransitionsTo("t")).Verifiable();
             var target = new AfterEntryFluentBuilderApi<StubStateModel>(Builder);
-            var result = target.Compile();
-            Assert.Same(machine, result);
-        }
-
-        [Fact]
-        public void AfterEntryFluentBuilderApi_BeforeTransition_NullCallBack_ThrowsNullEx()
-        {
-            Assert.Throws<ArgumentNullException>(() =>
-                (new AfterEntryFluentBuilderApi<StubStateModel>(Builder)).BeforeTransition(null));
-        }
-
-        [Fact]
-        public void AfterEntryFluentBuilderApi_BeforeTransition_ValidParms_CallsBeforeTransitionOnBuilder_ReturnsApiWithBuilder()
-        {
-            Action<TransitionEventArgs<StubStateModel>> callback = e => { };
-            MockBuilder.Setup(b => b.BeforeTransition(callback)).Verifiable();
-            var target = new AfterEntryFluentBuilderApi<StubStateModel>(Builder);
-            var result = target.BeforeTransition(callback);
-            Assert.NotNull(result);
-            MockBuilder.VerifyAll();
-        }
-
-        [Fact]
-        public void AfterEntryFluentBuilderApi_AfterTransition_NullCallback_ThrowsNullEx()
-        {
-            Assert.Throws<ArgumentNullException>(() =>
-                (new AfterEntryFluentBuilderApi<StubStateModel>(Builder)).AfterTransition(null));
-        }
-
-        [Fact]
-        public void AfterEntryFluentBuilderApi_AfterTransition_ValidParms_CallsAfterTransitionOnBuilder_ReturnsApiWithBuilder()
-        {
-            Action<TransitionEventArgs<StubStateModel>> callback = e => { };
-            MockBuilder.Setup(b => b.AfterTransition(callback)).Verifiable();
-            var target = new AfterEntryFluentBuilderApi<StubStateModel>(Builder);
-            var result = target.AfterTransition(callback);
-            Assert.NotNull(result);
-            MockBuilder.VerifyAll();
-        }
-
-        [Fact]
-        public void AfterEntryFluentBuilderApi_GloballyTransitionsTo_NullState_ThrowsNullEx()
-        {
-            Assert.Throws<ArgumentNullException>(() =>
-                (new AfterEntryFluentBuilderApi<StubStateModel>(Builder)).GloballyTransitionsTo(null));
-        }
-
-        [Fact]
-        public void AfterEntryFluentBuilderApi_GloballyTransitionsTo_CallsGloballyTransitionsToOnBuilder_ReturnsApiWithBuilder()
-        {
-            MockBuilder.Setup(b => b.GloballyTransitionsTo("s")).Verifiable();
-            var target = new AfterEntryFluentBuilderApi<StubStateModel>(Builder);
-            var result = target.GloballyTransitionsTo("s");
-            Assert.NotNull(result);
-            MockBuilder.VerifyAll();
-        }
-
-
-        [Fact]
-        public void StateFluentBuilderApi_BeforeEntry_NullCallback_ThrowsNullEx()
-        {
-            Assert.Throws<ArgumentNullException>(() =>
-                (new AfterEntryFluentBuilderApi<StubStateModel>(Builder)).BeforeEntry(null));
-
-        }
-
-        [Fact]
-        public void StateFluentBuilderApi_BeforeEntry_ValidParms_CallsBeforeEntryOnBuilder_ReturnsApiWithBuilder()
-        {
-            Action<TransitionEventArgs<StubStateModel>> callback = e => { };
-            MockBuilder.Setup(b => b.BeforeEntry(callback)).Verifiable();
-            var target = new AfterEntryFluentBuilderApi<StubStateModel>(Builder);
-            var result = target.BeforeEntry(callback);
+            var result = target.TransitionsTo("t");
             Assert.NotNull(result);
             MockBuilder.VerifyAll();
         }
@@ -177,7 +157,7 @@ namespace Nate.Tests.Unit.Fluent
         public void StateFluentBuilderApi_AfterExit_NullCallback_ThrowsNullEx()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                (new AfterEntryFluentBuilderApi<StubStateModel>(Builder)).AfterExit(null));
+                new AfterEntryFluentBuilderApi<StubStateModel>(Builder).AfterExit(null));
         }
 
         [Fact]
@@ -191,5 +171,23 @@ namespace Nate.Tests.Unit.Fluent
             MockBuilder.VerifyAll();
         }
 
+
+        [Fact]
+        public void StateFluentBuilderApi_BeforeEntry_NullCallback_ThrowsNullEx()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                new AfterEntryFluentBuilderApi<StubStateModel>(Builder).BeforeEntry(null));
+        }
+
+        [Fact]
+        public void StateFluentBuilderApi_BeforeEntry_ValidParms_CallsBeforeEntryOnBuilder_ReturnsApiWithBuilder()
+        {
+            Action<TransitionEventArgs<StubStateModel>> callback = e => { };
+            MockBuilder.Setup(b => b.BeforeEntry(callback)).Verifiable();
+            var target = new AfterEntryFluentBuilderApi<StubStateModel>(Builder);
+            var result = target.BeforeEntry(callback);
+            Assert.NotNull(result);
+            MockBuilder.VerifyAll();
+        }
     }
 }

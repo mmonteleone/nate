@@ -5,14 +5,14 @@ using Nate.Core;
 
 namespace Nate.Fluent
 {
-    public class FluentStateMachineBuilder<TStateModel> : IStateModel, Nate.Fluent.IFluentStateMachineBuilder<TStateModel> where TStateModel : IStateModel
+    public class FluentStateMachineBuilder<TStateModel> : IStateModel, IFluentStateMachineBuilder<TStateModel>
+        where TStateModel : IStateModel
     {
         #region model manipulation
 
-
         /// <summary>
-        /// Triggers an event on the internal fluent state machine builder, also
-        /// traps trigger exceptions and exposes them as fluent syntax errors
+        ///     Triggers an event on the internal fluent state machine builder, also
+        ///     traps trigger exceptions and exposes them as fluent syntax errors
         /// </summary>
         /// <param name="trigger"></param>
         private void Trigger(Trigger trigger)
@@ -23,17 +23,17 @@ namespace Nate.Fluent
             }
             catch (InvalidTriggerException trigEx)
             {
-                var message = String.Format(
+                var message = string.Format(
                     "A syntax error occurred in the definition of a FluentStateMachine when attempting to define '{0}'.  The only allowed definitions at this point are: {1}",
                     trigger.Name,
-                    String.Join(", ", trigEx.AvailableTriggers.ToList().ConvertAll(t => t.Name).ToArray()));
+                    string.Join(", ", trigEx.AvailableTriggers.ToList().ConvertAll(t => t.Name).ToArray()));
                 throw new FluentSyntaxException(message, trigEx);
             }
         }
 
         public void State(string name, int? code)
         {
-            if (String.IsNullOrEmpty(name)) { throw new ArgumentNullException("name"); }
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("name");
 
             Trigger(stateTrigger);
             workingState = FindOrCreateState(name, code);
@@ -46,7 +46,7 @@ namespace Nate.Fluent
 
         public void TransitionsTo(string name)
         {
-            if (String.IsNullOrEmpty(name)) { throw new ArgumentNullException("name"); }
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("name");
 
             Trigger(transitionsToTrigger);
             workingTransitionTarget = FindOrCreateState(name, null);
@@ -54,7 +54,7 @@ namespace Nate.Fluent
 
         public void On(string name)
         {
-            if (String.IsNullOrEmpty(name)) { throw new ArgumentNullException("name"); }
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("name");
 
             workingTransitionTrigger = FindOrCreateTrigger(name);
             Trigger(onTrigger);
@@ -62,7 +62,7 @@ namespace Nate.Fluent
 
         public void When(Func<TStateModel, bool> guard)
         {
-            if (guard == null) { throw new ArgumentNullException("guard"); }
+            if (guard == null) throw new ArgumentNullException("guard");
 
             workingTransitionGuard = guard;
             Trigger(whenTrigger);
@@ -70,23 +70,23 @@ namespace Nate.Fluent
 
         public void BeforeEntry(Action<TransitionEventArgs<TStateModel>> callback)
         {
-            if (callback == null) { throw new ArgumentNullException("callback"); }
+            if (callback == null) throw new ArgumentNullException("callback");
 
-            this.workingBeforeEntry = callback;
+            workingBeforeEntry = callback;
             Trigger(beforeEntryTrigger);
         }
-        
+
         public void AfterEntry(Action<TransitionEventArgs<TStateModel>> callback)
         {
-            if (callback == null) { throw new ArgumentNullException("callback"); }
+            if (callback == null) throw new ArgumentNullException("callback");
 
-            this.workingAfterEntry = callback;
+            workingAfterEntry = callback;
             Trigger(afterEntryTrigger);
         }
 
         public void BeforeExit(Action<TransitionEventArgs<TStateModel>> callback)
         {
-            if (callback == null) { throw new ArgumentNullException("callback"); }
+            if (callback == null) throw new ArgumentNullException("callback");
 
             workingBeforeExit = callback;
             Trigger(beforeExitTrigger);
@@ -94,15 +94,15 @@ namespace Nate.Fluent
 
         public void AfterExit(Action<TransitionEventArgs<TStateModel>> callback)
         {
-            if (callback == null) { throw new ArgumentNullException("callback"); }
+            if (callback == null) throw new ArgumentNullException("callback");
 
-            this.workingAfterExit = callback;
+            workingAfterExit = callback;
             Trigger(afterExitTrigger);
         }
 
         public void BeforeTransition(Action<TransitionEventArgs<TStateModel>> callback)
         {
-            if (callback == null) { throw new ArgumentNullException("callback"); }
+            if (callback == null) throw new ArgumentNullException("callback");
 
             workingGlobalTransitionings.Add(callback);
             Trigger(BeforeTransitionTrigger);
@@ -110,7 +110,7 @@ namespace Nate.Fluent
 
         public void AfterTransition(Action<TransitionEventArgs<TStateModel>> callback)
         {
-            if (callback == null) { throw new ArgumentNullException("callback"); }
+            if (callback == null) throw new ArgumentNullException("callback");
 
             workingGlobalTransitioneds.Add(callback);
             Trigger(AfterTranasitionTrigger);
@@ -118,7 +118,7 @@ namespace Nate.Fluent
 
         public void GloballyTransitionsTo(string state)
         {
-            if (String.IsNullOrEmpty(state)) { throw new ArgumentNullException("state"); }
+            if (string.IsNullOrEmpty(state)) throw new ArgumentNullException("state");
 
             Trigger(globallyTransitionsToTrigger);
             workingTransitionTarget = FindOrCreateState(state, null);
@@ -127,9 +127,8 @@ namespace Nate.Fluent
         public IFluentStateMachine<TStateModel> Compile(StateMachineConfiguration configuration)
         {
             if (CurrentState == initial)
-            {
-                throw new FluentSyntaxException("Cannot compile an empty state machine.  No statements have been made to define this state machine");
-            }
+                throw new FluentSyntaxException(
+                    "Cannot compile an empty state machine.  No statements have been made to define this state machine");
             Trigger(compileTrigger);
             var stateMachine = new StateMachine<TStateModel>(configuration);
             return new FluentStateMachine<TStateModel>(
@@ -146,7 +145,6 @@ namespace Nate.Fluent
             return Compile(new StateMachineConfiguration());
         }
 
-
         #endregion
 
         #region implementation
@@ -156,8 +154,8 @@ namespace Nate.Fluent
         // holder for all constructed states in the state model
         private static readonly object statesLock = new object();
         private static readonly object triggersLock = new object();
-        private Dictionary<string, State<TStateModel>> states = new Dictionary<string, State<TStateModel>>();
-        private Dictionary<string, Trigger> triggers = new Dictionary<string, Trigger>();
+        private readonly Dictionary<string, State<TStateModel>> states = new Dictionary<string, State<TStateModel>>();
+        private readonly Dictionary<string, Trigger> triggers = new Dictionary<string, Trigger>();
 
         // working placeholders for items as the model is built
         private State<TStateModel> workingInitialState;
@@ -169,9 +167,14 @@ namespace Nate.Fluent
         private Action<TransitionEventArgs<TStateModel>> workingAfterEntry;
         private Action<TransitionEventArgs<TStateModel>> workingBeforeExit;
         private Action<TransitionEventArgs<TStateModel>> workingAfterExit;
-        private List<Action<TransitionEventArgs<TStateModel>>> workingGlobalTransitionings = new List<Action<TransitionEventArgs<TStateModel>>>();
-        private List<Action<TransitionEventArgs<TStateModel>>> workingGlobalTransitioneds = new List<Action<TransitionEventArgs<TStateModel>>>();
-        private List<Transition<TStateModel>> workingGlobalTransitions = new List<Transition<TStateModel>>();
+
+        private readonly List<Action<TransitionEventArgs<TStateModel>>> workingGlobalTransitionings =
+            new List<Action<TransitionEventArgs<TStateModel>>>();
+
+        private readonly List<Action<TransitionEventArgs<TStateModel>>> workingGlobalTransitioneds =
+            new List<Action<TransitionEventArgs<TStateModel>>>();
+
+        private readonly List<Transition<TStateModel>> workingGlobalTransitions = new List<Transition<TStateModel>>();
 
         private State<TStateModel> FindOrCreateState(string stateName, int? code)
         {
@@ -183,6 +186,7 @@ namespace Nate.Fluent
                     state = new State<TStateModel>(stateName, code);
                     states[stateName] = state;
                 }
+
                 if (code.HasValue && !state.Code.HasValue)
                     state.Code = code;
                 return state;
@@ -199,6 +203,7 @@ namespace Nate.Fluent
                     trigger = new Trigger(triggerName);
                     triggers[triggerName] = trigger;
                 }
+
                 return trigger;
             }
         }
@@ -211,26 +216,22 @@ namespace Nate.Fluent
                 if (workingState != null)
                 {
                     if (workingTransitionGuard != null)
-                    {
-                        workingState.AddTransition(workingTransitionTrigger, workingTransitionTarget, workingTransitionGuard);
-                    }
+                        workingState.AddTransition(workingTransitionTrigger, workingTransitionTarget,
+                            workingTransitionGuard);
                     else
-                    {
                         workingState.AddTransition(workingTransitionTrigger, workingTransitionTarget);
-                    }
                 }
                 // should be a global transition
                 else
                 {
                     if (workingTransitionGuard != null)
-                    {
-                        workingGlobalTransitions.Add(new Transition<TStateModel>(workingTransitionTrigger, null, workingTransitionTarget, workingTransitionGuard));
-                    }
+                        workingGlobalTransitions.Add(new Transition<TStateModel>(workingTransitionTrigger, null,
+                            workingTransitionTarget, workingTransitionGuard));
                     else
-                    {
-                        workingGlobalTransitions.Add(new Transition<TStateModel>(workingTransitionTrigger, null, workingTransitionTarget));
-                    }
+                        workingGlobalTransitions.Add(new Transition<TStateModel>(workingTransitionTrigger, null,
+                            workingTransitionTarget));
                 }
+
                 workingTransitionTrigger = null;
                 workingTransitionTarget = null;
                 workingTransitionGuard = null;
@@ -248,47 +249,73 @@ namespace Nate.Fluent
 
         public FluentStateMachineBuilder()
         {
-            this.CurrentState = initial;
+            CurrentState = initial;
         }
 
         // api states
-        private static State<FluentStateMachineBuilder<TStateModel>> initial = new State<FluentStateMachineBuilder<TStateModel>>("Initial", 0);
-        private static State<FluentStateMachineBuilder<TStateModel>> definingState = new State<FluentStateMachineBuilder<TStateModel>>("DefiningState", 1);
-        private static State<FluentStateMachineBuilder<TStateModel>> definingStateInitiation = new State<FluentStateMachineBuilder<TStateModel>>("DefiningStateInitiation", 2);
-        private static State<FluentStateMachineBuilder<TStateModel>> definingTransition = new State<FluentStateMachineBuilder<TStateModel>>("DefiningTransition", 3);
-        private static State<FluentStateMachineBuilder<TStateModel>> definingTransitionTrigger = new State<FluentStateMachineBuilder<TStateModel>>("DefiningTransitionTrigger", 4);
-        private static State<FluentStateMachineBuilder<TStateModel>> definingTransitionGuard = new State<FluentStateMachineBuilder<TStateModel>>("DefiningTransitionGuard", 5);
-        private static State<FluentStateMachineBuilder<TStateModel>> definingBeforeEntry = new State<FluentStateMachineBuilder<TStateModel>>("DefiningBeforeEntry", 6);
-        private static State<FluentStateMachineBuilder<TStateModel>> definingAfterEntry = new State<FluentStateMachineBuilder<TStateModel>>("DefiningAfterEntry", 7);
-        private static State<FluentStateMachineBuilder<TStateModel>> definingBeforeExit = new State<FluentStateMachineBuilder<TStateModel>>("DefiningBeforeExit", 8);
-        private static State<FluentStateMachineBuilder<TStateModel>> definingAfterExit = new State<FluentStateMachineBuilder<TStateModel>>("DefiningAfterExit", 9);
-        private static State<FluentStateMachineBuilder<TStateModel>> compiling = new State<FluentStateMachineBuilder<TStateModel>>("Compiling", 10);
-        private static State<FluentStateMachineBuilder<TStateModel>> definingGlobalBeforeTransition = new State<FluentStateMachineBuilder<TStateModel>>("DefiningGlobalTransitioning", 11);
-        private static State<FluentStateMachineBuilder<TStateModel>> definingGlobalAfterTranasition = new State<FluentStateMachineBuilder<TStateModel>>("DefiningGlobalTransitioned", 12);
-        private static State<FluentStateMachineBuilder<TStateModel>> definingGlobalTransition = new State<FluentStateMachineBuilder<TStateModel>>("DefiningGloballyTransition", 13);
+        private static readonly State<FluentStateMachineBuilder<TStateModel>> initial =
+            new State<FluentStateMachineBuilder<TStateModel>>("Initial", 0);
+
+        private static readonly State<FluentStateMachineBuilder<TStateModel>> definingState =
+            new State<FluentStateMachineBuilder<TStateModel>>("DefiningState", 1);
+
+        private static readonly State<FluentStateMachineBuilder<TStateModel>> definingStateInitiation =
+            new State<FluentStateMachineBuilder<TStateModel>>("DefiningStateInitiation", 2);
+
+        private static readonly State<FluentStateMachineBuilder<TStateModel>> definingTransition =
+            new State<FluentStateMachineBuilder<TStateModel>>("DefiningTransition", 3);
+
+        private static readonly State<FluentStateMachineBuilder<TStateModel>> definingTransitionTrigger =
+            new State<FluentStateMachineBuilder<TStateModel>>("DefiningTransitionTrigger", 4);
+
+        private static readonly State<FluentStateMachineBuilder<TStateModel>> definingTransitionGuard =
+            new State<FluentStateMachineBuilder<TStateModel>>("DefiningTransitionGuard", 5);
+
+        private static readonly State<FluentStateMachineBuilder<TStateModel>> definingBeforeEntry =
+            new State<FluentStateMachineBuilder<TStateModel>>("DefiningBeforeEntry", 6);
+
+        private static readonly State<FluentStateMachineBuilder<TStateModel>> definingAfterEntry =
+            new State<FluentStateMachineBuilder<TStateModel>>("DefiningAfterEntry", 7);
+
+        private static readonly State<FluentStateMachineBuilder<TStateModel>> definingBeforeExit =
+            new State<FluentStateMachineBuilder<TStateModel>>("DefiningBeforeExit", 8);
+
+        private static readonly State<FluentStateMachineBuilder<TStateModel>> definingAfterExit =
+            new State<FluentStateMachineBuilder<TStateModel>>("DefiningAfterExit", 9);
+
+        private static readonly State<FluentStateMachineBuilder<TStateModel>> compiling =
+            new State<FluentStateMachineBuilder<TStateModel>>("Compiling", 10);
+
+        private static readonly State<FluentStateMachineBuilder<TStateModel>> definingGlobalBeforeTransition =
+            new State<FluentStateMachineBuilder<TStateModel>>("DefiningGlobalTransitioning", 11);
+
+        private static readonly State<FluentStateMachineBuilder<TStateModel>> definingGlobalAfterTranasition =
+            new State<FluentStateMachineBuilder<TStateModel>>("DefiningGlobalTransitioned", 12);
+
+        private static readonly State<FluentStateMachineBuilder<TStateModel>> definingGlobalTransition =
+            new State<FluentStateMachineBuilder<TStateModel>>("DefiningGloballyTransition", 13);
 
         // api triggers
-        private static Trigger stateTrigger = new Trigger("State");
-        private static Trigger initiatesTrigger = new Trigger("Initiates");
-        private static Trigger transitionsToTrigger = new Trigger("TransitionsTo");
-        private static Trigger onTrigger = new Trigger("On");
-        private static Trigger whenTrigger = new Trigger("When");
-        private static Trigger beforeEntryTrigger = new Trigger("BeforeEntry");
-        private static Trigger afterEntryTrigger = new Trigger("AfterEntry");
-        private static Trigger beforeExitTrigger = new Trigger("BeforeExit");
-        private static Trigger afterExitTrigger = new Trigger("AfterExit");
-        private static Trigger compileTrigger = new Trigger("Compile");
-        private static Trigger BeforeTransitionTrigger = new Trigger("BeforeTransition");
-        private static Trigger AfterTranasitionTrigger = new Trigger("AfterTranasition");
-        private static Trigger globallyTransitionsToTrigger = new Trigger("GloballyTransitionsTo");
+        private static readonly Trigger stateTrigger = new Trigger("State");
+        private static readonly Trigger initiatesTrigger = new Trigger("Initiates");
+        private static readonly Trigger transitionsToTrigger = new Trigger("TransitionsTo");
+        private static readonly Trigger onTrigger = new Trigger("On");
+        private static readonly Trigger whenTrigger = new Trigger("When");
+        private static readonly Trigger beforeEntryTrigger = new Trigger("BeforeEntry");
+        private static readonly Trigger afterEntryTrigger = new Trigger("AfterEntry");
+        private static readonly Trigger beforeExitTrigger = new Trigger("BeforeExit");
+        private static readonly Trigger afterExitTrigger = new Trigger("AfterExit");
+        private static readonly Trigger compileTrigger = new Trigger("Compile");
+        private static readonly Trigger BeforeTransitionTrigger = new Trigger("BeforeTransition");
+        private static readonly Trigger AfterTranasitionTrigger = new Trigger("AfterTranasition");
+        private static readonly Trigger globallyTransitionsToTrigger = new Trigger("GloballyTransitionsTo");
 
         // istatefulmodel stuff
         public object CurrentState { get; set; }
-        private static IStateMachine<FluentStateMachineBuilder<TStateModel>> builderStateMachine;
+        private static readonly IStateMachine<FluentStateMachineBuilder<TStateModel>> builderStateMachine;
 
         static FluentStateMachineBuilder()
         {
-
             builderStateMachine = new StateMachine<FluentStateMachineBuilder<TStateModel>>();
 
             // wire transitions
@@ -409,29 +436,14 @@ namespace Nate.Fluent
                 e.Model.FinalizeState();
             };
 
-            definingStateInitiation.Entered += (s, e) =>
-            {
-                e.Model.FinalizeTransition();
-            };
-            definingStateInitiation.Exiting += (s, e) =>
-            {
-                e.Model.workingInitialState = e.Model.workingState;
-            };
+            definingStateInitiation.Entered += (s, e) => { e.Model.FinalizeTransition(); };
+            definingStateInitiation.Exiting += (s, e) => { e.Model.workingInitialState = e.Model.workingState; };
 
-            definingTransition.Entered += (s, e) =>
-            {
-                e.Model.FinalizeTransition();
-            };
+            definingTransition.Entered += (s, e) => { e.Model.FinalizeTransition(); };
 
-            definingTransitionGuard.Exiting += (s, e) =>
-            {
-                e.Model.FinalizeTransition();
-            };
+            definingTransitionGuard.Exiting += (s, e) => { e.Model.FinalizeTransition(); };
 
-            definingBeforeEntry.Entered += (s, e) =>
-            {
-                e.Model.FinalizeTransition();
-            };
+            definingBeforeEntry.Entered += (s, e) => { e.Model.FinalizeTransition(); };
             definingBeforeEntry.Exited += (s, e) =>
             {
                 // grab an immediate reference to working entry.
@@ -440,10 +452,7 @@ namespace Nate.Fluent
                 e.Model.workingState.Entering += (es, ee) => entry(ee);
             };
 
-            definingAfterEntry.Entered += (s, e) =>
-            {
-                e.Model.FinalizeTransition();
-            };
+            definingAfterEntry.Entered += (s, e) => { e.Model.FinalizeTransition(); };
 
             definingAfterEntry.Exiting += (s, e) =>
             {
@@ -453,10 +462,7 @@ namespace Nate.Fluent
                 e.Model.workingState.Entered += (es, ee) => entry(ee);
             };
 
-            definingBeforeExit.Entered += (s, e) =>
-            {
-                e.Model.FinalizeTransition();
-            };
+            definingBeforeExit.Entered += (s, e) => { e.Model.FinalizeTransition(); };
             definingBeforeExit.Exiting += (s, e) =>
             {
                 // grab an immediate reference to working exit.
@@ -465,10 +471,7 @@ namespace Nate.Fluent
                 e.Model.workingState.Exiting += (es, ee) => exit(ee);
             };
 
-            definingAfterExit.Entered += (s, e) =>
-            {
-                e.Model.FinalizeTransition();
-            };
+            definingAfterExit.Entered += (s, e) => { e.Model.FinalizeTransition(); };
             definingAfterExit.Exiting += (s, e) =>
             {
                 // grab an immediate reference to working exit.

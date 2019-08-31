@@ -1,4 +1,5 @@
 ﻿#region license
+
 /* Nate
  * http://github.com/mmonteleone/nate
  * 
@@ -21,21 +22,23 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  * DEALINGS IN THE SOFTWARE.
- */ 
+ */
+
 #endregion
+
 using System;
 using System.Collections.Generic;
 
 namespace Nate.Core
 {
     /// <summary>
-    /// Declares an interface for a state machine
+    ///     Declares an interface for a state machine
     /// </summary>
     /// <typeparam name="TStateModel"></typeparam>
     public interface IStateMachine<TStateModel> where TStateModel : IStateModel
     {
-        void Trigger(Trigger trigger, TStateModel model);
         StateMachineConfiguration Configuration { get; }
+        void Trigger(Trigger trigger, TStateModel model);
 
         IEnumerable<State<TStateModel>> AvailableStates(TStateModel model);
         IEnumerable<Trigger> AvailableTriggers(TStateModel model);

@@ -1,4 +1,5 @@
 ﻿#region license
+
 /* Nate
  * http://github.com/mmonteleone/nate
  * 
@@ -21,22 +22,22 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  * DEALINGS IN THE SOFTWARE.
- */ 
+ */
+
 #endregion
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Nate.Core
 {
     /// <summary>
-    /// Extensions to StateModels for simpler API usage
+    ///     Extensions to StateModels for simpler API usage
     /// </summary>
     public static class IStateModelExtensions
     {
         /// <summary>
-        /// Returns the available states from the current one on a model, given a state machine
+        ///     Returns the available states from the current one on a model, given a state machine
         /// </summary>
         /// <typeparam name="TStateModel"></typeparam>
         /// <param name="model">model containing current state</param>
@@ -45,14 +46,14 @@ namespace Nate.Core
         public static IEnumerable<State<TStateModel>> AvailableStates<TStateModel>(this IStateModel model,
             IStateMachine<TStateModel> stateMachine) where TStateModel : IStateModel
         {
-            if (model == null) { throw new ArgumentNullException("model"); }
-            if (stateMachine == null) { throw new ArgumentNullException("stateMachine"); }
+            if (model == null) throw new ArgumentNullException("model");
+            if (stateMachine == null) throw new ArgumentNullException("stateMachine");
 
-            return stateMachine.AvailableStates((TStateModel)model);
+            return stateMachine.AvailableStates((TStateModel) model);
         }
 
         /// <summary>
-        /// Returns the available triggers available given the current state of a model, and a state machine
+        ///     Returns the available triggers available given the current state of a model, and a state machine
         /// </summary>
         /// <typeparam name="TStateModel"></typeparam>
         /// <param name="model">model containing current state</param>
@@ -61,14 +62,14 @@ namespace Nate.Core
         public static IEnumerable<Trigger> AvailableTriggers<TStateModel>(this IStateModel model,
             IStateMachine<TStateModel> stateMachine) where TStateModel : IStateModel
         {
-            if (model == null) { throw new ArgumentNullException("model"); }
-            if (stateMachine == null) { throw new ArgumentNullException("stateMachine"); }
+            if (model == null) throw new ArgumentNullException("model");
+            if (stateMachine == null) throw new ArgumentNullException("stateMachine");
 
-            return stateMachine.AvailableTriggers((TStateModel)model);
+            return stateMachine.AvailableTriggers((TStateModel) model);
         }
 
         /// <summary>
-        /// Triggers a transition trigger on a model given triggername and machine
+        ///     Triggers a transition trigger on a model given triggername and machine
         /// </summary>
         /// <typeparam name="TStateModel"></typeparam>
         /// <param name="model">model containing current state</param>
@@ -78,15 +79,15 @@ namespace Nate.Core
             string triggerName,
             IStateMachine<TStateModel> stateMachine) where TStateModel : IStateModel
         {
-            if (model == null) { throw new ArgumentNullException("model"); }
-            if (String.IsNullOrEmpty(triggerName)) { throw new ArgumentNullException("triggerName"); }
-            if (stateMachine == null) { throw new ArgumentNullException("stateMachine"); }
-         
-            stateMachine.Trigger(new Trigger(triggerName), (TStateModel)model);
+            if (model == null) throw new ArgumentNullException("model");
+            if (string.IsNullOrEmpty(triggerName)) throw new ArgumentNullException("triggerName");
+            if (stateMachine == null) throw new ArgumentNullException("stateMachine");
+
+            stateMachine.Trigger(new Trigger(triggerName), (TStateModel) model);
         }
 
         /// <summary>
-        /// Triggers a transition trigger on a model given trigger instance and machine
+        ///     Triggers a transition trigger on a model given trigger instance and machine
         /// </summary>
         /// <typeparam name="TStateModel"></typeparam>
         /// <param name="model">model containing current state</param>
@@ -96,11 +97,11 @@ namespace Nate.Core
             Trigger trigger,
             IStateMachine<TStateModel> stateMachine) where TStateModel : IStateModel
         {
-            if (model == null) { throw new ArgumentNullException("model"); }
-            if (trigger == null) { throw new ArgumentNullException("trigger"); }
-            if (stateMachine == null) { throw new ArgumentNullException("stateMachine"); }
+            if (model == null) throw new ArgumentNullException("model");
+            if (trigger == null) throw new ArgumentNullException("trigger");
+            if (stateMachine == null) throw new ArgumentNullException("stateMachine");
 
-            stateMachine.Trigger(trigger, (TStateModel)model);
+            stateMachine.Trigger(trigger, (TStateModel) model);
         }
     }
 }

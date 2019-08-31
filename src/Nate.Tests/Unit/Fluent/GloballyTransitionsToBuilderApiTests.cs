@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Nate.Core;
-using Xunit;
-using Moq;
 using Nate.Fluent;
+using Xunit;
 
 namespace Nate.Tests.Unit.Fluent
 {
@@ -15,7 +10,7 @@ namespace Nate.Tests.Unit.Fluent
         public void GloballyTransitionsToBuilderApi_On_NullName_ThrowsNullEx()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                (new GloballyTransitionsToBuilderApi<StubStateModel>(Builder)).On(null));
+                new GloballyTransitionsToBuilderApi<StubStateModel>(Builder).On(null));
         }
 
         [Fact]
@@ -27,6 +22,5 @@ namespace Nate.Tests.Unit.Fluent
             Assert.NotNull(result);
             MockBuilder.VerifyAll();
         }
-
     }
 }

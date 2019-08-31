@@ -1,4 +1,5 @@
 ﻿#region license
+
 /* Nate
  * http://github.com/mmonteleone/nate
  * 
@@ -21,30 +22,32 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  * DEALINGS IN THE SOFTWARE.
- */ 
+ */
+
 #endregion
+
 using System;
 
 namespace Nate.Core
 {
     public class TransitionEventArgs<TStateModel> : EventArgs where TStateModel : IStateModel
     {
-        public TStateModel Model { get; private set; }
-        public State<TStateModel> From { get; private set; }
-        public State<TStateModel> To { get; private set; }
-        public Trigger Trigger { get; private set; }
-
         public TransitionEventArgs(TStateModel model, State<TStateModel> from, State<TStateModel> to, Trigger trigger)
         {
-            if (model == null) { throw new ArgumentNullException("model"); }
-            if (from == null) { throw new ArgumentNullException("from"); }
-            if (to == null) { throw new ArgumentNullException("to"); }
-            if (trigger == null) { throw new ArgumentNullException("trigger"); }
+            if (model == null) throw new ArgumentNullException("model");
+            if (from == null) throw new ArgumentNullException("from");
+            if (to == null) throw new ArgumentNullException("to");
+            if (trigger == null) throw new ArgumentNullException("trigger");
 
             Model = model;
             From = from;
             To = to;
             Trigger = trigger;
         }
+
+        public TStateModel Model { get; }
+        public State<TStateModel> From { get; }
+        public State<TStateModel> To { get; }
+        public Trigger Trigger { get; }
     }
 }

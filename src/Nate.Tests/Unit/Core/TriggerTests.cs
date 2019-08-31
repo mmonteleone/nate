@@ -1,4 +1,5 @@
 ﻿#region license
+
 /* Nate
  * http://github.com/mmonteleone/nate
  * 
@@ -21,41 +22,24 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  * DEALINGS IN THE SOFTWARE.
- */ 
+ */
+
 #endregion
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Xunit;
-using Moq;
 using Nate.Core;
+using Xunit;
 
 namespace Nate.Tests.Unit.Core
 {
     public class TriggerTests
     {
         [Fact]
-        public void Trigger_NullName_ThrowsNullEx()
+        public void Trigger_Equals_TwoInstances_SameName_ReturnTrue()
         {
-            Assert.Throws<ArgumentNullException>(() =>
-                new Trigger(null));
-        }
-
-        [Fact]
-        public void Trigger_Name_VerifyAssign()
-        {
-            var name = "trigger";
-            var trigger = new Trigger(name);
-            Assert.Equal(name, trigger.Name);
-        }
-
-        [Fact]
-        public void Trigger_ToString_VerifySameAsName()
-        {
-            var name = "trigger";
-            var trigger = new Trigger(name);
-            Assert.Equal(name, trigger.ToString());
+            var trigger1 = new Trigger("trigger");
+            var trigger2 = new Trigger("trigger");
+            Assert.True(trigger1.Equals(trigger2));
         }
 
         [Fact]
@@ -67,11 +51,26 @@ namespace Nate.Tests.Unit.Core
         }
 
         [Fact]
-        public void Trigger_Equals_TwoInstances_SameName_ReturnTrue()
+        public void Trigger_Name_VerifyAssign()
         {
-            var trigger1 = new Trigger("trigger");
-            var trigger2 = new Trigger("trigger");
-            Assert.True(trigger1.Equals(trigger2));
+            var name = "trigger";
+            var trigger = new Trigger(name);
+            Assert.Equal(name, trigger.Name);
+        }
+
+        [Fact]
+        public void Trigger_NullName_ThrowsNullEx()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                new Trigger(null));
+        }
+
+        [Fact]
+        public void Trigger_ToString_VerifySameAsName()
+        {
+            var name = "trigger";
+            var trigger = new Trigger(name);
+            Assert.Equal(name, trigger.ToString());
         }
     }
 }
