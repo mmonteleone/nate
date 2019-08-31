@@ -1,4 +1,5 @@
 ﻿#region license
+
 /* Nate
  * http://github.com/mmonteleone/nate
  * 
@@ -21,24 +22,17 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  * DEALINGS IN THE SOFTWARE.
- */ 
+ */
+
 #endregion
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Nate.Core
 {
     /// <summary>
-    /// Holds configuration for a state machine
+    ///     Holds configuration for a state machine
     /// </summary>
     public class StateMachineConfiguration
     {
-        public bool RaiseExceptionOnTriggerMatchingNoTransition { get; set; }
-        public bool RaiseExceptionOnTriggerMatchingNoPassingTransition { get; set; }
-        public bool RaiseExceptionBeforeTransitionToSameState { get; set; }
-
         public StateMachineConfiguration()
         {
             // default options
@@ -46,5 +40,9 @@ namespace Nate.Core
             RaiseExceptionOnTriggerMatchingNoPassingTransition = false;
             RaiseExceptionBeforeTransitionToSameState = false;
         }
+
+        public bool RaiseExceptionOnTriggerMatchingNoTransition { get; set; }
+        public bool RaiseExceptionOnTriggerMatchingNoPassingTransition { get; set; }
+        public bool RaiseExceptionBeforeTransitionToSameState { get; set; }
     }
 }
