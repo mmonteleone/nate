@@ -1,9 +1,18 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.779
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nate", "Nate\Nate.csproj", "{62FCBCDE-7A8E-4581-9934-998D118119A0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nate.Tests", "Nate.Tests\Nate.Tests.csproj", "{B950F583-D3A3-4093-BD29-6467E6CB2F20}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E3254F94-FCBF-47CD-A20E-A279E4F9674F}"
+	ProjectSection(SolutionItems) = preProject
+		build-nuget-packages.cmd = build-nuget-packages.cmd
+		build-nuget-packages.ps1 = build-nuget-packages.ps1
+		..\README.markdown = ..\README.markdown
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,8 +25,8 @@ Global
 		{62FCBCDE-7A8E-4581-9934-998D118119A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62FCBCDE-7A8E-4581-9934-998D118119A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62FCBCDE-7A8E-4581-9934-998D118119A0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{62FCBCDE-7A8E-4581-9934-998D118119A0}.Test|Any CPU.ActiveCfg = Test|Any CPU
-		{62FCBCDE-7A8E-4581-9934-998D118119A0}.Test|Any CPU.Build.0 = Test|Any CPU
+		{62FCBCDE-7A8E-4581-9934-998D118119A0}.Test|Any CPU.ActiveCfg = Release|Any CPU
+		{62FCBCDE-7A8E-4581-9934-998D118119A0}.Test|Any CPU.Build.0 = Release|Any CPU
 		{B950F583-D3A3-4093-BD29-6467E6CB2F20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B950F583-D3A3-4093-BD29-6467E6CB2F20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B950F583-D3A3-4093-BD29-6467E6CB2F20}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,5 +36,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DEC42A76-369B-4E4C-BFE0-240403D054AC}
 	EndGlobalSection
 EndGlobal
