@@ -50,13 +50,6 @@ namespace Nate.Tests.Unit.Core.Extensions
         }
 
         [Fact]
-        public void IStateMachineExtensions_NullMachine_ThrowsNullEx()
-        {
-            Assert.Throws<ArgumentNullException>(() =>
-                null.Trigger("trigger", new StubStateModel()));
-        }
-
-        [Fact]
         public void IStateMachineExtensions_NullModel_ThrowsNullEx()
         {
             Assert.Throws<ArgumentNullException>(() =>

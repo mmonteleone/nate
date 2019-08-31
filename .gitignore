@@ -16,3 +16,4 @@ aspnet_client
 *.user
 releases
 .vs
+packages
