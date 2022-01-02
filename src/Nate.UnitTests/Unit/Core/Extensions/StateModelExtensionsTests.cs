@@ -35,10 +35,10 @@ using Xunit;
 
 namespace Nate.Tests.Unit.Core.Extensions
 {
-    public class IStateModelExtensionsTests
+    public class StateModelExtensionsTests
     {
         [Fact]
-        public void IStateModelExtensions_AvailableStates_NullMachine_ThrowsNullEx()
+        public void StateModelExtensions_AvailableStates_NullMachine_ThrowsNullEx()
         {
             var mockModel = new StubStateModel();
             Assert.Throws<ArgumentNullException>(() =>
@@ -46,7 +46,7 @@ namespace Nate.Tests.Unit.Core.Extensions
         }
 
         [Fact]
-        public void IStateModelExtensions_AvailableStates_NullModel_ThrowsNullEx()
+        public void StateModelExtensions_AvailableStates_NullModel_ThrowsNullEx()
         {
             var mockMachine = new Mock<IStateMachine<StubStateModel>>();
             Assert.Throws<ArgumentNullException>(() =>
@@ -54,7 +54,7 @@ namespace Nate.Tests.Unit.Core.Extensions
         }
 
         [Fact]
-        public void IStateModelExtensions_AvailableStates_ValidParms_CallsReturnsMachineAvailable()
+        public void StateModelExtensions_AvailableStates_ValidParms_CallsReturnsMachineAvailable()
         {
             var mockModel = new StubStateModel();
             var mockMachine = new Mock<IStateMachine<StubStateModel>>();
@@ -68,7 +68,7 @@ namespace Nate.Tests.Unit.Core.Extensions
         }
 
         [Fact]
-        public void IStateModelExtensions_AvailableTriggers_NullMachine_ThrowsNullEx()
+        public void StateModelExtensions_AvailableTriggers_NullMachine_ThrowsNullEx()
         {
             var mockModel = new StubStateModel();
 
@@ -77,7 +77,7 @@ namespace Nate.Tests.Unit.Core.Extensions
         }
 
         [Fact]
-        public void IStateModelExtensions_AvailableTriggers_NullModel_ThrowsNullEx()
+        public void StateModelExtensions_AvailableTriggers_NullModel_ThrowsNullEx()
         {
             var mockMachine = new Mock<IStateMachine<StubStateModel>>();
 
@@ -86,7 +86,7 @@ namespace Nate.Tests.Unit.Core.Extensions
         }
 
         [Fact]
-        public void IStateModelExtensions_AvailableTriggers_ValidParms_CallsReturnsTriggersAvailable()
+        public void StateModelExtensions_AvailableTriggers_ValidParms_CallsReturnsTriggersAvailable()
         {
             var mockModel = new StubStateModel();
             var mockTriggers = new Mock<IEnumerable<Trigger>>().Object;
@@ -100,7 +100,7 @@ namespace Nate.Tests.Unit.Core.Extensions
         }
 
         [Fact]
-        public void IStateModelExtensions_Trigger_NullMachine_ObjTrigger_ThrowsNullEx()
+        public void StateModelExtensions_Trigger_NullMachine_ObjTrigger_ThrowsNullEx()
         {
             var mockModel = new StubStateModel();
             var trigger = new Trigger("trigger");
@@ -109,7 +109,7 @@ namespace Nate.Tests.Unit.Core.Extensions
         }
 
         [Fact]
-        public void IStateModelExtensions_Trigger_NullMachine_StringTrigger_ThrowsNullEx()
+        public void StateModelExtensions_Trigger_NullMachine_StringTrigger_ThrowsNullEx()
         {
             var mockModel = new StubStateModel();
 
@@ -118,7 +118,7 @@ namespace Nate.Tests.Unit.Core.Extensions
         }
 
         [Fact]
-        public void IStateModelExtensions_Trigger_NullModel_ObjTrigger_ThrowsNullEx()
+        public void StateModelExtensions_Trigger_NullModel_ObjTrigger_ThrowsNullEx()
         {
             var mockMachine = new Mock<IStateMachine<StubStateModel>>();
             var trigger = new Trigger("trigger");
@@ -128,7 +128,7 @@ namespace Nate.Tests.Unit.Core.Extensions
         }
 
         [Fact]
-        public void IStateModelExtensions_Trigger_NullModel_StringTrigger_ThrowsNullEx()
+        public void StateModelExtensions_Trigger_NullModel_StringTrigger_ThrowsNullEx()
         {
             var mockMachine = new Mock<IStateMachine<StubStateModel>>();
 
@@ -137,7 +137,7 @@ namespace Nate.Tests.Unit.Core.Extensions
         }
 
         [Fact]
-        public void IStateModelExtensions_Trigger_NullTrigger_ThrowsNullEx()
+        public void StateModelExtensions_Trigger_NullTrigger_ThrowsNullEx()
         {
             var mockModel = new StubStateModel();
             var mockMachine = new Mock<IStateMachine<StubStateModel>>();
@@ -147,7 +147,7 @@ namespace Nate.Tests.Unit.Core.Extensions
         }
 
         [Fact]
-        public void IStateModelExtensions_Trigger_NullTriggerName_ThrowsNullEx()
+        public void StateModelExtensions_Trigger_NullTriggerName_ThrowsNullEx()
         {
             var mockModel = new StubStateModel();
             var mockMachine = new Mock<IStateMachine<StubStateModel>>();
@@ -157,7 +157,7 @@ namespace Nate.Tests.Unit.Core.Extensions
         }
 
         [Fact]
-        public void IStateModelExtensions_Trigger_ValidParms_ObjTrigger_CallsTriggerOnMachine()
+        public void StateModelExtensions_Trigger_ValidParms_ObjTrigger_CallsTriggerOnMachine()
         {
             var mockModel = new StubStateModel();
             var trigger = new Trigger("trigger");
@@ -168,7 +168,7 @@ namespace Nate.Tests.Unit.Core.Extensions
         }
 
         [Fact]
-        public void IStateModelExtensions_Trigger_ValidParms_StringTrigger_CallsTriggerOnMachine()
+        public void StateModelExtensions_Trigger_ValidParms_StringTrigger_CallsTriggerOnMachine()
         {
             var mockModel = new StubStateModel();
             var mockMachine = new Mock<IStateMachine<StubStateModel>>();

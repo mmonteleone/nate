@@ -30,14 +30,15 @@ using System;
 using Moq;
 using Nate.Core;
 using Nate.Core.Extensions;
+using Nate.Tests;
 using Xunit;
 
-namespace Nate.Tests.Unit.Core.Extensions
+namespace Nate.UnitTests.Unit.Core.Extensions
 {
-    public class IStateMachineExtensionsTests
+    public class StateMachineExtensionsTests
     {
         [Fact]
-        public void IStateMachineExtensinos_ValidParms_CallsTriggerOnMachineWithParms()
+        public void StateMachineExtensions_ValidParams_CallsTriggerOnMachineWithParms()
         {
             var mockMachine = new Mock<IStateMachine<StubStateModel>>();
             var mockModel = new StubStateModel();
@@ -51,14 +52,14 @@ namespace Nate.Tests.Unit.Core.Extensions
         }
 
         [Fact]
-        public void IStateMachineExtensions_NullModel_ThrowsNullEx()
+        public void StateMachineExtensions_NullModel_ThrowsNullEx()
         {
             Assert.Throws<ArgumentNullException>(() =>
                 new Mock<IStateMachine<StubStateModel>>().Object.Trigger("trigger", null));
         }
 
         [Fact]
-        public void IStateMachineExtensions_NullTriggerName_ThrowsNullEx()
+        public void StateMachineExtensions_NullTriggerName_ThrowsNullEx()
         {
             Assert.Throws<ArgumentNullException>(() =>
                 StateMachineExtensions.Trigger(new Mock<IStateMachine<StubStateModel>>().Object, null,
