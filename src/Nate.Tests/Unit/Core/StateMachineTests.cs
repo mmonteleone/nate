@@ -276,7 +276,7 @@ namespace Nate.Tests.Unit.Core
 
             var result = machine.GlobalTransitionsOn(new Trigger("t1"));
             Assert.NotNull(result);
-            Assert.Equal(1, result.Count());
+            Assert.Single( result);
             Assert.Same(transition1, result.FirstOrDefault());
         }
 
@@ -614,8 +614,8 @@ namespace Nate.Tests.Unit.Core
                     It.IsAny<StubStateModel>(),
                     It.IsAny<State<StubStateModel>>(),
                     It.IsAny<Trigger>()), Times.Never());
-            Assert.Equal(1, transitioningEventArgs.Count);
-            Assert.Equal(1, transitionedEventArgs.Count);
+            Assert.Single( transitioningEventArgs);
+            Assert.Single( transitionedEventArgs);
 
             Assert.Equal(state1, transitioningEventArgs[0].From);
             Assert.Equal(state2, transitioningEventArgs[0].To);
@@ -745,8 +745,8 @@ namespace Nate.Tests.Unit.Core
                     It.IsAny<StubStateModel>(),
                     It.IsAny<State<StubStateModel>>(),
                     It.IsAny<Trigger>()), Times.Never());
-            Assert.Equal(1, transitioningEventArgs.Count);
-            Assert.Equal(1, transitionedEventArgs.Count);
+            Assert.Single( transitioningEventArgs);
+            Assert.Single(transitionedEventArgs);
 
             Assert.Equal(state1, transitioningEventArgs[0].From);
             Assert.Equal(state2, transitioningEventArgs[0].To);

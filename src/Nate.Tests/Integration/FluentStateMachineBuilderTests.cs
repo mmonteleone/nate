@@ -34,7 +34,7 @@ namespace Nate.Tests.Integration
 
             machine.Trigger("t", model);
             Assert.Equal("s2", model.CurrentState.ToString());
-            Assert.Equal(1, loggedEvents.Count());
+            Assert.Single( loggedEvents);
             Assert.Equal("AfterEntry from s1 to s2 on t", loggedEvents[0]);
         }
 
@@ -82,7 +82,7 @@ namespace Nate.Tests.Integration
 
             machine.Trigger("t", model);
             Assert.Equal("s2", model.CurrentState.ToString());
-            Assert.Equal(1, loggedEvents.Count());
+            Assert.Single( loggedEvents);
             Assert.Equal("AfterExit from s1 to s2 on t", loggedEvents[0]);
         }
 
@@ -129,7 +129,7 @@ namespace Nate.Tests.Integration
 
             machine.Trigger("t", model);
             Assert.Equal("s2", model.CurrentState.ToString());
-            Assert.Equal(1, loggedEvents.Count());
+            Assert.Single(loggedEvents);
             Assert.Equal("AfterTransition from s1 to s2 on t", loggedEvents[0]);
         }
 
@@ -177,7 +177,7 @@ namespace Nate.Tests.Integration
 
             machine.Trigger("t", model);
             Assert.Equal("s2", model.CurrentState.ToString());
-            Assert.Equal(1, loggedEvents.Count());
+            Assert.Single( loggedEvents);
             Assert.Equal("beforeEntry from s1 to s2 on t", loggedEvents[0]);
         }
 
@@ -225,7 +225,7 @@ namespace Nate.Tests.Integration
 
             machine.Trigger("t", model);
             Assert.Equal("s2", model.CurrentState.ToString());
-            Assert.Equal(1, loggedEvents.Count());
+            Assert.Single(loggedEvents); 
             Assert.Equal("beforeExit from s1 to s2 on t", loggedEvents[0]);
         }
 
@@ -272,7 +272,7 @@ namespace Nate.Tests.Integration
 
             machine.Trigger("t", model);
             Assert.Equal("s2", model.CurrentState.ToString());
-            Assert.Equal(1, loggedEvents.Count());
+            Assert.Single(loggedEvents); 
             Assert.Equal("BeforeTransition from s1 to s2 on t", loggedEvents[0]);
         }
 
@@ -335,7 +335,7 @@ namespace Nate.Tests.Integration
 
             Assert.NotNull(machine);
             Assert.Same(config, machine.Configuration);
-            Assert.Equal(true, machine.Configuration.RaiseExceptionBeforeTransitionToSameState);
+            Assert.True( machine.Configuration.RaiseExceptionBeforeTransitionToSameState);
         }
 
         [Fact]

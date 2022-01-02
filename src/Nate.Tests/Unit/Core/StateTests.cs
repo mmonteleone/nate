@@ -525,9 +525,9 @@ namespace Nate.Tests.Unit.Core
 
             state1.AddTransition(transition1);
 
-            var result = state1.TransitionsOn(new Trigger("t1"));
+            var result = state1.TransitionsOn(new Trigger("t1")).ToList();
             Assert.NotNull(result);
-            Assert.Equal(1, result.Count());
+            Assert.Single( result);
             Assert.Same(transition1, result.FirstOrDefault());
         }
 

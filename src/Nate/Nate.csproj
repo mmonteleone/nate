@@ -2,21 +2,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net45;net462;net472;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net45;net462;net472;netstandard2.0;net5.0;net6.0</TargetFrameworks>
     <Title>Nate</Title>
     <Description>Tiny fluent state machine for .NET</Description>
     <Authors>Michael Monteleone and Dariusz Danielewski</Authors>
     <CurrentYear>$([System.DateTime]::Now.ToString(yyyy))</CurrentYear>
     <Copyright>Copyright (c) $(CurrentYear) Michael Monteleone and Dariusz Danielewski</Copyright>
     <PackageTags>state machine</PackageTags>
-    <PackageIconUrl></PackageIconUrl>
     <PackageProjectUrl>https://github.com/DarekDan/nate</PackageProjectUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>git://github.com/mmonteleone/nate</RepositoryUrl>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <ApplicationIcon></ApplicationIcon>
     <PackageReleaseNotes>
+      Version 1.0.3 
+      - Added support for .Net 5.0 and 6.0
     </PackageReleaseNotes>
     <PackageIcon>nate.png</PackageIcon>
     <PackageReadmeFile>README.markdown</PackageReadmeFile>
