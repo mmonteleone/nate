@@ -26,41 +26,28 @@
 
 #endregion
 
-using System;
+using Nate.Core;
+using Xunit;
 
-namespace Nate.Core
+namespace Nate.Tests.Unit.Core;
+
+public class StateMachineConfigurationTests
 {
-    /// <summary>
-    ///     Represents a possible trigger that can cause a transition, on any number of State instances or types.
-    /// </summary>
-    public class Trigger
+    [Fact]
+    public void StateMachineConfiguration_RaiseExceptionOnTransitioningToSameState_DefaultsFalse()
     {
-        public Trigger(string name)
-        {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+        Assert.False(new StateMachineConfiguration().RaiseExceptionBeforeTransitionToSameState);
+    }
 
-            Name = name;
-        }
+    [Fact]
+    public void StateMachineConfiguration_RaiseExceptionOnTriggerMatchingNoPassingTransitions_DefaultsFalse()
+    {
+        Assert.False(new StateMachineConfiguration().RaiseExceptionOnTriggerMatchingNoPassingTransition);
+    }
 
-        public string Name { get; protected set; }
-
-        #region comparison overrides
-
-        public override int GetHashCode()
-        {
-            return Name.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            return Name;
-        }
-
-        public override bool Equals(object obj)
-        {
-            return GetHashCode() == obj?.GetHashCode();
-        }
-
-        #endregion
+    [Fact]
+    public void StateMachineConfiguration_RaiseExceptionOnTriggerMatchingNoTransitions_DefaultsTrue()
+    {
+        Assert.True(new StateMachineConfiguration().RaiseExceptionOnTriggerMatchingNoTransition);
     }
 }

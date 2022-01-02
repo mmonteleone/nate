@@ -27,40 +27,49 @@
 #endregion
 
 using System;
+using Nate.Core;
+using Xunit;
 
-namespace Nate.Core
+namespace Nate.Tests.Unit.Core;
+
+public class TriggerTests
 {
-    /// <summary>
-    ///     Represents a possible trigger that can cause a transition, on any number of State instances or types.
-    /// </summary>
-    public class Trigger
+    [Fact]
+    public void Trigger_Equals_TwoInstances_SameName_ReturnTrue()
     {
-        public Trigger(string name)
-        {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+        var trigger1 = new Trigger("trigger");
+        var trigger2 = new Trigger("trigger");
+        Assert.True(trigger1.Equals(trigger2));
+    }
 
-            Name = name;
-        }
+    [Fact]
+    public void Trigger_GetHashCode_VerifySameAsNameHash()
+    {
+        var name = "trigger";
+        var trigger = new Trigger(name);
+        Assert.Equal(name.GetHashCode(), trigger.GetHashCode());
+    }
 
-        public string Name { get; protected set; }
+    [Fact]
+    public void Trigger_Name_VerifyAssign()
+    {
+        var name = "trigger";
+        var trigger = new Trigger(name);
+        Assert.Equal(name, trigger.Name);
+    }
 
-        #region comparison overrides
+    [Fact]
+    public void Trigger_NullName_ThrowsNullEx()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+            new Trigger(null));
+    }
 
-        public override int GetHashCode()
-        {
-            return Name.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            return Name;
-        }
-
-        public override bool Equals(object obj)
-        {
-            return GetHashCode() == obj?.GetHashCode();
-        }
-
-        #endregion
+    [Fact]
+    public void Trigger_ToString_VerifySameAsName()
+    {
+        var name = "trigger";
+        var trigger = new Trigger(name);
+        Assert.Equal(name, trigger.ToString());
     }
 }

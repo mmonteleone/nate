@@ -27,40 +27,33 @@
 #endregion
 
 using System;
+using Nate.Core;
+using Xunit;
 
-namespace Nate.Core
+namespace Nate.Tests.Unit.Core;
+
+public class InvalidStateModelExceptionTests
 {
-    /// <summary>
-    ///     Represents a possible trigger that can cause a transition, on any number of State instances or types.
-    /// </summary>
-    public class Trigger
+    [Fact]
+    public void InvalidStateModelException_Verify()
     {
-        public Trigger(string name)
-        {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+        var ex = new InvalidStateModelException();
+        Assert.Equal(new ArgumentException().Message, ex.Message);
+    }
 
-            Name = name;
-        }
+    [Fact]
+    public void InvalidStateModelException_Message_VerifyMessage()
+    {
+        var ex = new InvalidStateModelException("message");
+        Assert.Equal("message", ex.Message);
+    }
 
-        public string Name { get; protected set; }
-
-        #region comparison overrides
-
-        public override int GetHashCode()
-        {
-            return Name.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            return Name;
-        }
-
-        public override bool Equals(object obj)
-        {
-            return GetHashCode() == obj?.GetHashCode();
-        }
-
-        #endregion
+    [Fact]
+    public void InvalidStateModelException_MessageEx_VerifyMessageEx()
+    {
+        var inner = new Exception();
+        var ex = new InvalidStateModelException("message", inner);
+        Assert.Equal("message", ex.Message);
+        Assert.Same(inner, ex.InnerException);
     }
 }

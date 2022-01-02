@@ -31,7 +31,7 @@ using System;
 namespace Nate.Core
 {
     /// <summary>
-    ///     Represents a single definition of a trigger causing a transition fromn one state to
+    ///     Represents a single definition of a trigger causing a transition from one state to
     ///     another, possibly given the optional evaluation of a logical guard lambda.
     /// </summary>
     /// <typeparam name="TStateModel"></typeparam>
@@ -47,14 +47,10 @@ namespace Nate.Core
         public Transition(Trigger trigger, State<TStateModel> source, State<TStateModel> target,
             Func<TStateModel, bool> guard)
         {
-            if (trigger == null) throw new ArgumentNullException("trigger");
-            if (target == null) throw new ArgumentNullException("target");
-            if (guard == null) throw new ArgumentNullException("guard");
-
             Source = source;
-            Trigger = trigger;
-            Target = target;
-            Guard = guard;
+            Trigger = trigger ?? throw new ArgumentNullException(nameof(trigger));
+            Target = target ?? throw new ArgumentNullException(nameof(target));
+            Guard = guard ?? throw new ArgumentNullException(nameof(guard));
         }
 
         public State<TStateModel> Source { get; }
@@ -82,11 +78,6 @@ namespace Nate.Core
             }
 
             return base.Equals(obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
 
         #endregion

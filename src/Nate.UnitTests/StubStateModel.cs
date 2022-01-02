@@ -26,41 +26,9 @@
 
 #endregion
 
-using System;
+namespace Nate.Tests;
 
-namespace Nate.Core
+public class StubStateModel : IStateModel
 {
-    /// <summary>
-    ///     Represents a possible trigger that can cause a transition, on any number of State instances or types.
-    /// </summary>
-    public class Trigger
-    {
-        public Trigger(string name)
-        {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
-
-            Name = name;
-        }
-
-        public string Name { get; protected set; }
-
-        #region comparison overrides
-
-        public override int GetHashCode()
-        {
-            return Name.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            return Name;
-        }
-
-        public override bool Equals(object obj)
-        {
-            return GetHashCode() == obj?.GetHashCode();
-        }
-
-        #endregion
-    }
+    public object CurrentState { get; set; }
 }
