@@ -102,7 +102,7 @@ namespace Nate.Fluent
             if (callback == null) throw new ArgumentNullException(nameof(callback));
 
             _workingGlobalTransitioneds.Add(callback);
-            Trigger(_afterTranasitionTrigger);
+            Trigger(_afterTransitionTrigger);
         }
 
         public void GloballyTransitionsTo(string state)
@@ -297,7 +297,7 @@ namespace Nate.Fluent
         private static readonly Trigger _afterExitTrigger = new Trigger("AfterExit");
         private static readonly Trigger _compileTrigger = new Trigger("Compile");
         private static readonly Trigger _beforeTransitionTrigger = new Trigger("BeforeTransition");
-        private static readonly Trigger _afterTranasitionTrigger = new Trigger("AfterTranasition");
+        private static readonly Trigger _afterTransitionTrigger = new Trigger("AfterTransition");
         private static readonly Trigger _globallyTransitionsToTrigger = new Trigger("GloballyTransitionsTo");
 
         // stateful model stuff
@@ -319,7 +319,7 @@ namespace Nate.Fluent
             definingState.AddTransition(_stateTrigger, definingState);
             definingState.AddTransition(_compileTrigger, compiling);
             definingState.AddTransition(_beforeTransitionTrigger, definingGlobalBeforeTransition);
-            definingState.AddTransition(_afterTranasitionTrigger, definingGlobalAfterTransition);
+            definingState.AddTransition(_afterTransitionTrigger, definingGlobalAfterTransition);
             definingState.AddTransition(_globallyTransitionsToTrigger, definingGlobalTransition);
             definingState.AddTransition(_beforeEntryTrigger, definingBeforeEntry);
             definingState.AddTransition(_afterExitTrigger, definingAfterExit);
@@ -330,7 +330,7 @@ namespace Nate.Fluent
             definingStateInitiation.AddTransition(_stateTrigger, definingState);
             definingStateInitiation.AddTransition(_compileTrigger, compiling);
             definingStateInitiation.AddTransition(_beforeTransitionTrigger, definingGlobalBeforeTransition);
-            definingStateInitiation.AddTransition(_afterTranasitionTrigger, definingGlobalAfterTransition);
+            definingStateInitiation.AddTransition(_afterTransitionTrigger, definingGlobalAfterTransition);
             definingStateInitiation.AddTransition(_globallyTransitionsToTrigger, definingGlobalTransition);
             definingStateInitiation.AddTransition(_beforeEntryTrigger, definingBeforeEntry);
             definingStateInitiation.AddTransition(_afterExitTrigger, definingAfterExit);
@@ -345,7 +345,7 @@ namespace Nate.Fluent
             definingTransitionTrigger.AddTransition(_stateTrigger, definingState);
             definingTransitionTrigger.AddTransition(_compileTrigger, compiling);
             definingTransitionTrigger.AddTransition(_beforeTransitionTrigger, definingGlobalBeforeTransition);
-            definingTransitionTrigger.AddTransition(_afterTranasitionTrigger, definingGlobalAfterTransition);
+            definingTransitionTrigger.AddTransition(_afterTransitionTrigger, definingGlobalAfterTransition);
             definingTransitionTrigger.AddTransition(_globallyTransitionsToTrigger, definingGlobalTransition);
             definingTransitionTrigger.AddTransition(_beforeEntryTrigger, definingBeforeEntry);
             definingTransitionTrigger.AddTransition(_afterExitTrigger, definingAfterExit);
@@ -357,7 +357,7 @@ namespace Nate.Fluent
             definingTransitionGuard.AddTransition(_stateTrigger, definingState);
             definingTransitionGuard.AddTransition(_compileTrigger, compiling);
             definingTransitionGuard.AddTransition(_beforeTransitionTrigger, definingGlobalBeforeTransition);
-            definingTransitionGuard.AddTransition(_afterTranasitionTrigger, definingGlobalAfterTransition);
+            definingTransitionGuard.AddTransition(_afterTransitionTrigger, definingGlobalAfterTransition);
             definingTransitionGuard.AddTransition(_globallyTransitionsToTrigger, definingGlobalTransition);
             definingTransitionGuard.AddTransition(_beforeEntryTrigger, definingBeforeEntry);
             definingTransitionGuard.AddTransition(_afterExitTrigger, definingAfterExit);
@@ -368,7 +368,7 @@ namespace Nate.Fluent
             definingAfterEntry.AddTransition(_stateTrigger, definingState);
             definingAfterEntry.AddTransition(_compileTrigger, compiling);
             definingAfterEntry.AddTransition(_beforeTransitionTrigger, definingGlobalBeforeTransition);
-            definingAfterEntry.AddTransition(_afterTranasitionTrigger, definingGlobalAfterTransition);
+            definingAfterEntry.AddTransition(_afterTransitionTrigger, definingGlobalAfterTransition);
             definingAfterEntry.AddTransition(_globallyTransitionsToTrigger, definingGlobalTransition);
             definingAfterEntry.AddTransition(_beforeEntryTrigger, definingBeforeEntry);
             definingAfterEntry.AddTransition(_afterExitTrigger, definingAfterExit);
@@ -379,7 +379,7 @@ namespace Nate.Fluent
             definingBeforeExit.AddTransition(_stateTrigger, definingState);
             definingBeforeExit.AddTransition(_compileTrigger, compiling);
             definingBeforeExit.AddTransition(_beforeTransitionTrigger, definingGlobalBeforeTransition);
-            definingBeforeExit.AddTransition(_afterTranasitionTrigger, definingGlobalAfterTransition);
+            definingBeforeExit.AddTransition(_afterTransitionTrigger, definingGlobalAfterTransition);
             definingBeforeExit.AddTransition(_globallyTransitionsToTrigger, definingGlobalTransition);
             definingBeforeExit.AddTransition(_beforeEntryTrigger, definingBeforeEntry);
             definingBeforeExit.AddTransition(_afterExitTrigger, definingAfterExit);
@@ -390,7 +390,7 @@ namespace Nate.Fluent
             definingBeforeEntry.AddTransition(_stateTrigger, definingState);
             definingBeforeEntry.AddTransition(_compileTrigger, compiling);
             definingBeforeEntry.AddTransition(_beforeTransitionTrigger, definingGlobalBeforeTransition);
-            definingBeforeEntry.AddTransition(_afterTranasitionTrigger, definingGlobalAfterTransition);
+            definingBeforeEntry.AddTransition(_afterTransitionTrigger, definingGlobalAfterTransition);
             definingBeforeEntry.AddTransition(_globallyTransitionsToTrigger, definingGlobalTransition);
             definingBeforeEntry.AddTransition(_afterEntryTrigger, definingAfterEntry);
             definingBeforeEntry.AddTransition(_afterExitTrigger, definingAfterExit);
@@ -401,13 +401,13 @@ namespace Nate.Fluent
             definingAfterExit.AddTransition(_stateTrigger, definingState);
             definingAfterExit.AddTransition(_compileTrigger, compiling);
             definingAfterExit.AddTransition(_beforeTransitionTrigger, definingGlobalBeforeTransition);
-            definingAfterExit.AddTransition(_afterTranasitionTrigger, definingGlobalAfterTransition);
+            definingAfterExit.AddTransition(_afterTransitionTrigger, definingGlobalAfterTransition);
             definingAfterExit.AddTransition(_globallyTransitionsToTrigger, definingGlobalTransition);
             definingAfterExit.AddTransition(_beforeEntryTrigger, definingBeforeEntry);
             definingAfterExit.AddTransition(_beforeExitTrigger, definingBeforeExit);
 
             definingGlobalBeforeTransition.AddTransition(_stateTrigger, definingState);
-            definingGlobalBeforeTransition.AddTransition(_afterTranasitionTrigger, definingGlobalAfterTransition);
+            definingGlobalBeforeTransition.AddTransition(_afterTransitionTrigger, definingGlobalAfterTransition);
             definingGlobalBeforeTransition.AddTransition(_compileTrigger, compiling);
             definingGlobalBeforeTransition.AddTransition(_globallyTransitionsToTrigger, definingGlobalTransition);
 
