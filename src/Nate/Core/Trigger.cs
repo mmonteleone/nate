@@ -37,7 +37,7 @@ namespace Nate.Core
     {
         public Trigger(string name)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("name");
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
 
             Name = name;
         }
