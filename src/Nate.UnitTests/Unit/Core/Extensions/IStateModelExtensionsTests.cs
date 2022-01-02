@@ -50,7 +50,7 @@ namespace Nate.Tests.Unit.Core.Extensions
         {
             var mockMachine = new Mock<IStateMachine<StubStateModel>>();
             Assert.Throws<ArgumentNullException>(() =>
-                IStateModelExtensions.AvailableStates(null, mockMachine.Object));
+                StateModelExtensions.AvailableStates(null, mockMachine.Object));
         }
 
         [Fact]
@@ -82,7 +82,7 @@ namespace Nate.Tests.Unit.Core.Extensions
             var mockMachine = new Mock<IStateMachine<StubStateModel>>();
 
             Assert.Throws<ArgumentNullException>(() =>
-                IStateModelExtensions.AvailableTriggers(null, mockMachine.Object));
+                StateModelExtensions.AvailableTriggers(null, mockMachine.Object));
         }
 
         [Fact]
@@ -124,7 +124,7 @@ namespace Nate.Tests.Unit.Core.Extensions
             var trigger = new Trigger("trigger");
 
             Assert.Throws<ArgumentNullException>(() =>
-                IStateModelExtensions.Trigger(null, trigger, mockMachine.Object));
+                StateModelExtensions.Trigger(null, trigger, mockMachine.Object));
         }
 
         [Fact]
@@ -133,7 +133,7 @@ namespace Nate.Tests.Unit.Core.Extensions
             var mockMachine = new Mock<IStateMachine<StubStateModel>>();
 
             Assert.Throws<ArgumentNullException>(() =>
-                IStateModelExtensions.Trigger(null, "someTrigger", mockMachine.Object));
+                StateModelExtensions.Trigger(null, "someTrigger", mockMachine.Object));
         }
 
         [Fact]

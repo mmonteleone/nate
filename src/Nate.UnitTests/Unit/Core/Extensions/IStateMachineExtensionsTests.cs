@@ -61,7 +61,7 @@ namespace Nate.Tests.Unit.Core.Extensions
         public void IStateMachineExtensions_NullTriggerName_ThrowsNullEx()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                IStateMachineExtensions.Trigger(new Mock<IStateMachine<StubStateModel>>().Object, null,
+                StateMachineExtensions.Trigger(new Mock<IStateMachine<StubStateModel>>().Object, null,
                     new StubStateModel()));
         }
 
