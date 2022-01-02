@@ -30,24 +30,23 @@ using System;
 using Nate.Core;
 using Xunit;
 
-namespace Nate.Tests.Unit.Core
-{
-    public class InvalidTriggerExceptionTests
-    {
-        [Fact]
-        public void InvalidTriggerException_Message_VerifyMessage()
-        {
-            var ex = new InvalidTriggerException("message");
-            Assert.Equal("message", ex.Message);
-        }
+namespace Nate.Tests.Unit.Core;
 
-        [Fact]
-        public void InvalidTriggerException_MessageEx_VerifyMessageEx()
-        {
-            var inner = new Exception();
-            var ex = new InvalidTriggerException("message", inner);
-            Assert.Equal("message", ex.Message);
-            Assert.Same(inner, ex.InnerException);
-        }
+public class InvalidTriggerExceptionTests
+{
+    [Fact]
+    public void InvalidTriggerException_Message_VerifyMessage()
+    {
+        var ex = new InvalidTriggerException("message");
+        Assert.Equal("message", ex.Message);
+    }
+
+    [Fact]
+    public void InvalidTriggerException_MessageEx_VerifyMessageEx()
+    {
+        var inner = new Exception();
+        var ex = new InvalidTriggerException("message", inner);
+        Assert.Equal("message", ex.Message);
+        Assert.Same(inner, ex.InnerException);
     }
 }

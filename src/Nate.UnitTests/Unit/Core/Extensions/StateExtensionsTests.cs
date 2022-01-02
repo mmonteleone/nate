@@ -32,103 +32,102 @@ using Nate.Core;
 using Nate.Core.Extensions;
 using Xunit;
 
-namespace Nate.Tests.Unit.Core.Extensions
+namespace Nate.Tests.Unit.Core.Extensions;
+
+public class StateExtensionsTests
 {
-    public class StateExtensionsTests
+    [Fact]
+    public void StateExtensions_AddTransition_NullGuard_ThrowsNullex()
     {
-        [Fact]
-        public void StateExtensions_AddTransition_NullGuard_ThrowsNullex()
-        {
-            var fromState = new State<StubStateModel>("from");
-            var trigger = new Trigger("trigger");
-            var toState = new State<StubStateModel>("to");
-            Func<StubStateModel, bool> guard = null;
-            Assert.Throws<ArgumentNullException>(() =>
-                fromState.AddTransition(trigger, null, guard));
-        }
+        var fromState = new State<StubStateModel>("from");
+        var trigger = new Trigger("trigger");
+        var toState = new State<StubStateModel>("to");
+        Func<StubStateModel, bool> guard = null;
+        Assert.Throws<ArgumentNullException>(() =>
+            fromState.AddTransition(trigger, null, guard));
+    }
 
-        [Fact]
-        public void StateExtensions_AddTransition_NullState_ThrowsNullex()
-        {
-            var trigger = new Trigger("trigger");
-            var toState = new State<StubStateModel>("to");
-            Assert.Throws<ArgumentNullException>(() =>
-                ((State<StubStateModel>)null).AddTransition(trigger, toState));
-        }
+    [Fact]
+    public void StateExtensions_AddTransition_NullState_ThrowsNullex()
+    {
+        var trigger = new Trigger("trigger");
+        var toState = new State<StubStateModel>("to");
+        Assert.Throws<ArgumentNullException>(() =>
+            ((State<StubStateModel>)null).AddTransition(trigger, toState));
+    }
 
 
-        [Fact]
-        public void StateExtensions_AddTransition_NullState_WithGuard_ThrowsNullex()
-        {
-            var trigger = new Trigger("trigger");
-            var toState = new State<StubStateModel>("to");
-            Func<StubStateModel, bool> guard = s => true;
-            Assert.Throws<ArgumentNullException>(() =>
-                ((State<StubStateModel>)null).AddTransition(trigger, toState, guard));
-        }
+    [Fact]
+    public void StateExtensions_AddTransition_NullState_WithGuard_ThrowsNullex()
+    {
+        var trigger = new Trigger("trigger");
+        var toState = new State<StubStateModel>("to");
+        Func<StubStateModel, bool> guard = s => true;
+        Assert.Throws<ArgumentNullException>(() =>
+            ((State<StubStateModel>)null).AddTransition(trigger, toState, guard));
+    }
 
-        [Fact]
-        public void StateExtensions_AddTransition_NullTo_ThrowsNullex()
-        {
-            var fromState = new State<StubStateModel>("from");
-            var trigger = new Trigger("trigger");
-            Assert.Throws<ArgumentNullException>(() =>
-                fromState.AddTransition(trigger, null));
-        }
+    [Fact]
+    public void StateExtensions_AddTransition_NullTo_ThrowsNullex()
+    {
+        var fromState = new State<StubStateModel>("from");
+        var trigger = new Trigger("trigger");
+        Assert.Throws<ArgumentNullException>(() =>
+            fromState.AddTransition(trigger, null));
+    }
 
-        [Fact]
-        public void StateExtensions_AddTransition_NullTo_WithGuard_ThrowsNullex()
-        {
-            var fromState = new State<StubStateModel>("from");
-            var trigger = new Trigger("trigger");
-            Func<StubStateModel, bool> guard = s => true;
-            Assert.Throws<ArgumentNullException>(() =>
-                fromState.AddTransition(trigger, null, guard));
-        }
+    [Fact]
+    public void StateExtensions_AddTransition_NullTo_WithGuard_ThrowsNullex()
+    {
+        var fromState = new State<StubStateModel>("from");
+        var trigger = new Trigger("trigger");
+        Func<StubStateModel, bool> guard = s => true;
+        Assert.Throws<ArgumentNullException>(() =>
+            fromState.AddTransition(trigger, null, guard));
+    }
 
-        [Fact]
-        public void StateExtensions_AddTransition_NullTrigger_ThrowsNullex()
-        {
-            var fromState = new State<StubStateModel>("from");
-            var toState = new State<StubStateModel>("to");
-            Assert.Throws<ArgumentNullException>(() =>
-                fromState.AddTransition(null, toState));
-        }
+    [Fact]
+    public void StateExtensions_AddTransition_NullTrigger_ThrowsNullex()
+    {
+        var fromState = new State<StubStateModel>("from");
+        var toState = new State<StubStateModel>("to");
+        Assert.Throws<ArgumentNullException>(() =>
+            fromState.AddTransition(null, toState));
+    }
 
-        [Fact]
-        public void StateExtensions_AddTransition_NullTrigger_WithGuard_ThrowsNullex()
-        {
-            var fromState = new State<StubStateModel>("from");
-            var toState = new State<StubStateModel>("to");
-            Func<StubStateModel, bool> guard = s => true;
-            Assert.Throws<ArgumentNullException>(() =>
-                fromState.AddTransition(null, toState, guard));
-        }
+    [Fact]
+    public void StateExtensions_AddTransition_NullTrigger_WithGuard_ThrowsNullex()
+    {
+        var fromState = new State<StubStateModel>("from");
+        var toState = new State<StubStateModel>("to");
+        Func<StubStateModel, bool> guard = s => true;
+        Assert.Throws<ArgumentNullException>(() =>
+            fromState.AddTransition(null, toState, guard));
+    }
 
-        [Fact]
-        public void StateExtensions_AddTransition_ValidParms_CallsAddOnFromState()
-        {
-            var fromStateMock = new Mock<State<StubStateModel>>("from");
-            var trigger = new Trigger("trigger");
-            var toState = new State<StubStateModel>("to");
-            fromStateMock.Setup(s => s.AddTransition(It.Is<Transition<StubStateModel>>(
-                t => t.Source.Name == "from" && t.Target.Name == "to" && t.Trigger.Name == "trigger"))).Verifiable();
-            fromStateMock.Object.AddTransition(trigger, toState);
-            fromStateMock.VerifyAll();
-        }
+    [Fact]
+    public void StateExtensions_AddTransition_ValidParms_CallsAddOnFromState()
+    {
+        var fromStateMock = new Mock<State<StubStateModel>>("from");
+        var trigger = new Trigger("trigger");
+        var toState = new State<StubStateModel>("to");
+        fromStateMock.Setup(s => s.AddTransition(It.Is<Transition<StubStateModel>>(
+            t => t.Source.Name == "from" && t.Target.Name == "to" && t.Trigger.Name == "trigger"))).Verifiable();
+        fromStateMock.Object.AddTransition(trigger, toState);
+        fromStateMock.VerifyAll();
+    }
 
-        [Fact]
-        public void StateExtensions_AddTransition_ValidParms_WithGuard_CallsAddOnFromState()
-        {
-            var fromStateMock = new Mock<State<StubStateModel>>("from");
-            var trigger = new Trigger("trigger");
-            var toState = new State<StubStateModel>("to");
-            Func<StubStateModel, bool> guard = s => true;
-            fromStateMock.Setup(s => s.AddTransition(It.Is<Transition<StubStateModel>>(
-                t => t.Source.Name == "from" && t.Target.Name == "to" && t.Trigger.Name == "trigger" &&
-                     t.Guard == guard))).Verifiable();
-            fromStateMock.Object.AddTransition(trigger, toState, guard);
-            fromStateMock.VerifyAll();
-        }
+    [Fact]
+    public void StateExtensions_AddTransition_ValidParms_WithGuard_CallsAddOnFromState()
+    {
+        var fromStateMock = new Mock<State<StubStateModel>>("from");
+        var trigger = new Trigger("trigger");
+        var toState = new State<StubStateModel>("to");
+        Func<StubStateModel, bool> guard = s => true;
+        fromStateMock.Setup(s => s.AddTransition(It.Is<Transition<StubStateModel>>(
+            t => t.Source.Name == "from" && t.Target.Name == "to" && t.Trigger.Name == "trigger" &&
+                 t.Guard == guard))).Verifiable();
+        fromStateMock.Object.AddTransition(trigger, toState, guard);
+        fromStateMock.VerifyAll();
     }
 }

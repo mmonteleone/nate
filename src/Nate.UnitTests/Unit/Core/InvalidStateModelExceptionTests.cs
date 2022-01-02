@@ -30,24 +30,23 @@ using System;
 using Nate.Core;
 using Xunit;
 
-namespace Nate.Tests.Unit.Core
-{
-    public class InvalidStateModelExceptionTests
-    {
-        [Fact]
-        public void InvalidStateModelException_Message_VerifyMessage()
-        {
-            var ex = new InvalidStateModelException("message");
-            Assert.Equal("message", ex.Message);
-        }
+namespace Nate.Tests.Unit.Core;
 
-        [Fact]
-        public void InvalidStateModelException_MessageEx_VerifyMessageEx()
-        {
-            var inner = new Exception();
-            var ex = new InvalidStateModelException("message", inner);
-            Assert.Equal("message", ex.Message);
-            Assert.Same(inner, ex.InnerException);
-        }
+public class InvalidStateModelExceptionTests
+{
+    [Fact]
+    public void InvalidStateModelException_Message_VerifyMessage()
+    {
+        var ex = new InvalidStateModelException("message");
+        Assert.Equal("message", ex.Message);
+    }
+
+    [Fact]
+    public void InvalidStateModelException_MessageEx_VerifyMessageEx()
+    {
+        var inner = new Exception();
+        var ex = new InvalidStateModelException("message", inner);
+        Assert.Equal("message", ex.Message);
+        Assert.Same(inner, ex.InnerException);
     }
 }
