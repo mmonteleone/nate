@@ -96,10 +96,10 @@ namespace Nate.Core
         public virtual void RaiseEntered(TStateModel stateModel, State<TStateModel> from, Trigger trigger)
         {
             if (stateModel == null) throw new ArgumentNullException(nameof(stateModel));
-            if (from == null) throw new ArgumentNullException(nameof(@from));
+            if (from == null) throw new ArgumentNullException(nameof(from));
             if (trigger == null) throw new ArgumentNullException(nameof(trigger));
 
-            Entered?.Invoke(this, new TransitionEventArgs<TStateModel>(stateModel, @from, this, trigger));
+            Entered?.Invoke(this, new TransitionEventArgs<TStateModel>(stateModel, from, this, trigger));
         }
 
         public virtual void RaiseExiting(TStateModel stateModel, State<TStateModel> to, Trigger trigger)
@@ -114,10 +114,10 @@ namespace Nate.Core
         public virtual void RaiseEntering(TStateModel stateModel, State<TStateModel> from, Trigger trigger)
         {
             if (stateModel == null) throw new ArgumentNullException(nameof(stateModel));
-            if (from == null) throw new ArgumentNullException(nameof(@from));
+            if (from == null) throw new ArgumentNullException(nameof(from));
             if (trigger == null) throw new ArgumentNullException(nameof(trigger));
 
-            Entering?.Invoke(this, new TransitionEventArgs<TStateModel>(stateModel, @from, this, trigger));
+            Entering?.Invoke(this, new TransitionEventArgs<TStateModel>(stateModel, from, this, trigger));
         }
 
         public virtual void RaiseExited(TStateModel stateModel, State<TStateModel> to, Trigger trigger)
