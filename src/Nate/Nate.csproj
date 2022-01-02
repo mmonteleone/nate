@@ -24,33 +24,25 @@
   </PropertyGroup>
 
   <!--common NuGet package refs -->
-  <ItemGroup><!-- <PackageReference Include="NLog" Version="4.6.7" /> -->
-  
-    <Folder Include="Properties\" />
-  </ItemGroup>
 
   <!--.NET Standard 2.0 config -->
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <AssemblyTitle>Nate .NET Standard 2.0</AssemblyTitle>
-    <DefineConstants>NETCORE;NETSTANDARD</DefineConstants>
   </PropertyGroup>
 
   <!-- .NET 4.5 config -->
   <PropertyGroup Condition=" '$(TargetFramework)'=='net45' ">
     <AssemblyTitle>Nate .NET 4.5</AssemblyTitle>
-    <DefineConstants>NETFULL</DefineConstants>
   </PropertyGroup>
 
   <!-- .NET 4.6.2 config -->
   <PropertyGroup Condition=" '$(TargetFramework)'=='net462' ">
     <AssemblyTitle>Nate .NET 4.6.2</AssemblyTitle>
-    <DefineConstants>NETFULL</DefineConstants>
   </PropertyGroup>
 
   <!-- .NET 4.7.2 config -->
   <PropertyGroup Condition=" '$(TargetFramework)'=='net472' ">
     <AssemblyTitle>Nate .NET 4.7.2</AssemblyTitle>
-    <DefineConstants>NETFULL</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net472' or '$(TargetFramework)' == 'net462' ">
