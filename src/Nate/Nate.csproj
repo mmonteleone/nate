@@ -20,7 +20,7 @@
       - Added support for .Net 5.0 and 6.0
     </PackageReleaseNotes>
     <PackageIcon>nate.png</PackageIcon>
-    <PackageReadmeFile>README.markdown</PackageReadmeFile>
+    <PackageReadmeFile>README.MD</PackageReadmeFile>
   </PropertyGroup>
 
   <!--common NuGet package refs -->
@@ -57,7 +57,7 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Include="..\..\README.markdown">
+    <None Include="..\..\README.MD">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
