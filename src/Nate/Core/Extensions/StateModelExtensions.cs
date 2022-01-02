@@ -69,7 +69,7 @@ namespace Nate.Core.Extensions
         }
 
         /// <summary>
-        ///     Triggers a transition trigger on a model given triggername and machine
+        ///     Triggers a transition trigger on a model given trigger name and machine
         /// </summary>
         /// <typeparam name="TStateModel"></typeparam>
         /// <param name="model">model containing current state</param>

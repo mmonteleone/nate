@@ -7,10 +7,6 @@ namespace Nate.Fluent
     {
         private readonly IFluentStateMachineBuilder<TStateModel> _builder;
 
-        private BeforeEntryFluentBuilderApi()
-        {
-        }
-
         public BeforeEntryFluentBuilderApi(IFluentStateMachineBuilder<TStateModel> stateMachineBuilder)
         {
             _builder = stateMachineBuilder;
