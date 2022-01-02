@@ -29,26 +29,25 @@
 using Nate.Core;
 using Xunit;
 
-namespace Nate.Tests.Unit.Core
+namespace Nate.Tests.Unit.Core;
+
+public class StateMachineConfigurationTests
 {
-    public class StateMachineConfigurationTests
+    [Fact]
+    public void StateMachineConfiguration_RaiseExceptionOnTransitioningToSameState_DefaultsFalse()
     {
-        [Fact]
-        public void StateMachineConfiguration_RaiseExceptionOnTransitioningToSameState_DefaultsFalse()
-        {
-            Assert.False(new StateMachineConfiguration().RaiseExceptionBeforeTransitionToSameState);
-        }
+        Assert.False(new StateMachineConfiguration().RaiseExceptionBeforeTransitionToSameState);
+    }
 
-        [Fact]
-        public void StateMachineConfiguration_RaiseExceptionOnTriggerMatchingNoPassingTransitions_DefaultsFalse()
-        {
-            Assert.False(new StateMachineConfiguration().RaiseExceptionOnTriggerMatchingNoPassingTransition);
-        }
+    [Fact]
+    public void StateMachineConfiguration_RaiseExceptionOnTriggerMatchingNoPassingTransitions_DefaultsFalse()
+    {
+        Assert.False(new StateMachineConfiguration().RaiseExceptionOnTriggerMatchingNoPassingTransition);
+    }
 
-        [Fact]
-        public void StateMachineConfiguration_RaiseExceptionOnTriggerMatchingNoTransitions_DefaultsTrue()
-        {
-            Assert.True(new StateMachineConfiguration().RaiseExceptionOnTriggerMatchingNoTransition);
-        }
+    [Fact]
+    public void StateMachineConfiguration_RaiseExceptionOnTriggerMatchingNoTransitions_DefaultsTrue()
+    {
+        Assert.True(new StateMachineConfiguration().RaiseExceptionOnTriggerMatchingNoTransition);
     }
 }

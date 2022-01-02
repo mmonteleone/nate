@@ -26,10 +26,9 @@
 
 #endregion
 
-namespace Nate.Tests
+namespace Nate.Tests;
+
+public class StubStateModel : IStateModel
 {
-    public class StubStateModel : IStateModel
-    {
-        public object CurrentState { get; set; }
-    }
+    public object CurrentState { get; set; }
 }

@@ -30,24 +30,23 @@ using System;
 using Nate.Core;
 using Xunit;
 
-namespace Nate.Tests.Unit.Core
-{
-    public class InvalidTransitionExceptionTests
-    {
-        [Fact]
-        public void InvalidTransitionException_Message_VerifyMessage()
-        {
-            var ex = new InvalidTransitionException("message");
-            Assert.Equal("message", ex.Message);
-        }
+namespace Nate.Tests.Unit.Core;
 
-        [Fact]
-        public void InvalidTransitionException_MessageEx_VerifyMessageEx()
-        {
-            var inner = new Exception();
-            var ex = new InvalidTransitionException("message", inner);
-            Assert.Equal("message", ex.Message);
-            Assert.Same(inner, ex.InnerException);
-        }
+public class InvalidTransitionExceptionTests
+{
+    [Fact]
+    public void InvalidTransitionException_Message_VerifyMessage()
+    {
+        var ex = new InvalidTransitionException("message");
+        Assert.Equal("message", ex.Message);
+    }
+
+    [Fact]
+    public void InvalidTransitionException_MessageEx_VerifyMessageEx()
+    {
+        var inner = new Exception();
+        var ex = new InvalidTransitionException("message", inner);
+        Assert.Equal("message", ex.Message);
+        Assert.Same(inner, ex.InnerException);
     }
 }

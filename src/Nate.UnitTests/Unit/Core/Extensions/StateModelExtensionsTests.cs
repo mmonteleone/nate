@@ -33,150 +33,149 @@ using Nate.Core;
 using Nate.Core.Extensions;
 using Xunit;
 
-namespace Nate.Tests.Unit.Core.Extensions
+namespace Nate.Tests.Unit.Core.Extensions;
+
+public class StateModelExtensionsTests
 {
-    public class StateModelExtensionsTests
+    [Fact]
+    public void StateModelExtensions_AvailableStates_NullMachine_ThrowsNullEx()
     {
-        [Fact]
-        public void StateModelExtensions_AvailableStates_NullMachine_ThrowsNullEx()
-        {
-            var mockModel = new StubStateModel();
-            Assert.Throws<ArgumentNullException>(() =>
-                mockModel.AvailableStates((IStateMachine<StubStateModel>)null));
-        }
+        var mockModel = new StubStateModel();
+        Assert.Throws<ArgumentNullException>(() =>
+            mockModel.AvailableStates((IStateMachine<StubStateModel>)null));
+    }
 
-        [Fact]
-        public void StateModelExtensions_AvailableStates_NullModel_ThrowsNullEx()
-        {
-            var mockMachine = new Mock<IStateMachine<StubStateModel>>();
-            Assert.Throws<ArgumentNullException>(() =>
-                StateModelExtensions.AvailableStates(null, mockMachine.Object));
-        }
+    [Fact]
+    public void StateModelExtensions_AvailableStates_NullModel_ThrowsNullEx()
+    {
+        var mockMachine = new Mock<IStateMachine<StubStateModel>>();
+        Assert.Throws<ArgumentNullException>(() =>
+            StateModelExtensions.AvailableStates(null, mockMachine.Object));
+    }
 
-        [Fact]
-        public void StateModelExtensions_AvailableStates_ValidParms_CallsReturnsMachineAvailable()
-        {
-            var mockModel = new StubStateModel();
-            var mockMachine = new Mock<IStateMachine<StubStateModel>>();
-            var mockStates = new Mock<IEnumerable<State<StubStateModel>>>().Object;
-            mockMachine.Setup(m => m.AvailableStates(mockModel)).Returns(mockStates).Verifiable();
+    [Fact]
+    public void StateModelExtensions_AvailableStates_ValidParms_CallsReturnsMachineAvailable()
+    {
+        var mockModel = new StubStateModel();
+        var mockMachine = new Mock<IStateMachine<StubStateModel>>();
+        var mockStates = new Mock<IEnumerable<State<StubStateModel>>>().Object;
+        mockMachine.Setup(m => m.AvailableStates(mockModel)).Returns(mockStates).Verifiable();
 
-            var result = mockModel.AvailableStates(mockMachine.Object);
+        var result = mockModel.AvailableStates(mockMachine.Object);
 
-            mockMachine.VerifyAll();
-            Assert.Same(mockStates, result);
-        }
+        mockMachine.VerifyAll();
+        Assert.Same(mockStates, result);
+    }
 
-        [Fact]
-        public void StateModelExtensions_AvailableTriggers_NullMachine_ThrowsNullEx()
-        {
-            var mockModel = new StubStateModel();
+    [Fact]
+    public void StateModelExtensions_AvailableTriggers_NullMachine_ThrowsNullEx()
+    {
+        var mockModel = new StubStateModel();
 
-            Assert.Throws<ArgumentNullException>(() =>
-                mockModel.AvailableTriggers((IStateMachine<StubStateModel>)null));
-        }
+        Assert.Throws<ArgumentNullException>(() =>
+            mockModel.AvailableTriggers((IStateMachine<StubStateModel>)null));
+    }
 
-        [Fact]
-        public void StateModelExtensions_AvailableTriggers_NullModel_ThrowsNullEx()
-        {
-            var mockMachine = new Mock<IStateMachine<StubStateModel>>();
+    [Fact]
+    public void StateModelExtensions_AvailableTriggers_NullModel_ThrowsNullEx()
+    {
+        var mockMachine = new Mock<IStateMachine<StubStateModel>>();
 
-            Assert.Throws<ArgumentNullException>(() =>
-                StateModelExtensions.AvailableTriggers(null, mockMachine.Object));
-        }
+        Assert.Throws<ArgumentNullException>(() =>
+            StateModelExtensions.AvailableTriggers(null, mockMachine.Object));
+    }
 
-        [Fact]
-        public void StateModelExtensions_AvailableTriggers_ValidParms_CallsReturnsTriggersAvailable()
-        {
-            var mockModel = new StubStateModel();
-            var mockTriggers = new Mock<IEnumerable<Trigger>>().Object;
-            var mockMachine = new Mock<IStateMachine<StubStateModel>>();
-            mockMachine.Setup(m => m.AvailableTriggers(mockModel)).Returns(mockTriggers).Verifiable();
+    [Fact]
+    public void StateModelExtensions_AvailableTriggers_ValidParms_CallsReturnsTriggersAvailable()
+    {
+        var mockModel = new StubStateModel();
+        var mockTriggers = new Mock<IEnumerable<Trigger>>().Object;
+        var mockMachine = new Mock<IStateMachine<StubStateModel>>();
+        mockMachine.Setup(m => m.AvailableTriggers(mockModel)).Returns(mockTriggers).Verifiable();
 
-            var result = mockModel.AvailableTriggers(mockMachine.Object);
+        var result = mockModel.AvailableTriggers(mockMachine.Object);
 
-            mockMachine.VerifyAll();
-            Assert.Same(mockTriggers, result);
-        }
+        mockMachine.VerifyAll();
+        Assert.Same(mockTriggers, result);
+    }
 
-        [Fact]
-        public void StateModelExtensions_Trigger_NullMachine_ObjTrigger_ThrowsNullEx()
-        {
-            var mockModel = new StubStateModel();
-            var trigger = new Trigger("trigger");
-            Assert.Throws<ArgumentNullException>(() =>
-                mockModel.Trigger(trigger, (IStateMachine<StubStateModel>)null));
-        }
+    [Fact]
+    public void StateModelExtensions_Trigger_NullMachine_ObjTrigger_ThrowsNullEx()
+    {
+        var mockModel = new StubStateModel();
+        var trigger = new Trigger("trigger");
+        Assert.Throws<ArgumentNullException>(() =>
+            mockModel.Trigger(trigger, (IStateMachine<StubStateModel>)null));
+    }
 
-        [Fact]
-        public void StateModelExtensions_Trigger_NullMachine_StringTrigger_ThrowsNullEx()
-        {
-            var mockModel = new StubStateModel();
+    [Fact]
+    public void StateModelExtensions_Trigger_NullMachine_StringTrigger_ThrowsNullEx()
+    {
+        var mockModel = new StubStateModel();
 
-            Assert.Throws<ArgumentNullException>(() =>
-                mockModel.Trigger("triggerName", (IStateMachine<StubStateModel>)null));
-        }
+        Assert.Throws<ArgumentNullException>(() =>
+            mockModel.Trigger("triggerName", (IStateMachine<StubStateModel>)null));
+    }
 
-        [Fact]
-        public void StateModelExtensions_Trigger_NullModel_ObjTrigger_ThrowsNullEx()
-        {
-            var mockMachine = new Mock<IStateMachine<StubStateModel>>();
-            var trigger = new Trigger("trigger");
+    [Fact]
+    public void StateModelExtensions_Trigger_NullModel_ObjTrigger_ThrowsNullEx()
+    {
+        var mockMachine = new Mock<IStateMachine<StubStateModel>>();
+        var trigger = new Trigger("trigger");
 
-            Assert.Throws<ArgumentNullException>(() =>
-                StateModelExtensions.Trigger(null, trigger, mockMachine.Object));
-        }
+        Assert.Throws<ArgumentNullException>(() =>
+            StateModelExtensions.Trigger(null, trigger, mockMachine.Object));
+    }
 
-        [Fact]
-        public void StateModelExtensions_Trigger_NullModel_StringTrigger_ThrowsNullEx()
-        {
-            var mockMachine = new Mock<IStateMachine<StubStateModel>>();
+    [Fact]
+    public void StateModelExtensions_Trigger_NullModel_StringTrigger_ThrowsNullEx()
+    {
+        var mockMachine = new Mock<IStateMachine<StubStateModel>>();
 
-            Assert.Throws<ArgumentNullException>(() =>
-                StateModelExtensions.Trigger(null, "someTrigger", mockMachine.Object));
-        }
+        Assert.Throws<ArgumentNullException>(() =>
+            StateModelExtensions.Trigger(null, "someTrigger", mockMachine.Object));
+    }
 
-        [Fact]
-        public void StateModelExtensions_Trigger_NullTrigger_ThrowsNullEx()
-        {
-            var mockModel = new StubStateModel();
-            var mockMachine = new Mock<IStateMachine<StubStateModel>>();
+    [Fact]
+    public void StateModelExtensions_Trigger_NullTrigger_ThrowsNullEx()
+    {
+        var mockModel = new StubStateModel();
+        var mockMachine = new Mock<IStateMachine<StubStateModel>>();
 
-            Assert.Throws<ArgumentNullException>(() =>
-                mockModel.Trigger((Trigger)null, mockMachine.Object));
-        }
+        Assert.Throws<ArgumentNullException>(() =>
+            mockModel.Trigger((Trigger)null, mockMachine.Object));
+    }
 
-        [Fact]
-        public void StateModelExtensions_Trigger_NullTriggerName_ThrowsNullEx()
-        {
-            var mockModel = new StubStateModel();
-            var mockMachine = new Mock<IStateMachine<StubStateModel>>();
+    [Fact]
+    public void StateModelExtensions_Trigger_NullTriggerName_ThrowsNullEx()
+    {
+        var mockModel = new StubStateModel();
+        var mockMachine = new Mock<IStateMachine<StubStateModel>>();
 
-            Assert.Throws<ArgumentNullException>(() =>
-                mockModel.Trigger((string)null, mockMachine.Object));
-        }
+        Assert.Throws<ArgumentNullException>(() =>
+            mockModel.Trigger((string)null, mockMachine.Object));
+    }
 
-        [Fact]
-        public void StateModelExtensions_Trigger_ValidParms_ObjTrigger_CallsTriggerOnMachine()
-        {
-            var mockModel = new StubStateModel();
-            var trigger = new Trigger("trigger");
-            var mockMachine = new Mock<IStateMachine<StubStateModel>>();
-            mockMachine.Setup(m => m.Trigger(trigger, mockModel)).Verifiable();
-            mockModel.Trigger(trigger, mockMachine.Object);
-            mockMachine.VerifyAll();
-        }
+    [Fact]
+    public void StateModelExtensions_Trigger_ValidParms_ObjTrigger_CallsTriggerOnMachine()
+    {
+        var mockModel = new StubStateModel();
+        var trigger = new Trigger("trigger");
+        var mockMachine = new Mock<IStateMachine<StubStateModel>>();
+        mockMachine.Setup(m => m.Trigger(trigger, mockModel)).Verifiable();
+        mockModel.Trigger(trigger, mockMachine.Object);
+        mockMachine.VerifyAll();
+    }
 
-        [Fact]
-        public void StateModelExtensions_Trigger_ValidParms_StringTrigger_CallsTriggerOnMachine()
-        {
-            var mockModel = new StubStateModel();
-            var mockMachine = new Mock<IStateMachine<StubStateModel>>();
-            mockMachine.Setup(m => m.Trigger(It.Is<Trigger>(t => t.Name == "triggerName"), mockModel)).Verifiable();
+    [Fact]
+    public void StateModelExtensions_Trigger_ValidParms_StringTrigger_CallsTriggerOnMachine()
+    {
+        var mockModel = new StubStateModel();
+        var mockMachine = new Mock<IStateMachine<StubStateModel>>();
+        mockMachine.Setup(m => m.Trigger(It.Is<Trigger>(t => t.Name == "triggerName"), mockModel)).Verifiable();
 
-            mockModel.Trigger("triggerName", mockMachine.Object);
+        mockModel.Trigger("triggerName", mockMachine.Object);
 
-            mockMachine.VerifyAll();
-        }
+        mockMachine.VerifyAll();
     }
 }

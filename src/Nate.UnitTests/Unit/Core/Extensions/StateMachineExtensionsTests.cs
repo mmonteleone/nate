@@ -33,131 +33,130 @@ using Nate.Core.Extensions;
 using Nate.Tests;
 using Xunit;
 
-namespace Nate.UnitTests.Unit.Core.Extensions
+namespace Nate.UnitTests.Unit.Core.Extensions;
+
+public class StateMachineExtensionsTests
 {
-    public class StateMachineExtensionsTests
+    [Fact]
+    public void StateMachineExtensions_ValidParams_CallsTriggerOnMachineWithParms()
     {
-        [Fact]
-        public void StateMachineExtensions_ValidParams_CallsTriggerOnMachineWithParms()
-        {
-            var mockMachine = new Mock<IStateMachine<StubStateModel>>();
-            var mockModel = new StubStateModel();
+        var mockMachine = new Mock<IStateMachine<StubStateModel>>();
+        var mockModel = new StubStateModel();
 
-            mockMachine.Setup(m =>
-                m.Trigger(It.Is<Trigger>(t => t.Name == "trigger"), mockModel)).Verifiable();
+        mockMachine.Setup(m =>
+            m.Trigger(It.Is<Trigger>(t => t.Name == "trigger"), mockModel)).Verifiable();
 
-            mockMachine.Object.Trigger("trigger", mockModel);
+        mockMachine.Object.Trigger("trigger", mockModel);
 
-            mockMachine.VerifyAll();
-        }
+        mockMachine.VerifyAll();
+    }
 
-        [Fact]
-        public void StateMachineExtensions_NullModel_ThrowsNullEx()
-        {
-            Assert.Throws<ArgumentNullException>(() =>
-                new Mock<IStateMachine<StubStateModel>>().Object.Trigger("trigger", null));
-        }
+    [Fact]
+    public void StateMachineExtensions_NullModel_ThrowsNullEx()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+            new Mock<IStateMachine<StubStateModel>>().Object.Trigger("trigger", null));
+    }
 
-        [Fact]
-        public void StateMachineExtensions_NullTriggerName_ThrowsNullEx()
-        {
-            Assert.Throws<ArgumentNullException>(() =>
-                StateMachineExtensions.Trigger(new Mock<IStateMachine<StubStateModel>>().Object, null,
-                    new StubStateModel()));
-        }
+    [Fact]
+    public void StateMachineExtensions_NullTriggerName_ThrowsNullEx()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+            StateMachineExtensions.Trigger(new Mock<IStateMachine<StubStateModel>>().Object, null,
+                new StubStateModel()));
+    }
 
-        [Fact]
-        public void StateExtensions_AddTransition_NullGuard_ThrowsNullex()
-        {
-            var machine = new Mock<IStateMachine<StubStateModel>>().Object;
-            var trigger = new Trigger("trigger");
-            var toState = new State<StubStateModel>("to");
-            Func<StubStateModel, bool> guard = null;
-            Assert.Throws<ArgumentNullException>(() =>
-                machine.AddGlobalTransition(trigger, null, guard));
-        }
+    [Fact]
+    public void StateExtensions_AddTransition_NullGuard_ThrowsNullex()
+    {
+        var machine = new Mock<IStateMachine<StubStateModel>>().Object;
+        var trigger = new Trigger("trigger");
+        var toState = new State<StubStateModel>("to");
+        Func<StubStateModel, bool> guard = null;
+        Assert.Throws<ArgumentNullException>(() =>
+            machine.AddGlobalTransition(trigger, null, guard));
+    }
 
-        [Fact]
-        public void StateExtensions_AddTransition_NullStateMachine_ThrowsNullex()
-        {
-            var trigger = new Trigger("trigger");
-            var toState = new State<StubStateModel>("to");
-            Assert.Throws<ArgumentNullException>(() =>
-                ((IStateMachine<StubStateModel>)null).AddGlobalTransition(trigger, toState));
-        }
+    [Fact]
+    public void StateExtensions_AddTransition_NullStateMachine_ThrowsNullex()
+    {
+        var trigger = new Trigger("trigger");
+        var toState = new State<StubStateModel>("to");
+        Assert.Throws<ArgumentNullException>(() =>
+            ((IStateMachine<StubStateModel>)null).AddGlobalTransition(trigger, toState));
+    }
 
 
-        [Fact]
-        public void StateExtensions_AddTransition_NullStateMachine_WithGuard_ThrowsNullex()
-        {
-            var trigger = new Trigger("trigger");
-            var toState = new State<StubStateModel>("to");
-            Func<StubStateModel, bool> guard = s => true;
-            Assert.Throws<ArgumentNullException>(() =>
-                ((IStateMachine<StubStateModel>)null).AddGlobalTransition(trigger, toState, guard));
-        }
+    [Fact]
+    public void StateExtensions_AddTransition_NullStateMachine_WithGuard_ThrowsNullex()
+    {
+        var trigger = new Trigger("trigger");
+        var toState = new State<StubStateModel>("to");
+        Func<StubStateModel, bool> guard = s => true;
+        Assert.Throws<ArgumentNullException>(() =>
+            ((IStateMachine<StubStateModel>)null).AddGlobalTransition(trigger, toState, guard));
+    }
 
-        [Fact]
-        public void StateExtensions_AddTransition_NullTo_ThrowsNullex()
-        {
-            var machine = new Mock<IStateMachine<StubStateModel>>().Object;
-            var trigger = new Trigger("trigger");
-            Assert.Throws<ArgumentNullException>(() =>
-                machine.AddGlobalTransition(trigger, null));
-        }
+    [Fact]
+    public void StateExtensions_AddTransition_NullTo_ThrowsNullex()
+    {
+        var machine = new Mock<IStateMachine<StubStateModel>>().Object;
+        var trigger = new Trigger("trigger");
+        Assert.Throws<ArgumentNullException>(() =>
+            machine.AddGlobalTransition(trigger, null));
+    }
 
-        [Fact]
-        public void StateExtensions_AddTransition_NullTo_WithGuard_ThrowsNullex()
-        {
-            var machine = new Mock<IStateMachine<StubStateModel>>().Object;
-            var trigger = new Trigger("trigger");
-            Func<StubStateModel, bool> guard = s => true;
-            Assert.Throws<ArgumentNullException>(() =>
-                machine.AddGlobalTransition(trigger, null, guard));
-        }
+    [Fact]
+    public void StateExtensions_AddTransition_NullTo_WithGuard_ThrowsNullex()
+    {
+        var machine = new Mock<IStateMachine<StubStateModel>>().Object;
+        var trigger = new Trigger("trigger");
+        Func<StubStateModel, bool> guard = s => true;
+        Assert.Throws<ArgumentNullException>(() =>
+            machine.AddGlobalTransition(trigger, null, guard));
+    }
 
-        [Fact]
-        public void StateExtensions_AddTransition_NullTrigger_ThrowsNullex()
-        {
-            var machine = new Mock<IStateMachine<StubStateModel>>().Object;
-            var toState = new State<StubStateModel>("to");
-            Assert.Throws<ArgumentNullException>(() =>
-                machine.AddGlobalTransition(null, toState));
-        }
+    [Fact]
+    public void StateExtensions_AddTransition_NullTrigger_ThrowsNullex()
+    {
+        var machine = new Mock<IStateMachine<StubStateModel>>().Object;
+        var toState = new State<StubStateModel>("to");
+        Assert.Throws<ArgumentNullException>(() =>
+            machine.AddGlobalTransition(null, toState));
+    }
 
-        [Fact]
-        public void StateExtensions_AddTransition_NullTrigger_WithGuard_ThrowsNullex()
-        {
-            var machine = new Mock<IStateMachine<StubStateModel>>().Object;
-            var toState = new State<StubStateModel>("to");
-            Func<StubStateModel, bool> guard = s => true;
-            Assert.Throws<ArgumentNullException>(() =>
-                machine.AddGlobalTransition(null, toState, guard));
-        }
+    [Fact]
+    public void StateExtensions_AddTransition_NullTrigger_WithGuard_ThrowsNullex()
+    {
+        var machine = new Mock<IStateMachine<StubStateModel>>().Object;
+        var toState = new State<StubStateModel>("to");
+        Func<StubStateModel, bool> guard = s => true;
+        Assert.Throws<ArgumentNullException>(() =>
+            machine.AddGlobalTransition(null, toState, guard));
+    }
 
-        [Fact]
-        public void StateExtensions_AddTransition_ValidParms_CallsAddOnFromState()
-        {
-            var machineMock = new Mock<IStateMachine<StubStateModel>>();
-            var trigger = new Trigger("trigger");
-            var toState = new State<StubStateModel>("to");
-            machineMock.Setup(s => s.AddGlobalTransition(It.Is<Transition<StubStateModel>>(
-                t => t.Target.Name == "to" && t.Trigger.Name == "trigger"))).Verifiable();
-            machineMock.Object.AddGlobalTransition(trigger, toState);
-            machineMock.VerifyAll();
-        }
+    [Fact]
+    public void StateExtensions_AddTransition_ValidParms_CallsAddOnFromState()
+    {
+        var machineMock = new Mock<IStateMachine<StubStateModel>>();
+        var trigger = new Trigger("trigger");
+        var toState = new State<StubStateModel>("to");
+        machineMock.Setup(s => s.AddGlobalTransition(It.Is<Transition<StubStateModel>>(
+            t => t.Target.Name == "to" && t.Trigger.Name == "trigger"))).Verifiable();
+        machineMock.Object.AddGlobalTransition(trigger, toState);
+        machineMock.VerifyAll();
+    }
 
-        [Fact]
-        public void StateExtensions_AddTransition_ValidParms_WithGuard_CallsAddOnFromState()
-        {
-            var machineMock = new Mock<IStateMachine<StubStateModel>>();
-            var trigger = new Trigger("trigger");
-            var toState = new State<StubStateModel>("to");
-            Func<StubStateModel, bool> guard = s => true;
-            machineMock.Setup(s => s.AddGlobalTransition(It.Is<Transition<StubStateModel>>(
-                t => t.Target.Name == "to" && t.Trigger.Name == "trigger" && t.Guard == guard))).Verifiable();
-            machineMock.Object.AddGlobalTransition(trigger, toState, guard);
-            machineMock.VerifyAll();
-        }
+    [Fact]
+    public void StateExtensions_AddTransition_ValidParms_WithGuard_CallsAddOnFromState()
+    {
+        var machineMock = new Mock<IStateMachine<StubStateModel>>();
+        var trigger = new Trigger("trigger");
+        var toState = new State<StubStateModel>("to");
+        Func<StubStateModel, bool> guard = s => true;
+        machineMock.Setup(s => s.AddGlobalTransition(It.Is<Transition<StubStateModel>>(
+            t => t.Target.Name == "to" && t.Trigger.Name == "trigger" && t.Guard == guard))).Verifiable();
+        machineMock.Object.AddGlobalTransition(trigger, toState, guard);
+        machineMock.VerifyAll();
     }
 }
