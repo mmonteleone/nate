@@ -34,15 +34,12 @@ namespace Nate.Core
     {
         public TransitionEventArgs(TStateModel model, State<TStateModel> from, State<TStateModel> to, Trigger trigger)
         {
-            if (model == null) throw new ArgumentNullException("model");
-            if (from == null) throw new ArgumentNullException("from");
-            if (to == null) throw new ArgumentNullException("to");
-            if (trigger == null) throw new ArgumentNullException("trigger");
+            if (model == null) throw new ArgumentNullException(nameof(model));
 
             Model = model;
-            From = from;
-            To = to;
-            Trigger = trigger;
+            From = from ?? throw new ArgumentNullException(nameof(from));
+            To = to ?? throw new ArgumentNullException(nameof(to));
+            Trigger = trigger ?? throw new ArgumentNullException(nameof(trigger));
         }
 
         public TStateModel Model { get; }
