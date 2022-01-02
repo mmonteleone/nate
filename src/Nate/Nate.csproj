@@ -10,7 +10,7 @@
     <Copyright>Copyright (c) $(CurrentYear) Michael Monteleone and Dariusz Danielewski</Copyright>
     <PackageTags>state machine</PackageTags>
     <PackageIconUrl></PackageIconUrl>
-    <PackageProjectUrl>https://github.com/mmonteleone/nate</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/DarekDan/nate</PackageProjectUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>git://github.com/mmonteleone/nate</RepositoryUrl>
@@ -18,6 +18,8 @@
     <ApplicationIcon></ApplicationIcon>
     <PackageReleaseNotes>
     </PackageReleaseNotes>
+    <PackageIcon>nate.png</PackageIcon>
+    <PackageReadmeFile>README.markdown</PackageReadmeFile>
   </PropertyGroup>
 
   <!--common NuGet package refs -->
@@ -55,6 +57,17 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\nate.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\README.markdown">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
