@@ -38,8 +38,8 @@ namespace Nate.Core
     /// <typeparam name="TStateModel"></typeparam>
     public class State<TStateModel> where TStateModel : IStateModel
     {
-        private static readonly object transitionLock = new object();
-        private readonly Dictionary<Trigger, List<Transition<TStateModel>>> transitions;
+        private readonly object _transitionLock = new object();
+        private readonly Dictionary<Trigger, List<Transition<TStateModel>>> _transitions;
 
         public State(string name)
             : this(name, null)
@@ -48,11 +48,11 @@ namespace Nate.Core
 
         public State(string name, int? code)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("name");
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
 
             Name = name;
             Code = code;
-            transitions = new Dictionary<Trigger, List<Transition<TStateModel>>>();
+            _transitions = new Dictionary<Trigger, List<Transition<TStateModel>>>();
         }
 
         public string Name { get; }
@@ -60,7 +60,7 @@ namespace Nate.Core
 
         public virtual IEnumerable<Transition<TStateModel>> AvailableTransitions
         {
-            get { return transitions.Values.SelectMany(t => t); }
+            get { return _transitions.Values.SelectMany(t => t); }
         }
 
         public event EventHandler<TransitionEventArgs<TStateModel>> Entering;
@@ -77,17 +77,17 @@ namespace Nate.Core
                     string.Format(
                         "The source state ('{0}') of added transition does not match the state ('{1}') to which the transition is being added",
                         transition.Source, this));
-            lock (transitionLock)
+            lock (_transitionLock)
             {
-                if (!transitions.ContainsKey(transition.Trigger))
-                    transitions[transition.Trigger] = new List<Transition<TStateModel>>();
-                if (transitions[transition.Trigger].Contains(transition))
+                if (!_transitions.ContainsKey(transition.Trigger))
+                    _transitions[transition.Trigger] = new List<Transition<TStateModel>>();
+                if (_transitions[transition.Trigger].Contains(transition))
                     // don't allow effectively duplicate transitions
                     throw new InvalidTransitionException(
                         string.Format(
                             "State '{0}' already has a defined transition from source '{1}' to target '{2}' on trigger '{3}'",
                             this, transition.Source, transition.Target, transition.Trigger));
-                transitions[transition.Trigger].Add(transition);
+                _transitions[transition.Trigger].Add(transition);
             }
         }
 
@@ -131,11 +131,11 @@ namespace Nate.Core
         {
             if (trigger == null) throw new ArgumentNullException("trigger");
 
-            lock (transitionLock)
+            lock (_transitionLock)
             {
-                if (!transitions.ContainsKey(trigger))
+                if (!_transitions.ContainsKey(trigger))
                     return new List<Transition<TStateModel>>();
-                return transitions[trigger];
+                return _transitions[trigger];
             }
         }
 
@@ -148,16 +148,15 @@ namespace Nate.Core
 
         public override bool Equals(object obj)
         {
-            if (obj is State<TStateModel>)
+            if (obj is State<TStateModel> other)
             {
-                var other = (State<TStateModel>)obj;
                 if (other.Code.HasValue && Code.HasValue)
                     return Code.Value == other.Code.Value &&
                            Name.Equals(other.Name);
                 return Name.Equals(other.Name);
             }
 
-            return GetHashCode() == obj.GetHashCode();
+            return GetHashCode() == obj?.GetHashCode();
         }
 
         public override string ToString()

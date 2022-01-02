@@ -8,9 +8,9 @@ namespace Nate
 {
     public class FluentStateMachine<TStateModel> : IFluentStateMachine<TStateModel> where TStateModel : IStateModel
     {
-        private readonly Dictionary<int, State<TStateModel>> allStatesByCode;
-        private readonly Dictionary<string, State<TStateModel>> allStatesByName;
-        private readonly IStateMachine<TStateModel> stateMachine;
+        private readonly Dictionary<int, State<TStateModel>> _allStatesByCode;
+        private readonly Dictionary<string, State<TStateModel>> _allStatesByName;
+        private readonly IStateMachine<TStateModel> _stateMachine;
 
         public FluentStateMachine(
             IStateMachine<TStateModel> stateMachine,
@@ -20,10 +20,9 @@ namespace Nate
             IEnumerable<Action<TransitionEventArgs<TStateModel>>> globalTransitioneds,
             IEnumerable<Transition<TStateModel>> globalTransitions)
         {
-            if (stateMachine == null) throw new ArgumentNullException("stateMachine");
-            if (states == null) throw new ArgumentNullException("states");
+            if (states == null) throw new ArgumentNullException(nameof(states));
 
-            this.stateMachine = stateMachine;
+            this._stateMachine = stateMachine ?? throw new ArgumentNullException(nameof(stateMachine));
 
             if (globalTransitionings != null)
                 foreach (var callback in globalTransitionings)
@@ -34,44 +33,43 @@ namespace Nate
             if (globalTransitions != null)
                 foreach (var transition in globalTransitions)
                     stateMachine.AddGlobalTransition(transition);
-            allStatesByName = states.ToDictionary(s => s.Name);
-            allStatesByCode = states.Where(s => s.Code.HasValue).ToDictionary(s => s.Code.Value);
+            var enumerableStates = states.ToList();
+            _allStatesByName = enumerableStates.ToDictionary(s => s.Name);
+            _allStatesByCode = enumerableStates.Where(s => s.Code.HasValue).ToDictionary(s => s.Code.Value);
             InitialState = initialState;
         }
 
-        public StateMachineConfiguration Configuration => stateMachine.Configuration;
+        public StateMachineConfiguration Configuration => _stateMachine.Configuration;
 
         public State<TStateModel> InitialState { get; }
 
         public State<TStateModel> StateNamed(string name)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("name");
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
 
-            State<TStateModel> state = null;
-            allStatesByName.TryGetValue(name, out state);
+            _allStatesByName.TryGetValue(name, out var state);
             return state;
         }
 
         public State<TStateModel> StateCoded(int code)
         {
-            State<TStateModel> state = null;
-            allStatesByCode.TryGetValue(code, out state);
+            _allStatesByCode.TryGetValue(code, out var state);
             return state;
         }
 
         public void Trigger(string triggerName, TStateModel model)
         {
-            if (string.IsNullOrEmpty(triggerName)) throw new ArgumentNullException("triggerName");
-            if (model == null) throw new ArgumentNullException("model");
+            if (string.IsNullOrEmpty(triggerName)) throw new ArgumentNullException(nameof(triggerName));
+            if (model == null) throw new ArgumentNullException(nameof(model));
 
-            stateMachine.Trigger(new Trigger(triggerName), model);
+            _stateMachine.Trigger(new Trigger(triggerName), model);
         }
 
         public IEnumerable<State<TStateModel>> AvailableStates(TStateModel model)
         {
-            if (model == null) throw new ArgumentNullException("model");
+            if (model == null) throw new ArgumentNullException(nameof(model));
 
-            return stateMachine.AvailableStates(model);
+            return _stateMachine.AvailableStates(model);
         }
 
         public static InitialFluentBuilderApi<TStateModel> Describe()
