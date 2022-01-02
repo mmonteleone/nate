@@ -80,11 +80,6 @@ namespace Nate.Core
             return base.Equals(obj);
         }
 
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
         #endregion
     }
 }

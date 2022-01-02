@@ -35,6 +35,13 @@ namespace Nate.Tests.Unit.Core;
 public class InvalidStateModelExceptionTests
 {
     [Fact]
+    public void InvalidStateModelException_Verify()
+    {
+        var ex = new InvalidStateModelException();
+        Assert.Equal(new ArgumentException().Message, ex.Message);
+    }
+
+    [Fact]
     public void InvalidStateModelException_Message_VerifyMessage()
     {
         var ex = new InvalidStateModelException("message");

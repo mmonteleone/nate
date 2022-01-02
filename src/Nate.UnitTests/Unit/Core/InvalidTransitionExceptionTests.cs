@@ -35,6 +35,13 @@ namespace Nate.Tests.Unit.Core;
 public class InvalidTransitionExceptionTests
 {
     [Fact]
+    public void InvalidTransitionException_Verify()
+    {
+        var ex = new InvalidTransitionException();
+        Assert.Equal(new ArgumentException().Message, ex.Message);
+    }
+
+    [Fact]
     public void InvalidTransitionException_Message_VerifyMessage()
     {
         var ex = new InvalidTransitionException("message");

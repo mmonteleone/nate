@@ -35,6 +35,13 @@ namespace Nate.Tests.Unit.Core;
 public class InvalidTriggerExceptionTests
 {
     [Fact]
+    public void InvalidTriggerException_Verify()
+    {
+        var ex = new InvalidTriggerException();
+        Assert.Equal(new ArgumentException().Message, ex.Message);
+    }
+
+    [Fact]
     public void InvalidTriggerException_Message_VerifyMessage()
     {
         var ex = new InvalidTriggerException("message");
