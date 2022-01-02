@@ -58,7 +58,7 @@ namespace Nate.Core
 
         public override bool Equals(object obj)
         {
-            return GetHashCode() == obj.GetHashCode();
+            return GetHashCode() == obj?.GetHashCode();
         }
 
         #endregion
