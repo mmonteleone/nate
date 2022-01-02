@@ -60,7 +60,13 @@ namespace Nate.Core
 
         public virtual IEnumerable<Transition<TStateModel>> AvailableTransitions
         {
-            get { return _transitions.Values.SelectMany(t => t); }
+            get
+            {
+                lock (_transitionLock)
+                {
+                    return _transitions.Values.SelectMany(t => t);
+                }
+            }
         }
 
         public event EventHandler<TransitionEventArgs<TStateModel>> Entering;
@@ -70,13 +76,11 @@ namespace Nate.Core
 
         public virtual void AddTransition(Transition<TStateModel> transition)
         {
-            if (transition == null) throw new ArgumentNullException("transition");
+            if (transition == null) throw new ArgumentNullException(nameof(transition));
             if (!transition.Source.Equals(this))
                 // only transitions can be added to this state that have the same source as this state
                 throw new InvalidTransitionException(
-                    string.Format(
-                        "The source state ('{0}') of added transition does not match the state ('{1}') to which the transition is being added",
-                        transition.Source, this));
+                    $"The source state ('{transition.Source}') of added transition does not match the state ('{this}') to which the transition is being added");
             lock (_transitionLock)
             {
                 if (!_transitions.ContainsKey(transition.Trigger))
@@ -84,52 +88,50 @@ namespace Nate.Core
                 if (_transitions[transition.Trigger].Contains(transition))
                     // don't allow effectively duplicate transitions
                     throw new InvalidTransitionException(
-                        string.Format(
-                            "State '{0}' already has a defined transition from source '{1}' to target '{2}' on trigger '{3}'",
-                            this, transition.Source, transition.Target, transition.Trigger));
+                        $"State '{this}' already has a defined transition from source '{transition.Source}' to target '{transition.Target}' on trigger '{transition.Trigger}'");
                 _transitions[transition.Trigger].Add(transition);
             }
         }
 
         public virtual void RaiseEntered(TStateModel stateModel, State<TStateModel> from, Trigger trigger)
         {
-            if (stateModel == null) throw new ArgumentNullException("stateModel");
-            if (from == null) throw new ArgumentNullException("from");
-            if (trigger == null) throw new ArgumentNullException("trigger");
+            if (stateModel == null) throw new ArgumentNullException(nameof(stateModel));
+            if (from == null) throw new ArgumentNullException(nameof(@from));
+            if (trigger == null) throw new ArgumentNullException(nameof(trigger));
 
-            if (Entered != null) Entered(this, new TransitionEventArgs<TStateModel>(stateModel, from, this, trigger));
+            Entered?.Invoke(this, new TransitionEventArgs<TStateModel>(stateModel, @from, this, trigger));
         }
 
         public virtual void RaiseExiting(TStateModel stateModel, State<TStateModel> to, Trigger trigger)
         {
-            if (stateModel == null) throw new ArgumentNullException("stateModel");
-            if (to == null) throw new ArgumentNullException("to");
-            if (trigger == null) throw new ArgumentNullException("trigger");
+            if (stateModel == null) throw new ArgumentNullException(nameof(stateModel));
+            if (to == null) throw new ArgumentNullException(nameof(to));
+            if (trigger == null) throw new ArgumentNullException(nameof(trigger));
 
-            if (Exiting != null) Exiting(this, new TransitionEventArgs<TStateModel>(stateModel, this, to, trigger));
+            Exiting?.Invoke(this, new TransitionEventArgs<TStateModel>(stateModel, this, to, trigger));
         }
 
         public virtual void RaiseEntering(TStateModel stateModel, State<TStateModel> from, Trigger trigger)
         {
-            if (stateModel == null) throw new ArgumentNullException("stateModel");
-            if (from == null) throw new ArgumentNullException("from");
-            if (trigger == null) throw new ArgumentNullException("trigger");
+            if (stateModel == null) throw new ArgumentNullException(nameof(stateModel));
+            if (from == null) throw new ArgumentNullException(nameof(@from));
+            if (trigger == null) throw new ArgumentNullException(nameof(trigger));
 
-            if (Entering != null) Entering(this, new TransitionEventArgs<TStateModel>(stateModel, from, this, trigger));
+            Entering?.Invoke(this, new TransitionEventArgs<TStateModel>(stateModel, @from, this, trigger));
         }
 
         public virtual void RaiseExited(TStateModel stateModel, State<TStateModel> to, Trigger trigger)
         {
-            if (stateModel == null) throw new ArgumentNullException("stateModel");
-            if (to == null) throw new ArgumentNullException("to");
-            if (trigger == null) throw new ArgumentNullException("trigger");
+            if (stateModel == null) throw new ArgumentNullException(nameof(stateModel));
+            if (to == null) throw new ArgumentNullException(nameof(to));
+            if (trigger == null) throw new ArgumentNullException(nameof(trigger));
 
-            if (Exited != null) Exited(this, new TransitionEventArgs<TStateModel>(stateModel, this, to, trigger));
+            Exited?.Invoke(this, new TransitionEventArgs<TStateModel>(stateModel, this, to, trigger));
         }
 
         public virtual IEnumerable<Transition<TStateModel>> TransitionsOn(Trigger trigger)
         {
-            if (trigger == null) throw new ArgumentNullException("trigger");
+            if (trigger == null) throw new ArgumentNullException(nameof(trigger));
 
             lock (_transitionLock)
             {
