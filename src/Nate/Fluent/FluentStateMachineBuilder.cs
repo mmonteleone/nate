@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Nate.Core;
+using Nate.Core.Extensions;
 
 namespace Nate.Fluent
 {

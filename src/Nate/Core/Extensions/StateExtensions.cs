@@ -28,7 +28,7 @@
 
 using System;
 
-namespace Nate.Core
+namespace Nate.Core.Extensions
 {
     /// <summary>
     ///     Extensions to States for simpler API usage

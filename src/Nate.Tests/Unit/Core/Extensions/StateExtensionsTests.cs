@@ -29,6 +29,7 @@
 using System;
 using Moq;
 using Nate.Core;
+using Nate.Core.Extensions;
 using Xunit;
 
 namespace Nate.Tests.Unit.Core.Extensions

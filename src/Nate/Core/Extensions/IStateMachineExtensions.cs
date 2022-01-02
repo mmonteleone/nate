@@ -28,7 +28,7 @@
 
 using System;
 
-namespace Nate.Core
+namespace Nate.Core.Extensions
 {
     /// <summary>
     ///     Extension methods for easy api use on StateMachines

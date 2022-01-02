@@ -29,7 +29,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Nate.Core
+namespace Nate.Core.Extensions
 {
     /// <summary>
     ///     Extensions to StateModels for simpler API usage
