@@ -46,8 +46,8 @@ namespace Nate.Core.Extensions
         public static IEnumerable<State<TStateModel>> AvailableStates<TStateModel>(this IStateModel model,
             IStateMachine<TStateModel> stateMachine) where TStateModel : IStateModel
         {
-            if (model == null) throw new ArgumentNullException("model");
-            if (stateMachine == null) throw new ArgumentNullException("stateMachine");
+            if (model == null) throw new ArgumentNullException(nameof(model));
+            if (stateMachine == null) throw new ArgumentNullException(nameof(stateMachine));
 
             return stateMachine.AvailableStates((TStateModel)model);
         }
@@ -62,8 +62,8 @@ namespace Nate.Core.Extensions
         public static IEnumerable<Trigger> AvailableTriggers<TStateModel>(this IStateModel model,
             IStateMachine<TStateModel> stateMachine) where TStateModel : IStateModel
         {
-            if (model == null) throw new ArgumentNullException("model");
-            if (stateMachine == null) throw new ArgumentNullException("stateMachine");
+            if (model == null) throw new ArgumentNullException(nameof(model));
+            if (stateMachine == null) throw new ArgumentNullException(nameof(stateMachine));
 
             return stateMachine.AvailableTriggers((TStateModel)model);
         }
@@ -79,9 +79,9 @@ namespace Nate.Core.Extensions
             string triggerName,
             IStateMachine<TStateModel> stateMachine) where TStateModel : IStateModel
         {
-            if (model == null) throw new ArgumentNullException("model");
-            if (string.IsNullOrEmpty(triggerName)) throw new ArgumentNullException("triggerName");
-            if (stateMachine == null) throw new ArgumentNullException("stateMachine");
+            if (model == null) throw new ArgumentNullException(nameof(model));
+            if (string.IsNullOrEmpty(triggerName)) throw new ArgumentNullException(nameof(triggerName));
+            if (stateMachine == null) throw new ArgumentNullException(nameof(stateMachine));
 
             stateMachine.Trigger(new Trigger(triggerName), (TStateModel)model);
         }
@@ -97,9 +97,9 @@ namespace Nate.Core.Extensions
             Trigger trigger,
             IStateMachine<TStateModel> stateMachine) where TStateModel : IStateModel
         {
-            if (model == null) throw new ArgumentNullException("model");
-            if (trigger == null) throw new ArgumentNullException("trigger");
-            if (stateMachine == null) throw new ArgumentNullException("stateMachine");
+            if (model == null) throw new ArgumentNullException(nameof(model));
+            if (trigger == null) throw new ArgumentNullException(nameof(trigger));
+            if (stateMachine == null) throw new ArgumentNullException(nameof(stateMachine));
 
             stateMachine.Trigger(trigger, (TStateModel)model);
         }

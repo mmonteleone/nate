@@ -46,9 +46,9 @@ namespace Nate.Core.Extensions
             Trigger trigger,
             State<TStateModel> to) where TStateModel : IStateModel
         {
-            if (stateMachine == null) throw new ArgumentNullException("stateMachine");
-            if (trigger == null) throw new ArgumentNullException("trigger");
-            if (to == null) throw new ArgumentNullException("to");
+            if (stateMachine == null) throw new ArgumentNullException(nameof(stateMachine));
+            if (trigger == null) throw new ArgumentNullException(nameof(trigger));
+            if (to == null) throw new ArgumentNullException(nameof(to));
 
             stateMachine.AddGlobalTransition(new Transition<TStateModel>(trigger, null, to));
         }
@@ -66,16 +66,16 @@ namespace Nate.Core.Extensions
             State<TStateModel> to,
             Func<TStateModel, bool> guard) where TStateModel : IStateModel
         {
-            if (stateMachine == null) throw new ArgumentNullException("stateMachine");
-            if (trigger == null) throw new ArgumentNullException("trigger");
-            if (to == null) throw new ArgumentNullException("to");
-            if (guard == null) throw new ArgumentNullException("guard");
+            if (stateMachine == null) throw new ArgumentNullException(nameof(stateMachine));
+            if (trigger == null) throw new ArgumentNullException(nameof(trigger));
+            if (to == null) throw new ArgumentNullException(nameof(to));
+            if (guard == null) throw new ArgumentNullException(nameof(guard));
 
             stateMachine.AddGlobalTransition(new Transition<TStateModel>(trigger, null, to, guard));
         }
 
         /// <summary>
-        ///     Triggers a trigger on a statemachine by the trigger's name, instead of trigger object instance
+        ///     Triggers a trigger on a state machine by the trigger's name, instead of trigger object instance
         /// </summary>
         /// <typeparam name="TStateModel"></typeparam>
         /// <param name="stateMachine">state machine to use for trigger</param>
@@ -85,9 +85,9 @@ namespace Nate.Core.Extensions
             string triggerName,
             TStateModel model) where TStateModel : IStateModel
         {
-            if (stateMachine == null) throw new ArgumentNullException("stateMachine");
-            if (string.IsNullOrEmpty(triggerName)) throw new ArgumentNullException("triggerName");
-            if (model == null) throw new ArgumentNullException("model");
+            if (stateMachine == null) throw new ArgumentNullException(nameof(stateMachine));
+            if (string.IsNullOrEmpty(triggerName)) throw new ArgumentNullException(nameof(triggerName));
+            if (model == null) throw new ArgumentNullException(nameof(model));
 
             stateMachine.Trigger(new Trigger(triggerName), model);
         }
