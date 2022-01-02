@@ -102,17 +102,16 @@ namespace Nate.Core
             // doesn't yet take into account the passing of those transitions' guards lambdas
             var possibleTransitions = currentState
                 .TransitionsOn(trigger)
-                .Concat(GlobalTransitionsOn(trigger));
+                .Concat(GlobalTransitionsOn(trigger)).ToList();
             // if no possible transistions, throw exception about it
-            if (Configuration.RaiseExceptionOnTriggerMatchingNoTransition && possibleTransitions.Count() == 0)
+            if (Configuration.RaiseExceptionOnTriggerMatchingNoTransition && !possibleTransitions.Any())
             {
                 var availableTriggers = AvailableTriggers(model).ToList();
-                var ex = new InvalidTriggerException(string.Format(
-                    "State Model's CurrentState '{0}' does not define a Transition for trigger '{1}', nor does the state machine provide any global transitions on this trigger.  Available Triggers from this state: {2}.  This exception can be suppressed via the state machine's Configuration.RaiseExceptionOnTriggerMatchingNoTransitions property",
-                    model.CurrentState,
-                    trigger,
-                    string.Join(", ", availableTriggers.ConvertAll(t => t.Name).ToArray())));
-                ex.AvailableTriggers = availableTriggers;
+                var ex = new InvalidTriggerException(
+                    $"State Model's CurrentState '{model.CurrentState}' does not define a Transition for trigger '{trigger}', nor does the state machine provide any global transitions on this trigger.  Available Triggers from this state: {string.Join(", ", availableTriggers.ConvertAll(t => t.Name).ToArray())}.  This exception can be suppressed via the state machine's Configuration.RaiseExceptionOnTriggerMatchingNoTransitions property")
+                {
+                    AvailableTriggers = availableTriggers
+                };
                 throw ex;
             }
 
