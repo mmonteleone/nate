@@ -218,7 +218,7 @@ namespace Nate.Tests.Unit.Core
         [Fact]
         public void State_GetHashCode_WhenCoded_ReturnsCodeHash()
         {
-            var code = (int?) 5;
+            var code = (int?)5;
             var name = "state";
             var state = new State<StubStateModel>(name, code);
 
@@ -527,7 +527,7 @@ namespace Nate.Tests.Unit.Core
 
             var result = state1.TransitionsOn(new Trigger("t1")).ToList();
             Assert.NotNull(result);
-            Assert.Single( result);
+            Assert.Single(result);
             Assert.Same(transition1, result.FirstOrDefault());
         }
 

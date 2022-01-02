@@ -53,7 +53,7 @@ namespace Nate.Tests.Unit.Core.Extensions
             var trigger = new Trigger("trigger");
             var toState = new State<StubStateModel>("to");
             Assert.Throws<ArgumentNullException>(() =>
-                ((State<StubStateModel>) null).AddTransition(trigger, toState));
+                ((State<StubStateModel>)null).AddTransition(trigger, toState));
         }
 
 
@@ -64,7 +64,7 @@ namespace Nate.Tests.Unit.Core.Extensions
             var toState = new State<StubStateModel>("to");
             Func<StubStateModel, bool> guard = s => true;
             Assert.Throws<ArgumentNullException>(() =>
-                ((State<StubStateModel>) null).AddTransition(trigger, toState, guard));
+                ((State<StubStateModel>)null).AddTransition(trigger, toState, guard));
         }
 
         [Fact]

@@ -150,7 +150,7 @@ namespace Nate.Core
         {
             if (obj is State<TStateModel>)
             {
-                var other = (State<TStateModel>) obj;
+                var other = (State<TStateModel>)obj;
                 if (other.Code.HasValue && Code.HasValue)
                     return Code.Value == other.Code.Value &&
                            Name.Equals(other.Name);

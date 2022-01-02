@@ -49,7 +49,7 @@ namespace Nate.Core.Extensions
             if (model == null) throw new ArgumentNullException("model");
             if (stateMachine == null) throw new ArgumentNullException("stateMachine");
 
-            return stateMachine.AvailableStates((TStateModel) model);
+            return stateMachine.AvailableStates((TStateModel)model);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Nate.Core.Extensions
             if (model == null) throw new ArgumentNullException("model");
             if (stateMachine == null) throw new ArgumentNullException("stateMachine");
 
-            return stateMachine.AvailableTriggers((TStateModel) model);
+            return stateMachine.AvailableTriggers((TStateModel)model);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Nate.Core.Extensions
             if (string.IsNullOrEmpty(triggerName)) throw new ArgumentNullException("triggerName");
             if (stateMachine == null) throw new ArgumentNullException("stateMachine");
 
-            stateMachine.Trigger(new Trigger(triggerName), (TStateModel) model);
+            stateMachine.Trigger(new Trigger(triggerName), (TStateModel)model);
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Nate.Core.Extensions
             if (trigger == null) throw new ArgumentNullException("trigger");
             if (stateMachine == null) throw new ArgumentNullException("stateMachine");
 
-            stateMachine.Trigger(trigger, (TStateModel) model);
+            stateMachine.Trigger(trigger, (TStateModel)model);
         }
     }
 }

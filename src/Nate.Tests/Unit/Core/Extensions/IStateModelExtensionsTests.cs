@@ -42,7 +42,7 @@ namespace Nate.Tests.Unit.Core.Extensions
         {
             var mockModel = new StubStateModel();
             Assert.Throws<ArgumentNullException>(() =>
-                mockModel.AvailableStates((IStateMachine<StubStateModel>) null));
+                mockModel.AvailableStates((IStateMachine<StubStateModel>)null));
         }
 
         [Fact]
@@ -73,7 +73,7 @@ namespace Nate.Tests.Unit.Core.Extensions
             var mockModel = new StubStateModel();
 
             Assert.Throws<ArgumentNullException>(() =>
-                mockModel.AvailableTriggers((IStateMachine<StubStateModel>) null));
+                mockModel.AvailableTriggers((IStateMachine<StubStateModel>)null));
         }
 
         [Fact]
@@ -105,7 +105,7 @@ namespace Nate.Tests.Unit.Core.Extensions
             var mockModel = new StubStateModel();
             var trigger = new Trigger("trigger");
             Assert.Throws<ArgumentNullException>(() =>
-                mockModel.Trigger(trigger, (IStateMachine<StubStateModel>) null));
+                mockModel.Trigger(trigger, (IStateMachine<StubStateModel>)null));
         }
 
         [Fact]
@@ -114,7 +114,7 @@ namespace Nate.Tests.Unit.Core.Extensions
             var mockModel = new StubStateModel();
 
             Assert.Throws<ArgumentNullException>(() =>
-                mockModel.Trigger("triggerName", (IStateMachine<StubStateModel>) null));
+                mockModel.Trigger("triggerName", (IStateMachine<StubStateModel>)null));
         }
 
         [Fact]
@@ -143,7 +143,7 @@ namespace Nate.Tests.Unit.Core.Extensions
             var mockMachine = new Mock<IStateMachine<StubStateModel>>();
 
             Assert.Throws<ArgumentNullException>(() =>
-                mockModel.Trigger((Trigger) null, mockMachine.Object));
+                mockModel.Trigger((Trigger)null, mockMachine.Object));
         }
 
         [Fact]
@@ -153,7 +153,7 @@ namespace Nate.Tests.Unit.Core.Extensions
             var mockMachine = new Mock<IStateMachine<StubStateModel>>();
 
             Assert.Throws<ArgumentNullException>(() =>
-                mockModel.Trigger((string) null, mockMachine.Object));
+                mockModel.Trigger((string)null, mockMachine.Object));
         }
 
         [Fact]

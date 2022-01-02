@@ -95,7 +95,7 @@ namespace Nate.Core
                     "State model's CurrentState object property must be of type State<TStateModel>");
 
             // get current state
-            var currentState = (State<TStateModel>) model.CurrentState;
+            var currentState = (State<TStateModel>)model.CurrentState;
 
 
             // find all possible transitions (state+global) from current state with given trigger
@@ -179,7 +179,7 @@ namespace Nate.Core
                     "State model's CurrentState object property must be of type State<TStateModel>");
 
             // get current state
-            var currentState = (State<TStateModel>) model.CurrentState;
+            var currentState = (State<TStateModel>)model.CurrentState;
 
             return currentState.AvailableTransitions
                 .Concat(globalTransitions.Values.SelectMany(t => t))
@@ -196,7 +196,7 @@ namespace Nate.Core
                     "State model's CurrentState object property must be of type State<TStateModel>");
 
             // get current state
-            var currentState = (State<TStateModel>) model.CurrentState;
+            var currentState = (State<TStateModel>)model.CurrentState;
 
             return currentState.AvailableTransitions
                 .Concat(globalTransitions.Values.SelectMany(t => t))

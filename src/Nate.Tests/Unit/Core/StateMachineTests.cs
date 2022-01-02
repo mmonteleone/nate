@@ -38,29 +38,6 @@ namespace Nate.Tests.Unit.Core
 {
     public class StateMachineTests
     {
-        private class TrackableStateModel : IStateModel
-        {
-            private object currentState;
-            public EventHandler<EventArgs> Getting { get; set; }
-            public EventHandler<EventArgs> Setting { get; set; }
-
-            public object CurrentState
-            {
-                get
-                {
-                    if (Getting != null)
-                        Getting(this, new EventArgs());
-                    return currentState;
-                }
-                set
-                {
-                    if (Setting != null)
-                        Setting(this, new EventArgs());
-                    currentState = value;
-                }
-            }
-        }
-
         [Fact]
         public void StateMachine_AddGlobalTransition_NullTran_ThrowsNullEx()
         {
@@ -277,7 +254,7 @@ namespace Nate.Tests.Unit.Core
 
             var result = machine.GlobalTransitionsOn(new Trigger("t1"));
             Assert.NotNull(result);
-            Assert.Single( result);
+            Assert.Single(result);
             Assert.Same(transition1, result.FirstOrDefault());
         }
 
@@ -350,7 +327,7 @@ namespace Nate.Tests.Unit.Core
         public void
             StateMachine_Trigger_NoPassingTransitionOnTrigger_ConfigRaiseOnNoPassingTranFalse_ThrowsInvalidTrigger()
         {
-            var config = new StateMachineConfiguration {RaiseExceptionOnTriggerMatchingNoPassingTransition = false};
+            var config = new StateMachineConfiguration { RaiseExceptionOnTriggerMatchingNoPassingTransition = false };
             var machine = new StateMachine<StubStateModel>(config);
             var model = new StubStateModel();
             var trigger1 = new Trigger("trigger1");
@@ -369,7 +346,7 @@ namespace Nate.Tests.Unit.Core
         public void
             StateMachine_Trigger_NoPassingTransitionOnTrigger_ConfigRaiseOnNoPassingTranTrue_ThrowsInvalidTrigger()
         {
-            var config = new StateMachineConfiguration {RaiseExceptionOnTriggerMatchingNoPassingTransition = true};
+            var config = new StateMachineConfiguration { RaiseExceptionOnTriggerMatchingNoPassingTransition = true };
             var machine = new StateMachine<StubStateModel>(config);
             var model = new StubStateModel();
             var trigger1 = new Trigger("trigger1");
@@ -388,7 +365,7 @@ namespace Nate.Tests.Unit.Core
         public void
             StateMachine_Trigger_NoStateOrGlobalTransOnTrigger_ConfigRaiseOnNoTransFalse_NotThrowsInvalidTrigger()
         {
-            var config = new StateMachineConfiguration {RaiseExceptionOnTriggerMatchingNoTransition = false};
+            var config = new StateMachineConfiguration { RaiseExceptionOnTriggerMatchingNoTransition = false };
             var machine = new StateMachine<StubStateModel>(config);
             var model = new StubStateModel();
             var trigger1 = new Trigger("trigger1");
@@ -405,7 +382,7 @@ namespace Nate.Tests.Unit.Core
         [Fact]
         public void StateMachine_Trigger_NoStateOrGlobalTransOnTrigger_ConfigRaiseOnNoTransTrue_ThrowsInvalidTrigger()
         {
-            var config = new StateMachineConfiguration {RaiseExceptionOnTriggerMatchingNoTransition = true};
+            var config = new StateMachineConfiguration { RaiseExceptionOnTriggerMatchingNoTransition = true };
             var machine = new StateMachine<StubStateModel>(config);
             var model = new StubStateModel();
             var trigger1 = new Trigger("trigger1");
@@ -440,7 +417,7 @@ namespace Nate.Tests.Unit.Core
         public void
             StateMachine_Trigger_TransitionFromCurrentToSame_ConfiggedNotToRaiseExcep_DoesNotRaiseTransitionChangeEvents()
         {
-            var config = new StateMachineConfiguration {RaiseExceptionBeforeTransitionToSameState = false};
+            var config = new StateMachineConfiguration { RaiseExceptionBeforeTransitionToSameState = false };
             var machine = new StateMachine<StubStateModel>(config);
             var model = new StubStateModel();
             var trigger1 = new Trigger("trigger1");
@@ -468,7 +445,7 @@ namespace Nate.Tests.Unit.Core
         [Fact]
         public void StateMachine_Trigger_TransitionsToSameState_ConfigRaiseOnSameStateTranFalse_ThrowsInvalidTrigger()
         {
-            var config = new StateMachineConfiguration {RaiseExceptionBeforeTransitionToSameState = false};
+            var config = new StateMachineConfiguration { RaiseExceptionBeforeTransitionToSameState = false };
             var machine = new StateMachine<StubStateModel>(config);
             var model = new StubStateModel();
             var trigger1 = new Trigger("trigger1");
@@ -487,7 +464,7 @@ namespace Nate.Tests.Unit.Core
         [Fact]
         public void StateMachine_Trigger_TransitionsToSameState_ConfigRaiseOnSameStateTranTrue_ThrowsInvalidTrigger()
         {
-            var config = new StateMachineConfiguration {RaiseExceptionBeforeTransitionToSameState = true};
+            var config = new StateMachineConfiguration { RaiseExceptionBeforeTransitionToSameState = true };
             var machine = new StateMachine<StubStateModel>(config);
             var model = new StubStateModel();
             var trigger1 = new Trigger("trigger1");
@@ -615,8 +592,8 @@ namespace Nate.Tests.Unit.Core
                     It.IsAny<StubStateModel>(),
                     It.IsAny<State<StubStateModel>>(),
                     It.IsAny<Trigger>()), Times.Never());
-            Assert.Single( transitioningEventArgs);
-            Assert.Single( transitionedEventArgs);
+            Assert.Single(transitioningEventArgs);
+            Assert.Single(transitionedEventArgs);
 
             Assert.Equal(state1, transitioningEventArgs[0].From);
             Assert.Equal(state2, transitioningEventArgs[0].To);
@@ -746,7 +723,7 @@ namespace Nate.Tests.Unit.Core
                     It.IsAny<StubStateModel>(),
                     It.IsAny<State<StubStateModel>>(),
                     It.IsAny<Trigger>()), Times.Never());
-            Assert.Single( transitioningEventArgs);
+            Assert.Single(transitioningEventArgs);
             Assert.Single(transitionedEventArgs);
 
             Assert.Equal(state1, transitioningEventArgs[0].From);
@@ -821,10 +798,33 @@ namespace Nate.Tests.Unit.Core
         [Fact]
         public void StateMachine_ValidConfigPassed_SetsConfigAsCurrentConfig()
         {
-            var config = new StateMachineConfiguration {RaiseExceptionOnTriggerMatchingNoTransition = true};
+            var config = new StateMachineConfiguration { RaiseExceptionOnTriggerMatchingNoTransition = true };
             var machine = new StateMachine<StubStateModel>(config);
             Assert.Same(config, machine.Configuration);
             Assert.True(machine.Configuration.RaiseExceptionOnTriggerMatchingNoTransition);
+        }
+
+        private class TrackableStateModel : IStateModel
+        {
+            private object currentState;
+            private EventHandler<EventArgs> Getting { get; set; }
+            public EventHandler<EventArgs> Setting { get; set; }
+
+            public object CurrentState
+            {
+                get
+                {
+                    if (Getting != null)
+                        Getting(this, EventArgs.Empty);
+                    return currentState;
+                }
+                set
+                {
+                    if (Setting != null)
+                        Setting(this, EventArgs.Empty);
+                    currentState = value;
+                }
+            }
         }
     }
 }

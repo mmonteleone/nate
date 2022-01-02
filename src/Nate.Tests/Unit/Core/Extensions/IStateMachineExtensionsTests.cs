@@ -82,7 +82,7 @@ namespace Nate.Tests.Unit.Core.Extensions
             var trigger = new Trigger("trigger");
             var toState = new State<StubStateModel>("to");
             Assert.Throws<ArgumentNullException>(() =>
-                ((IStateMachine<StubStateModel>) null).AddGlobalTransition(trigger, toState));
+                ((IStateMachine<StubStateModel>)null).AddGlobalTransition(trigger, toState));
         }
 
 
@@ -93,7 +93,7 @@ namespace Nate.Tests.Unit.Core.Extensions
             var toState = new State<StubStateModel>("to");
             Func<StubStateModel, bool> guard = s => true;
             Assert.Throws<ArgumentNullException>(() =>
-                ((IStateMachine<StubStateModel>) null).AddGlobalTransition(trigger, toState, guard));
+                ((IStateMachine<StubStateModel>)null).AddGlobalTransition(trigger, toState, guard));
         }
 
         [Fact]
