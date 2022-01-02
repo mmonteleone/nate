@@ -18,6 +18,7 @@
     <PackageReleaseNotes>
       Version 1.0.3 
       - Added support for .Net 5.0 and 6.0
+      - Code cleanup and changing locks to instance level
     </PackageReleaseNotes>
     <PackageIcon>nate.png</PackageIcon>
     <PackageReadmeFile>README.MD</PackageReadmeFile>
