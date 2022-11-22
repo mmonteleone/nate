@@ -2,6 +2,8 @@ Nate
 ====
 Tiny little fluent state machine for .NET
 
+[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/nate)](https://www.nuget.org/packages/nate)
+
 Full documentation coming soon
 ------------------------------
 

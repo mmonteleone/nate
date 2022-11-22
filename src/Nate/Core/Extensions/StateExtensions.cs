@@ -1,4 +1,5 @@
 ﻿#region license
+
 /* Nate
  * http://github.com/mmonteleone/nate
  * 
@@ -21,56 +22,55 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  * DEALINGS IN THE SOFTWARE.
- */ 
-#endregion
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+ */
 
-namespace Nate.Core
+#endregion
+
+using System;
+
+namespace Nate.Core.Extensions
 {
     /// <summary>
-    /// Extensions to States for simpler API usage
+    ///     Extensions to States for simpler API usage
     /// </summary>
     public static class StateExtensions
     {
         /// <summary>
-        /// Shortcut for adding a transition to a state without first constructing a Transition object
+        ///     Shortcut for adding a transition to a state without first constructing a Transition object
         /// </summary>
         /// <typeparam name="TStateModel"></typeparam>
         /// <param name="state">state to hold transition</param>
         /// <param name="trigger">transition trigger</param>
         /// <param name="to">transition target</param>
-        public static void AddTransition<TStateModel>(this State<TStateModel> state, 
+        public static void AddTransition<TStateModel>(this State<TStateModel> state,
             Trigger trigger,
             State<TStateModel> to) where TStateModel : IStateModel
         {
-            if (state == null) { throw new ArgumentNullException("state"); }
-            if (trigger == null) { throw new ArgumentNullException("trigger"); }
-            if (to == null) { throw new ArgumentNullException("to"); }
+            if (state == null) throw new ArgumentNullException(nameof(state));
+            if (trigger == null) throw new ArgumentNullException(nameof(trigger));
+            if (to == null) throw new ArgumentNullException(nameof(to));
 
             state.AddTransition(
                 new Transition<TStateModel>(trigger, state, to));
         }
 
         /// <summary>
-        /// Shortcut for adding a transition to a state without first constructing a Transition object
+        ///     Shortcut for adding a transition to a state without first constructing a Transition object
         /// </summary>
         /// <typeparam name="TStateModel"></typeparam>
         /// <param name="state">state to hold transition</param>
         /// <param name="trigger">transition trigger</param>
         /// <param name="to">transition target</param>
         /// <param name="guard">lambda guard method which must evaluate to true for transition to occur</param>
-        public static void AddTransition<TStateModel>(this State<TStateModel> state, 
+        public static void AddTransition<TStateModel>(this State<TStateModel> state,
             Trigger trigger,
             State<TStateModel> to,
             Func<TStateModel, bool> guard) where TStateModel : IStateModel
         {
-            if (state == null) { throw new ArgumentNullException("state"); }
-            if (trigger == null) { throw new ArgumentNullException("trigger"); }
-            if (to == null) { throw new ArgumentNullException("to"); }
-            if (guard == null) { throw new ArgumentNullException("guard"); }
+            if (state == null) throw new ArgumentNullException(nameof(state));
+            if (trigger == null) throw new ArgumentNullException(nameof(trigger));
+            if (to == null) throw new ArgumentNullException(nameof(to));
+            if (guard == null) throw new ArgumentNullException(nameof(guard));
 
             state.AddTransition(
                 new Transition<TStateModel>(trigger, state, to, guard));

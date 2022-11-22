@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Moq;
-using Xunit;
-using Nate.Fluent;
 using Nate.Core;
+using Nate.Fluent;
 
 namespace Nate.Tests.Unit.Fluent
 {
     public class FluentTestBase
     {
+        protected Mock<IFluentStateMachineBuilder<StubStateModel>> MockBuilder;
+
         public FluentTestBase()
         {
             MockBuilder = new Mock<IFluentStateMachineBuilder<StubStateModel>>();
         }
-
-        protected Mock<IFluentStateMachineBuilder<StubStateModel>> MockBuilder;
 
         protected FluentStateMachine<StubStateModel> FluentStateMachine
         {
@@ -36,9 +32,6 @@ namespace Nate.Tests.Unit.Fluent
             }
         }
 
-        protected IFluentStateMachineBuilder<StubStateModel> Builder
-        {
-            get { return MockBuilder.Object; }
-        }
+        protected IFluentStateMachineBuilder<StubStateModel> Builder => MockBuilder.Object;
     }
 }

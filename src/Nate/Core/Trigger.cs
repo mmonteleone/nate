@@ -1,4 +1,5 @@
 ﻿#region license
+
 /* Nate
  * http://github.com/mmonteleone/nate
  * 
@@ -21,25 +22,27 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  * DEALINGS IN THE SOFTWARE.
- */ 
+ */
+
 #endregion
+
 using System;
 
 namespace Nate.Core
 {
     /// <summary>
-    /// Represents a possible trigger that can cause a transition, on any number of State instances or types.
+    ///     Represents a possible trigger that can cause a transition, on any number of State instances or types.
     /// </summary>
     public class Trigger
     {
-        public string Name { get; protected set; }
-
         public Trigger(string name)
         {
-            if (String.IsNullOrEmpty(name)) { throw new ArgumentNullException("name"); }
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
 
             Name = name;
         }
+
+        public string Name { get; protected set; }
 
         #region comparison overrides
 
@@ -55,10 +58,9 @@ namespace Nate.Core
 
         public override bool Equals(object obj)
         {
-            return this.GetHashCode() == obj.GetHashCode();
+            return GetHashCode() == obj?.GetHashCode();
         }
 
         #endregion
-
     }
 }

@@ -1,15 +1,70 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Xunit;
 using Moq;
 using Nate.Core;
+using Xunit;
 
 namespace Nate.Tests.Unit
 {
     public class FluentStateMachineTests
     {
+        [Fact]
+        public void FluentStateMachine_AvailableStates_NullModel_ThrowsNullEx()
+        {
+            var machineMock = new Mock<IStateMachine<StubStateModel>>();
+            var state1 = new State<StubStateModel>("s1");
+            var state2 = new State<StubStateModel>("s2");
+            var state3 = new State<StubStateModel>("s3");
+
+            var allStates = new List<State<StubStateModel>>();
+            allStates.Add(state1);
+            allStates.Add(state2);
+            allStates.Add(state3);
+
+            var fluentMachine = new FluentStateMachine<StubStateModel>(
+                machineMock.Object,
+                allStates,
+                state2,
+                null,
+                null,
+                null);
+
+            Assert.Throws<ArgumentNullException>(() =>
+                fluentMachine.AvailableStates(null));
+        }
+
+        [Fact]
+        public void FluentStateMachine_AvailableStates_ValidParms_CallsReturnsMachineAvailable()
+        {
+            var machineMock = new Mock<IStateMachine<StubStateModel>>();
+            var state1 = new State<StubStateModel>("s1");
+            var state2 = new State<StubStateModel>("s2");
+            var state3 = new State<StubStateModel>("s3");
+
+            var allStates = new List<State<StubStateModel>>();
+            allStates.Add(state1);
+            allStates.Add(state2);
+            allStates.Add(state3);
+
+            var model = new StubStateModel();
+
+
+            machineMock.Setup(m => m.AvailableStates(model)).Returns(allStates).Verifiable();
+
+            var fluentMachine = new FluentStateMachine<StubStateModel>(
+                machineMock.Object,
+                allStates,
+                state2,
+                null,
+                null,
+                null);
+
+            var result = fluentMachine.AvailableStates(model);
+
+            Assert.Same(allStates, result);
+            machineMock.VerifyAll();
+        }
+
         [Fact]
         public void FluentStateMachine_Describe_ReturnsNewBuilderApi()
         {
@@ -18,33 +73,6 @@ namespace Nate.Tests.Unit
             Assert.NotNull(result);
             Assert.NotNull(result);
             Assert.NotSame(result, result2);
-        }
-
-        [Fact]
-        public void FluentStateMachine_NullMachine_ThrowsNullEx()
-        {
-            Assert.Throws<ArgumentNullException>(() =>
-                new FluentStateMachine<StubStateModel>(
-                    null,
-                    new Mock<IEnumerable<State<StubStateModel>>>().Object,
-                    new State<StubStateModel>("state"),
-                    new Mock<IEnumerable<Action<TransitionEventArgs<StubStateModel>>>>().Object,
-                    new Mock<IEnumerable<Action<TransitionEventArgs<StubStateModel>>>>().Object,
-                    new Mock<IEnumerable<Transition<StubStateModel>>>().Object));
-
-        }
-
-        [Fact]
-        public void FluentStateMachine_NullStates_ThrowsNullEx()
-        {
-            Assert.Throws<ArgumentNullException>(() =>
-                new FluentStateMachine<StubStateModel>(
-                    new Mock<IStateMachine<StubStateModel>>().Object,
-                    null,
-                    new State<StubStateModel>("state"),
-                    new Mock<IEnumerable<Action<TransitionEventArgs<StubStateModel>>>>().Object,
-                    new Mock<IEnumerable<Action<TransitionEventArgs<StubStateModel>>>>().Object,
-                    new Mock<IEnumerable<Transition<StubStateModel>>>().Object));
         }
 
         [Fact]
@@ -88,53 +116,6 @@ namespace Nate.Tests.Unit
             Assert.Equal(2, globalTransitionsAdded.Count);
             Assert.Equal(transition1, globalTransitionsAdded[0]);
             Assert.Equal(transition2, globalTransitionsAdded[1]);
-        }
-
-        [Fact]
-        public void FluentStateMachine_GlobalTransitionings_AddsEachOneToMachine()
-        {
-            var machine = new StateMachine<StubStateModel>();
-            var machineMock = new Mock<IStateMachine<StubStateModel>>();
-            var state1 = new State<StubStateModel>("s1");
-            var state2 = new State<StubStateModel>("s2");
-            var state3 = new State<StubStateModel>("s3");
-            var trigger1 = new Trigger("t1");
-            var trigger2 = new Trigger("t2");
-
-            var allStates = new List<State<StubStateModel>>();
-            allStates.Add(state1);
-            allStates.Add(state2);
-            allStates.Add(state3);
-
-            // transition arg
-            var arg = new TransitionEventArgs<StubStateModel>(new StubStateModel(),
-                state1, state2, trigger1);
-
-            // create some global transitionings
-            Action<TransitionEventArgs<StubStateModel>> callback1 = e => {  };
-            Action<TransitionEventArgs<StubStateModel>> callback2 = e => { };
-            Action<TransitionEventArgs<StubStateModel>> callback3 = e => { };
-
-            // put them in an ienum
-            var callbacks = new List<Action<TransitionEventArgs<StubStateModel>>>();
-            callbacks.Add(callback1);
-            callbacks.Add(callback2);
-            callbacks.Add(callback3);
-
-
-            // create a fluent machine, and validate each was added to machine
-            //machineMock.Raise(m => m.Transitioning += null, arg);
-            machineMock.SetupAllProperties();
-
-            var fluentMachine = new FluentStateMachine<StubStateModel>(
-                machineMock.Object,
-                allStates,
-                null,
-                callbacks,
-                null,
-                null);
-
-            //machineMock.VerifyAll();
         }
 
         [Fact]
@@ -185,6 +166,53 @@ namespace Nate.Tests.Unit
         }
 
         [Fact]
+        public void FluentStateMachine_GlobalTransitionings_AddsEachOneToMachine()
+        {
+            var machine = new StateMachine<StubStateModel>();
+            var machineMock = new Mock<IStateMachine<StubStateModel>>();
+            var state1 = new State<StubStateModel>("s1");
+            var state2 = new State<StubStateModel>("s2");
+            var state3 = new State<StubStateModel>("s3");
+            var trigger1 = new Trigger("t1");
+            var trigger2 = new Trigger("t2");
+
+            var allStates = new List<State<StubStateModel>>();
+            allStates.Add(state1);
+            allStates.Add(state2);
+            allStates.Add(state3);
+
+            // transition arg
+            var arg = new TransitionEventArgs<StubStateModel>(new StubStateModel(),
+                state1, state2, trigger1);
+
+            // create some global transitionings
+            Action<TransitionEventArgs<StubStateModel>> callback1 = e => { };
+            Action<TransitionEventArgs<StubStateModel>> callback2 = e => { };
+            Action<TransitionEventArgs<StubStateModel>> callback3 = e => { };
+
+            // put them in an ienum
+            var callbacks = new List<Action<TransitionEventArgs<StubStateModel>>>();
+            callbacks.Add(callback1);
+            callbacks.Add(callback2);
+            callbacks.Add(callback3);
+
+
+            // create a fluent machine, and validate each was added to machine
+            //machineMock.Raise(m => m.Transitioning += null, arg);
+            machineMock.SetupAllProperties();
+
+            var fluentMachine = new FluentStateMachine<StubStateModel>(
+                machineMock.Object,
+                allStates,
+                null,
+                callbacks,
+                null,
+                null);
+
+            //machineMock.VerifyAll();
+        }
+
+        [Fact]
         public void FluentStateMachine_InitialState_SameValueAsConstructor()
         {
             var machine = new StateMachine<StubStateModel>();
@@ -213,7 +241,84 @@ namespace Nate.Tests.Unit
         }
 
         [Fact]
-        public void FluentStateMachine_Trigger_NullName_ThrowsNullEx()
+        public void FluentStateMachine_NullMachine_ThrowsNullEx()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                new FluentStateMachine<StubStateModel>(
+                    null,
+                    new Mock<IEnumerable<State<StubStateModel>>>().Object,
+                    new State<StubStateModel>("state"),
+                    new Mock<IEnumerable<Action<TransitionEventArgs<StubStateModel>>>>().Object,
+                    new Mock<IEnumerable<Action<TransitionEventArgs<StubStateModel>>>>().Object,
+                    new Mock<IEnumerable<Transition<StubStateModel>>>().Object));
+        }
+
+        [Fact]
+        public void FluentStateMachine_NullStates_ThrowsNullEx()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                new FluentStateMachine<StubStateModel>(
+                    new Mock<IStateMachine<StubStateModel>>().Object,
+                    null,
+                    new State<StubStateModel>("state"),
+                    new Mock<IEnumerable<Action<TransitionEventArgs<StubStateModel>>>>().Object,
+                    new Mock<IEnumerable<Action<TransitionEventArgs<StubStateModel>>>>().Object,
+                    new Mock<IEnumerable<Transition<StubStateModel>>>().Object));
+        }
+
+        [Fact]
+        public void FluentStateMachine_StateCoded_ValidParms_ReturnsMatchingStateFromConstructor()
+        {
+            var machine = new StateMachine<StubStateModel>();
+            var state1 = new State<StubStateModel>("s1", 1);
+            var state2 = new State<StubStateModel>("s2", 2);
+            var state3 = new State<StubStateModel>("s3", 3);
+
+            var allStates = new List<State<StubStateModel>>();
+            allStates.Add(state1);
+            allStates.Add(state2);
+            allStates.Add(state3);
+
+            var fluentMachine = new FluentStateMachine<StubStateModel>(
+                machine,
+                allStates,
+                state2,
+                null,
+                null,
+                null);
+
+            Assert.Equal(state1, fluentMachine.StateCoded(1));
+            Assert.Equal(state2, fluentMachine.StateCoded(2));
+            Assert.Equal(state3, fluentMachine.StateCoded(3));
+        }
+
+        [Fact]
+        public void FluentStateMachine_StateNamed_NullName_ThrowsNullEx()
+        {
+            var machineMock = new Mock<IStateMachine<StubStateModel>>();
+            var state1 = new State<StubStateModel>("s1");
+            var state2 = new State<StubStateModel>("s2");
+            var state3 = new State<StubStateModel>("s3");
+
+            var allStates = new List<State<StubStateModel>>();
+            allStates.Add(state1);
+            allStates.Add(state2);
+            allStates.Add(state3);
+
+            var fluentMachine = new FluentStateMachine<StubStateModel>(
+                machineMock.Object,
+                allStates,
+                state2,
+                null,
+                null,
+                null);
+
+            Assert.Throws<ArgumentNullException>(() =>
+                fluentMachine.StateNamed(null));
+        }
+
+        [Fact]
+        public void FluentStateMachine_StateNamed_ValidParms_ReturnsMatchingStateFromConstructor()
         {
             var machine = new StateMachine<StubStateModel>();
             var state1 = new State<StubStateModel>("s1");
@@ -225,7 +330,6 @@ namespace Nate.Tests.Unit
             allStates.Add(state2);
             allStates.Add(state3);
 
-
             var fluentMachine = new FluentStateMachine<StubStateModel>(
                 machine,
                 allStates,
@@ -234,8 +338,9 @@ namespace Nate.Tests.Unit
                 null,
                 null);
 
-            Assert.Throws<ArgumentNullException>(() =>
-                fluentMachine.Trigger(null, new StubStateModel()));
+            Assert.Equal(state1, fluentMachine.StateNamed("s1"));
+            Assert.Equal(state2, fluentMachine.StateNamed("s2"));
+            Assert.Equal(state3, fluentMachine.StateNamed("s3"));
         }
 
         [Fact]
@@ -262,6 +367,32 @@ namespace Nate.Tests.Unit
 
             Assert.Throws<ArgumentNullException>(() =>
                 fluentMachine.Trigger("trigger", null));
+        }
+
+        [Fact]
+        public void FluentStateMachine_Trigger_NullName_ThrowsNullEx()
+        {
+            var machine = new StateMachine<StubStateModel>();
+            var state1 = new State<StubStateModel>("s1");
+            var state2 = new State<StubStateModel>("s2");
+            var state3 = new State<StubStateModel>("s3");
+
+            var allStates = new List<State<StubStateModel>>();
+            allStates.Add(state1);
+            allStates.Add(state2);
+            allStates.Add(state3);
+
+
+            var fluentMachine = new FluentStateMachine<StubStateModel>(
+                machine,
+                allStates,
+                state2,
+                null,
+                null,
+                null);
+
+            Assert.Throws<ArgumentNullException>(() =>
+                fluentMachine.Trigger(null, new StubStateModel()));
         }
 
         [Fact]
@@ -293,140 +424,6 @@ namespace Nate.Tests.Unit
             fluentMachine.Trigger("trigger1", model);
 
             machineMock.VerifyAll();
-        }
-
-        [Fact]
-        public void FluentStateMachine_AvailableStates_ValidParms_CallsReturnsMachineAvailable()
-        {
-            var machineMock = new Mock<IStateMachine<StubStateModel>>();
-            var state1 = new State<StubStateModel>("s1");
-            var state2 = new State<StubStateModel>("s2");
-            var state3 = new State<StubStateModel>("s3");
-
-            var allStates = new List<State<StubStateModel>>();
-            allStates.Add(state1);
-            allStates.Add(state2);
-            allStates.Add(state3);
-
-            var model = new StubStateModel();
-
-
-            machineMock.Setup(m => m.AvailableStates(model)).Returns(allStates).Verifiable();
-
-            var fluentMachine = new FluentStateMachine<StubStateModel>(
-                machineMock.Object,
-                allStates,
-                state2,
-                null,
-                null,
-                null);
-
-            var result = fluentMachine.AvailableStates(model);
-
-            Assert.Same(allStates, result);
-            machineMock.VerifyAll();
-        }
-
-        [Fact]
-        public void FluentStateMachine_AvailableStates_NullModel_ThrowsNullEx()
-        {
-            var machineMock = new Mock<IStateMachine<StubStateModel>>();
-            var state1 = new State<StubStateModel>("s1");
-            var state2 = new State<StubStateModel>("s2");
-            var state3 = new State<StubStateModel>("s3");
-
-            var allStates = new List<State<StubStateModel>>();
-            allStates.Add(state1);
-            allStates.Add(state2);
-            allStates.Add(state3);
-
-            var fluentMachine = new FluentStateMachine<StubStateModel>(
-                machineMock.Object,
-                allStates,
-                state2,
-                null,
-                null,
-                null);
-
-            Assert.Throws<ArgumentNullException>(() =>
-                fluentMachine.AvailableStates(null));
-        }
-
-        [Fact]
-        public void FluentStateMachine_StateNamed_NullName_ThrowsNullEx()
-        {
-            var machineMock = new Mock<IStateMachine<StubStateModel>>();
-            var state1 = new State<StubStateModel>("s1");
-            var state2 = new State<StubStateModel>("s2");
-            var state3 = new State<StubStateModel>("s3");
-
-            var allStates = new List<State<StubStateModel>>();
-            allStates.Add(state1);
-            allStates.Add(state2);
-            allStates.Add(state3);
-
-            var fluentMachine = new FluentStateMachine<StubStateModel>(
-                machineMock.Object,
-                allStates,
-                state2,
-                null,
-                null,
-                null);
-
-            Assert.Throws<ArgumentNullException>(() =>
-                fluentMachine.StateNamed(null));        
-        }
-
-        [Fact]
-        public void FluentStateMachine_StateNamed_ValidParms_ReturnsMatchingStateFromConstructor()
-        {
-            var machine = new StateMachine<StubStateModel>();
-            var state1 = new State<StubStateModel>("s1");
-            var state2 = new State<StubStateModel>("s2");
-            var state3 = new State<StubStateModel>("s3");
-
-            var allStates = new List<State<StubStateModel>>();
-            allStates.Add(state1);
-            allStates.Add(state2);
-            allStates.Add(state3);
-
-            var fluentMachine = new FluentStateMachine<StubStateModel>(
-                machine,
-                allStates,
-                state2,
-                null,
-                null,
-                null);
-
-            Assert.Equal(state1, fluentMachine.StateNamed("s1"));
-            Assert.Equal(state2, fluentMachine.StateNamed("s2"));
-            Assert.Equal(state3, fluentMachine.StateNamed("s3"));
-        }
-
-        [Fact]
-        public void FluentStateMachine_StateCoded_ValidParms_ReturnsMatchingStateFromConstructor()
-        {
-            var machine = new StateMachine<StubStateModel>();
-            var state1 = new State<StubStateModel>("s1", 1);
-            var state2 = new State<StubStateModel>("s2", 2);
-            var state3 = new State<StubStateModel>("s3", 3);
-
-            var allStates = new List<State<StubStateModel>>();
-            allStates.Add(state1);
-            allStates.Add(state2);
-            allStates.Add(state3);
-
-            var fluentMachine = new FluentStateMachine<StubStateModel>(
-                machine,
-                allStates,
-                state2,
-                null,
-                null,
-                null);
-
-            Assert.Equal(state1, fluentMachine.StateCoded(1));
-            Assert.Equal(state2, fluentMachine.StateCoded(2));
-            Assert.Equal(state3, fluentMachine.StateCoded(3));
         }
     }
 }

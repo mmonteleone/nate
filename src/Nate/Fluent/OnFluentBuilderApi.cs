@@ -1,119 +1,114 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Nate.Core;
 
 namespace Nate.Fluent
 {
     public class OnFluentBuilderApi<TStateModel> where TStateModel : IStateModel
     {
-        private IFluentStateMachineBuilder<TStateModel> builder;
-
-        private OnFluentBuilderApi()
-        { }
+        private readonly IFluentStateMachineBuilder<TStateModel> _builder;
 
         public OnFluentBuilderApi(IFluentStateMachineBuilder<TStateModel> stateMachineBuilder)
         {
-            this.builder = stateMachineBuilder;
+            _builder = stateMachineBuilder;
         }
 
         public WhenFluentBuilderApi<TStateModel> When(Func<TStateModel, bool> guard)
         {
-            if (guard == null) { throw new ArgumentNullException("guard"); }
+            if (guard == null) throw new ArgumentNullException(nameof(guard));
 
-            builder.When(guard);
-            return new WhenFluentBuilderApi<TStateModel>(builder);
+            _builder.When(guard);
+            return new WhenFluentBuilderApi<TStateModel>(_builder);
         }
 
         public AfterEntryFluentBuilderApi<TStateModel> AfterEntry(Action<TransitionEventArgs<TStateModel>> callback)
         {
-            if (callback == null) { throw new ArgumentNullException("callback"); }
+            if (callback == null) throw new ArgumentNullException(nameof(callback));
 
-            builder.AfterEntry(callback);
-            return new AfterEntryFluentBuilderApi<TStateModel>(builder);
+            _builder.AfterEntry(callback);
+            return new AfterEntryFluentBuilderApi<TStateModel>(_builder);
         }
 
         public BeforeExitFluentBuilderApi<TStateModel> BeforeExit(Action<TransitionEventArgs<TStateModel>> callback)
         {
-            if (callback == null) { throw new ArgumentNullException("callback"); }
+            if (callback == null) throw new ArgumentNullException(nameof(callback));
 
-            builder.BeforeExit(callback);
-            return new BeforeExitFluentBuilderApi<TStateModel>(builder);
+            _builder.BeforeExit(callback);
+            return new BeforeExitFluentBuilderApi<TStateModel>(_builder);
         }
 
         public TransitionsToFluentBuilderApi<TStateModel> TransitionsTo(string stateName)
         {
-            if (String.IsNullOrEmpty(stateName)) { throw new ArgumentNullException("stateName"); }
+            if (string.IsNullOrEmpty(stateName)) throw new ArgumentNullException(nameof(stateName));
 
-            builder.TransitionsTo(stateName);
-            return new TransitionsToFluentBuilderApi<TStateModel>(builder);
+            _builder.TransitionsTo(stateName);
+            return new TransitionsToFluentBuilderApi<TStateModel>(_builder);
         }
 
         public InitiatesFluentBuilderApi<TStateModel> Initiates()
         {
-            builder.Initiates();
-            return new InitiatesFluentBuilderApi<TStateModel>(builder);
+            _builder.Initiates();
+            return new InitiatesFluentBuilderApi<TStateModel>(_builder);
         }
 
         public StateFluentBuilderApi<TStateModel> State(string stateName)
         {
-            if (String.IsNullOrEmpty(stateName)) { throw new ArgumentNullException("stateName"); }
+            if (string.IsNullOrEmpty(stateName)) throw new ArgumentNullException(nameof(stateName));
 
-            return this.State(stateName, null);
+            return State(stateName, null);
         }
 
         public StateFluentBuilderApi<TStateModel> State(string stateName, int? stateCode)
         {
-            if (String.IsNullOrEmpty(stateName)) { throw new ArgumentNullException("stateName"); }
+            if (string.IsNullOrEmpty(stateName)) throw new ArgumentNullException(nameof(stateName));
 
-            builder.State(stateName, stateCode);
-            return new StateFluentBuilderApi<TStateModel>(builder);
+            _builder.State(stateName, stateCode);
+            return new StateFluentBuilderApi<TStateModel>(_builder);
         }
 
         public IFluentStateMachine<TStateModel> Compile()
         {
-            return builder.Compile();
+            return _builder.Compile();
         }
 
-        public BeforeTransitionBuilderApi<TStateModel> BeforeTransition(Action<TransitionEventArgs<TStateModel>> callback)
+        public BeforeTransitionBuilderApi<TStateModel> BeforeTransition(
+            Action<TransitionEventArgs<TStateModel>> callback)
         {
-            if (callback == null) { throw new ArgumentNullException("callback"); }
+            if (callback == null) throw new ArgumentNullException(nameof(callback));
 
-            builder.BeforeTransition(callback);
-            return new BeforeTransitionBuilderApi<TStateModel>(builder);
+            _builder.BeforeTransition(callback);
+            return new BeforeTransitionBuilderApi<TStateModel>(_builder);
         }
 
         public AfterTransitionBuilderApi<TStateModel> AfterTransition(Action<TransitionEventArgs<TStateModel>> callback)
         {
-            if (callback == null) { throw new ArgumentNullException("callback"); }
+            if (callback == null) throw new ArgumentNullException(nameof(callback));
 
-            builder.AfterTransition(callback);
-            return new AfterTransitionBuilderApi<TStateModel>(builder);
+            _builder.AfterTransition(callback);
+            return new AfterTransitionBuilderApi<TStateModel>(_builder);
         }
 
         public GloballyTransitionsToBuilderApi<TStateModel> GloballyTransitionsTo(string stateName)
         {
-            if (String.IsNullOrEmpty(stateName)) { throw new ArgumentNullException("stateName"); }
+            if (string.IsNullOrEmpty(stateName)) throw new ArgumentNullException(nameof(stateName));
 
-            builder.GloballyTransitionsTo(stateName);
-            return new GloballyTransitionsToBuilderApi<TStateModel>(builder);
+            _builder.GloballyTransitionsTo(stateName);
+            return new GloballyTransitionsToBuilderApi<TStateModel>(_builder);
         }
 
         public BeforeEntryFluentBuilderApi<TStateModel> BeforeEntry(Action<TransitionEventArgs<TStateModel>> callback)
         {
-            if (callback == null) { throw new ArgumentNullException("callback"); }
+            if (callback == null) throw new ArgumentNullException(nameof(callback));
 
-            builder.BeforeEntry(callback);
-            return new BeforeEntryFluentBuilderApi<TStateModel>(builder);
+            _builder.BeforeEntry(callback);
+            return new BeforeEntryFluentBuilderApi<TStateModel>(_builder);
         }
 
         public AfterExitFluentBuilderApi<TStateModel> AfterExit(Action<TransitionEventArgs<TStateModel>> callback)
         {
-            if (callback == null) { throw new ArgumentNullException("callback"); }
+            if (callback == null) throw new ArgumentNullException(nameof(callback));
 
-            builder.AfterExit(callback);
-            return new AfterExitFluentBuilderApi<TStateModel>(builder);
+            _builder.AfterExit(callback);
+            return new AfterExitFluentBuilderApi<TStateModel>(_builder);
         }
     }
 }

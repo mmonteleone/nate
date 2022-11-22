@@ -1,9 +1,19 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nate", "Nate\Nate.csproj", "{62FCBCDE-7A8E-4581-9934-998D118119A0}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nate", "Nate\Nate.csproj", "{62FCBCDE-7A8E-4581-9934-998D118119A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nate.Tests", "Nate.Tests\Nate.Tests.csproj", "{B950F583-D3A3-4093-BD29-6467E6CB2F20}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E3254F94-FCBF-47CD-A20E-A279E4F9674F}"
+	ProjectSection(SolutionItems) = preProject
+		build-nuget-packages.cmd = build-nuget-packages.cmd
+		build-nuget-packages.ps1 = build-nuget-packages.ps1
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nate.UnitTests", "Nate.UnitTests\Nate.UnitTests.csproj", "{DB0BA66C-664D-4CE0-AB40-98B20A0E3BC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nate.Bartender", "Nate.Bartender\Nate.Bartender.csproj", "{619F770F-3620-4682-9B93-89A1F7BCE7D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,16 +26,25 @@ Global
 		{62FCBCDE-7A8E-4581-9934-998D118119A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62FCBCDE-7A8E-4581-9934-998D118119A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62FCBCDE-7A8E-4581-9934-998D118119A0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{62FCBCDE-7A8E-4581-9934-998D118119A0}.Test|Any CPU.ActiveCfg = Test|Any CPU
-		{62FCBCDE-7A8E-4581-9934-998D118119A0}.Test|Any CPU.Build.0 = Test|Any CPU
-		{B950F583-D3A3-4093-BD29-6467E6CB2F20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B950F583-D3A3-4093-BD29-6467E6CB2F20}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B950F583-D3A3-4093-BD29-6467E6CB2F20}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B950F583-D3A3-4093-BD29-6467E6CB2F20}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B950F583-D3A3-4093-BD29-6467E6CB2F20}.Test|Any CPU.ActiveCfg = Test|Any CPU
-		{B950F583-D3A3-4093-BD29-6467E6CB2F20}.Test|Any CPU.Build.0 = Test|Any CPU
+		{62FCBCDE-7A8E-4581-9934-998D118119A0}.Test|Any CPU.ActiveCfg = Release|Any CPU
+		{62FCBCDE-7A8E-4581-9934-998D118119A0}.Test|Any CPU.Build.0 = Release|Any CPU
+		{DB0BA66C-664D-4CE0-AB40-98B20A0E3BC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB0BA66C-664D-4CE0-AB40-98B20A0E3BC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB0BA66C-664D-4CE0-AB40-98B20A0E3BC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB0BA66C-664D-4CE0-AB40-98B20A0E3BC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB0BA66C-664D-4CE0-AB40-98B20A0E3BC3}.Test|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB0BA66C-664D-4CE0-AB40-98B20A0E3BC3}.Test|Any CPU.Build.0 = Debug|Any CPU
+		{619F770F-3620-4682-9B93-89A1F7BCE7D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{619F770F-3620-4682-9B93-89A1F7BCE7D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{619F770F-3620-4682-9B93-89A1F7BCE7D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{619F770F-3620-4682-9B93-89A1F7BCE7D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{619F770F-3620-4682-9B93-89A1F7BCE7D1}.Test|Any CPU.ActiveCfg = Debug|Any CPU
+		{619F770F-3620-4682-9B93-89A1F7BCE7D1}.Test|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DEC42A76-369B-4E4C-BFE0-240403D054AC}
 	EndGlobalSection
 EndGlobal

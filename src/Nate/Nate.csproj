@@ -1,124 +1,119 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{62FCBCDE-7A8E-4581-9934-998D118119A0}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Nate</RootNamespace>
-    <AssemblyName>Nate</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation />
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
+    <TargetFrameworks>net45;net462;net472;netstandard2.0;net5.0;net6.0</TargetFrameworks>
+    <Title>Nate</Title>
+    <Description>Tiny fluent state machine for .NET</Description>
+    <Authors>Michael Monteleone and Dariusz Danielewski</Authors>
+    <CurrentYear>$([System.DateTime]::Now.ToString(yyyy))</CurrentYear>
+    <Copyright>Copyright (c) $(CurrentYear) Michael Monteleone and Dariusz Danielewski</Copyright>
+    <PackageTags>state machine</PackageTags>
+    <PackageProjectUrl>https://github.com/DarekDan/nate</PackageProjectUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>git://github.com/mmonteleone/nate</RepositoryUrl>
+    <Version>1.0.3</Version>
+    <ApplicationIcon></ApplicationIcon>
+    <PackageReleaseNotes>
+      Version 1.0.3 
+      - Added support for .Net 5.0 and 6.0
+      - Code cleanup and changing locks to instance level
+    </PackageReleaseNotes>
+    <PackageIcon>nate.png</PackageIcon>
+    <PackageReadmeFile>README.MD</PackageReadmeFile>
   </PropertyGroup>
+
+  <!--common NuGet package refs -->
+
+  <!--.NET Standard 2.0 config -->
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <AssemblyTitle>Nate .NET Standard 2.0</AssemblyTitle>
+  </PropertyGroup>
+
+  <!-- .NET 4.5 config -->
+  <PropertyGroup Condition=" '$(TargetFramework)'=='net45' ">
+    <AssemblyTitle>Nate .NET 4.5</AssemblyTitle>
+  </PropertyGroup>
+
+  <!-- .NET 4.6.2 config -->
+  <PropertyGroup Condition=" '$(TargetFramework)'=='net462' ">
+    <AssemblyTitle>Nate .NET 4.6.2</AssemblyTitle>
+  </PropertyGroup>
+
+  <!-- .NET 4.7.2 config -->
+  <PropertyGroup Condition=" '$(TargetFramework)'=='net472' ">
+    <AssemblyTitle>Nate .NET 4.7.2</AssemblyTitle>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net472' or '$(TargetFramework)' == 'net462' ">
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\nate.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\README.MD">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\..\build\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <DebugType>Full</DebugType>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\..\build\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
+    <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Test|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Test\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net45|AnyCPU'">
+    <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="Core\Extensions\IStateMachineExtensions.cs" />
-    <Compile Include="Core\Extensions\IStateModelExtensions.cs" />
-    <Compile Include="Core\InvalidStateModelException.cs" />
-    <Compile Include="Core\InvalidTransitionException.cs" />
-    <Compile Include="Core\InvalidTriggerException.cs" />
-    <Compile Include="Core\IStateMachine.cs" />
-    <Compile Include="Core\State.cs" />
-    <Compile Include="Core\StateMachine.cs" />
-    <Compile Include="Core\StateMachineConfiguration.cs" />
-    <Compile Include="Core\Transition.cs" />
-    <Compile Include="Core\Trigger.cs" />
-    <Compile Include="FluentStateMachine.cs" />
-    <Compile Include="Fluent\AfterEntryFluentBuilderApi.cs" />
-    <Compile Include="Fluent\AfterExitFluentBuilderApi.cs" />
-    <Compile Include="Fluent\AfterTransitionBuilderApi.cs" />
-    <Compile Include="Fluent\BeforeEntryFluentBuilderApi.cs" />
-    <Compile Include="Fluent\BeforeExitFluentBuilderApi.cs" />
-    <Compile Include="Fluent\BeforeTransitionBuilderApi.cs" />
-    <Compile Include="Fluent\FluentStateMachineBuilder.cs" />
-    <Compile Include="Fluent\FluentSyntaxException.cs" />
-    <Compile Include="Fluent\GloballyTransitionsToBuilderApi.cs" />
-    <Compile Include="Fluent\IFluentStateMachineBuilder.cs" />
-    <Compile Include="Fluent\InitialFluentBuilderApi.cs" />
-    <Compile Include="Fluent\InitiatesFluentBuilderApi.cs" />
-    <Compile Include="Fluent\OnFluentBuilderApi.cs" />
-    <Compile Include="Fluent\StateFluentBuilderApi.cs" />
-    <Compile Include="Fluent\TransitionsToFluentBuilderApi.cs" />
-    <Compile Include="Fluent\WhenFluentBuilderApi.cs" />
-    <Compile Include="IFluentStateMachine.cs" />
-    <Compile Include="IStateModel.cs" />
-    <Compile Include="Core\Extensions\StateExtensions.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Core\TransitionEventArgs.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net462|AnyCPU'">
+    <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net462|AnyCPU'">
+    <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net472|AnyCPU'">
+    <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net472|AnyCPU'">
+    <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+    <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+    <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net5.0|AnyCPU'">
+    <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net5.0|AnyCPU'">
+    <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
+    <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|AnyCPU'">
+    <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+  </PropertyGroup>
+
 </Project>
